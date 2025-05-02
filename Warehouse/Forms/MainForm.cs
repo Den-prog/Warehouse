@@ -32,7 +32,7 @@ namespace Warehouse.Forms
                 .Where(p => p.Name.ToLower().Contains(query))
                 .ToList();
 
-            dgvProducts.DataSource = filtered ;
+            dgvProducts.DataSource = filtered;
         }
     }
 }
