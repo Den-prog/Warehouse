@@ -34,5 +34,11 @@ namespace Warehouse.Forms
 
             dgvProducts.DataSource = filtered;
         }
+
+        private void btnCreateInvoice_Click(object sender, EventArgs e)
+        {
+            InvoiceForm invoiceForm = new InvoiceForm(allProducts);
+            invoiceForm.ShowDialog();
+        }
     }
 }

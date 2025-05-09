@@ -15,5 +15,9 @@ namespace Warehouse.Models
         public int Quantity {  get; set; }
         public DateTime LastDeliveryDate { get; set; }
 
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

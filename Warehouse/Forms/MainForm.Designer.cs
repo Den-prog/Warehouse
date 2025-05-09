@@ -31,6 +31,7 @@
             txtSearch = new TextBox();
             btnSeaarch = new Button();
             dgvProducts = new DataGridView();
+            btnCreateInvoice = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             SuspendLayout();
             // 
@@ -59,11 +60,22 @@
             dgvProducts.Size = new Size(701, 150);
             dgvProducts.TabIndex = 2;
             // 
+            // btnCreateInvoice
+            // 
+            btnCreateInvoice.Location = new Point(28, 27);
+            btnCreateInvoice.Name = "btnCreateInvoice";
+            btnCreateInvoice.Size = new Size(127, 23);
+            btnCreateInvoice.TabIndex = 3;
+            btnCreateInvoice.Text = "Створити накладну";
+            btnCreateInvoice.UseVisualStyleBackColor = true;
+            btnCreateInvoice.Click += btnCreateInvoice_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnCreateInvoice);
             Controls.Add(dgvProducts);
             Controls.Add(btnSeaarch);
             Controls.Add(txtSearch);
@@ -79,5 +91,6 @@
         private TextBox txtSearch;
         private Button btnSeaarch;
         private DataGridView dgvProducts;
+        private Button btnCreateInvoice;
     }
 }
