@@ -93,7 +93,7 @@ namespace Warehouse.Forms
 
         private void SaveInvoice_Click(object sender, EventArgs e)
         {
-            if (currentItems.Count < 0)
+            if (currentItems.Count <= 0)
             {
                 MessageBox.Show("Накладна порожня");
                 return;
