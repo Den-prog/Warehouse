@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             dgvProducts = new DataGridView();
-            textBox1 = new TextBox();
             nudQuantity = new NumericUpDown();
             comboBoxInvoiceType = new ComboBox();
             btnAddItem = new Button();
+            SaveInvoice = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudQuantity).BeginInit();
             SuspendLayout();
@@ -45,13 +45,6 @@
             dgvProducts.Size = new Size(616, 150);
             dgvProducts.TabIndex = 0;
             dgvProducts.CellContentClick += dgvProducts_CellContentClick;
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(57, 270);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(100, 23);
-            textBox1.TabIndex = 1;
             // 
             // nudQuantity
             // 
@@ -78,30 +71,39 @@
             btnAddItem.UseVisualStyleBackColor = true;
             btnAddItem.Click += btnAddItem_Click;
             // 
+            // SaveInvoice
+            // 
+            SaveInvoice.Location = new Point(361, 332);
+            SaveInvoice.Name = "SaveInvoice";
+            SaveInvoice.Size = new Size(115, 23);
+            SaveInvoice.TabIndex = 5;
+            SaveInvoice.Text = "SaveInvoice";
+            SaveInvoice.UseVisualStyleBackColor = true;
+            SaveInvoice.Click += SaveInvoice_Click;
+            // 
             // InvoiceForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(SaveInvoice);
             Controls.Add(btnAddItem);
             Controls.Add(comboBoxInvoiceType);
             Controls.Add(nudQuantity);
-            Controls.Add(textBox1);
             Controls.Add(dgvProducts);
             Name = "InvoiceForm";
             Text = "InvoiceForm";
             ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudQuantity).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private DataGridView dgvProducts;
-        private TextBox textBox1;
         private NumericUpDown nudQuantity;
         private ComboBox comboBoxInvoiceType;
         private Button btnAddItem;
+        private Button SaveInvoice;
     }
 }

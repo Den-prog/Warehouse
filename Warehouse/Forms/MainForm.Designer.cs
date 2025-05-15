@@ -32,6 +32,9 @@
             btnSeaarch = new Button();
             dgvProducts = new DataGridView();
             btnCreateInvoice = new Button();
+            Inventory = new Button();
+            btnSaveToFile = new Button();
+            btnLoadFormFile = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             SuspendLayout();
             // 
@@ -70,11 +73,44 @@
             btnCreateInvoice.UseVisualStyleBackColor = true;
             btnCreateInvoice.Click += btnCreateInvoice_Click;
             // 
+            // Inventory
+            // 
+            Inventory.Location = new Point(199, 27);
+            Inventory.Name = "Inventory";
+            Inventory.Size = new Size(173, 23);
+            Inventory.TabIndex = 4;
+            Inventory.Text = "Інвентарна відомість";
+            Inventory.UseVisualStyleBackColor = true;
+            Inventory.Click += Inventory_Click;
+            // 
+            // btnSaveToFile
+            // 
+            btnSaveToFile.Location = new Point(410, 27);
+            btnSaveToFile.Name = "btnSaveToFile";
+            btnSaveToFile.Size = new Size(110, 23);
+            btnSaveToFile.TabIndex = 5;
+            btnSaveToFile.Text = "Зберегти склад";
+            btnSaveToFile.UseVisualStyleBackColor = true;
+            btnSaveToFile.Click += btnSaveToFile_Click;
+            // 
+            // btnLoadFormFile
+            // 
+            btnLoadFormFile.Location = new Point(540, 27);
+            btnLoadFormFile.Name = "btnLoadFormFile";
+            btnLoadFormFile.Size = new Size(110, 38);
+            btnLoadFormFile.TabIndex = 6;
+            btnLoadFormFile.Text = "Завантажити склад";
+            btnLoadFormFile.UseVisualStyleBackColor = true;
+            btnLoadFormFile.Click += btnLoadFormFile_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnLoadFormFile);
+            Controls.Add(btnSaveToFile);
+            Controls.Add(Inventory);
             Controls.Add(btnCreateInvoice);
             Controls.Add(dgvProducts);
             Controls.Add(btnSeaarch);
@@ -92,5 +128,8 @@
         private Button btnSeaarch;
         private DataGridView dgvProducts;
         private Button btnCreateInvoice;
+        private Button Inventory;
+        private Button btnSaveToFile;
+        private Button btnLoadFormFile;
     }
 }
