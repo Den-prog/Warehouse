@@ -34,7 +34,7 @@
             btnCreateInvoice = new Button();
             Inventory = new Button();
             btnSaveToFile = new Button();
-            btnLoadFormFile = new Button();
+            btnLoadFromFile = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             SuspendLayout();
             // 
@@ -93,22 +93,22 @@
             btnSaveToFile.UseVisualStyleBackColor = true;
             btnSaveToFile.Click += btnSaveToFile_Click;
             // 
-            // btnLoadFormFile
+            // btnLoadFromFile
             // 
-            btnLoadFormFile.Location = new Point(540, 27);
-            btnLoadFormFile.Name = "btnLoadFormFile";
-            btnLoadFormFile.Size = new Size(110, 38);
-            btnLoadFormFile.TabIndex = 6;
-            btnLoadFormFile.Text = "Завантажити склад";
-            btnLoadFormFile.UseVisualStyleBackColor = true;
-            btnLoadFormFile.Click += btnLoadFormFile_Click;
+            btnLoadFromFile.Location = new Point(540, 27);
+            btnLoadFromFile.Name = "btnLoadFromFile";
+            btnLoadFromFile.Size = new Size(110, 38);
+            btnLoadFromFile.TabIndex = 6;
+            btnLoadFromFile.Text = "Завантажити склад";
+            btnLoadFromFile.UseVisualStyleBackColor = true;
+            btnLoadFromFile.Click += btnLoadFormFile_Click;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(btnLoadFormFile);
+            Controls.Add(btnLoadFromFile);
             Controls.Add(btnSaveToFile);
             Controls.Add(Inventory);
             Controls.Add(btnCreateInvoice);
@@ -130,6 +130,6 @@
         private Button btnCreateInvoice;
         private Button Inventory;
         private Button btnSaveToFile;
-        private Button btnLoadFormFile;
+        private Button btnLoadFromFile;
     }
 }

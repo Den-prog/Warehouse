@@ -141,7 +141,7 @@ namespace Warehouse.Forms
                     }
 
                 }
-                }
+             }
                 allInvoices.Add(invoice);
                 currentItems.Clear();
 

@@ -11,6 +11,7 @@ using Warehouse.Models;
 using System.Text.Json;
 using System.IO;
 
+
 namespace Warehouse.Forms
 {
     public partial class MainForm : Form
@@ -25,9 +26,16 @@ namespace Warehouse.Forms
         {
             allProducts = TestDataGenerator.GetSampleProducts();
             dgvProducts.DataSource = allProducts;
+            dgvProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvProducts.MultiSelect = false;
+            dgvProducts.ReadOnly = true;
 
         }
-
+        public void RefreshProductGrid()
+        {
+            dgvProducts.DataSource = null;
+            dgvProducts.DataSource = allProducts;
+        }
         private void btnSeaarch_Click(object sender, EventArgs e)
         {
             string query = txtSearch.Text.ToLower();
@@ -40,8 +48,15 @@ namespace Warehouse.Forms
 
         private void btnCreateInvoice_Click(object sender, EventArgs e)
         {
-            InvoiceForm invoiceForm = new InvoiceForm(allProducts);
+            //InvoiceForm invoiceForm = new InvoiceForm(allProducts);
+            //invoiceForm.ShowDialog();
+            var invoiceForm = new InvoiceForm(allProducts);
             invoiceForm.ShowDialog();
+            //invoiceForm.FormClosing += (s, args) => RefreshProductGrid();
+            //invoiceForm.ShowDialog();
+            RefreshProductGrid();
+
+
         }
 
         private void Inventory_Click(object sender, EventArgs e)
