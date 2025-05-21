@@ -141,25 +141,34 @@ namespace Warehouse.Forms
                     }
 
                 }
-             }
-                allInvoices.Add(invoice);
-                currentItems.Clear();
+            }
+            allInvoices.Add(invoice);
+            currentItems.Clear();
 
             dgvProducts.DataSource = null;
             dgvProducts.DataSource = products;
-                //dgvProducts.Refresh();
-                //dgvProducts.DataSource = null;
-                MessageBox.Show("Накладну збережено");
+            //dgvProducts.Refresh();
+            //dgvProducts.DataSource = null;
+            MessageBox.Show("Накладну збережено");
 
 
-            }
-        
+        }
+
         private int GenerateInvoiceNumber()
         {
             return allInvoices.Count + 1;
         }
 
+        private void btnAddProduct_Click(object sender, EventArgs e)
+        {
+            var addProduct = new AddProductForm();
+            if (addProduct.ShowDialog() == DialogResult.OK)
+            {
+                products.Add(addProduct.NewProduct);
 
-
+                dgvProducts.DataSource = null;
+                dgvProducts.DataSource = products;
+            }
+        }
     }
 }

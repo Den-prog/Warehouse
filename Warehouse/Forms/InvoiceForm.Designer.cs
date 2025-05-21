@@ -33,6 +33,7 @@
             comboBoxInvoiceType = new ComboBox();
             btnAddItem = new Button();
             SaveInvoice = new Button();
+            btnAddNewProduct = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudQuantity).BeginInit();
             SuspendLayout();
@@ -81,11 +82,22 @@
             SaveInvoice.UseVisualStyleBackColor = true;
             SaveInvoice.Click += SaveInvoice_Click;
             // 
+            // btnAddNewProduct
+            // 
+            btnAddNewProduct.Location = new Point(499, 332);
+            btnAddNewProduct.Name = "btnAddNewProduct";
+            btnAddNewProduct.Size = new Size(115, 23);
+            btnAddNewProduct.TabIndex = 6;
+            btnAddNewProduct.Text = "Додати товар";
+            btnAddNewProduct.UseVisualStyleBackColor = true;
+            btnAddNewProduct.Click += btnAddProduct_Click;
+            // 
             // InvoiceForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnAddNewProduct);
             Controls.Add(SaveInvoice);
             Controls.Add(btnAddItem);
             Controls.Add(comboBoxInvoiceType);
@@ -105,5 +117,6 @@
         private ComboBox comboBoxInvoiceType;
         private Button btnAddItem;
         private Button SaveInvoice;
+        private Button btnAddNewProduct;
     }
 }

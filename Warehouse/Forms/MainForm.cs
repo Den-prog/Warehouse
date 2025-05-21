@@ -21,6 +21,7 @@ namespace Warehouse.Forms
         {
             InitializeComponent();
             LoadTestData();
+            UpdateProductGridHeaders();
         }
         private void LoadTestData()
         {
@@ -29,12 +30,16 @@ namespace Warehouse.Forms
             dgvProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvProducts.MultiSelect = false;
             dgvProducts.ReadOnly = true;
+           
 
         }
         public void RefreshProductGrid()
         {
             dgvProducts.DataSource = null;
             dgvProducts.DataSource = allProducts;
+            UpdateProductGridHeaders();
+
+
         }
         private void btnSeaarch_Click(object sender, EventArgs e)
         {
@@ -44,6 +49,8 @@ namespace Warehouse.Forms
                 .ToList();
 
             dgvProducts.DataSource = filtered;
+            UpdateProductGridHeaders();
+
         }
 
         private void btnCreateInvoice_Click(object sender, EventArgs e)
@@ -55,6 +62,7 @@ namespace Warehouse.Forms
             //invoiceForm.FormClosing += (s, args) => RefreshProductGrid();
             //invoiceForm.ShowDialog();
             RefreshProductGrid();
+            UpdateProductGridHeaders();
 
 
         }
@@ -74,6 +82,7 @@ namespace Warehouse.Forms
 
                 dgvProducts.DataSource = null;
                 dgvProducts.DataSource = allProducts;
+                UpdateProductGridHeaders();
             }
         }
         private void SaveProductsToFile()
@@ -108,6 +117,76 @@ namespace Warehouse.Forms
             {
                 MessageBox.Show("Помилка завантеження: " + ex.Message);
             }
+        }
+
+        private void btnClearTxtSearch_Click(object sender, EventArgs e)
+        {
+            txtSearch.Clear();
+        }
+
+        private void файлToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void створитиНакладнуToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+
+        }
+
+        private void створитиНакладнуToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var invoiceForm = new InvoiceForm(allProducts);
+            invoiceForm.ShowDialog();
+            RefreshProductGrid();
+            UpdateProductGridHeaders();
+        }
+
+        private void зберегтиСкладToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SaveProductsToFile();
+                MessageBox.Show("Склад збережено");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Помилка збереження: " + ex.Message);
+            }
+
+        }
+
+        private void завантажитиСкладToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadProoductsFormFile();
+                MessageBox.Show("Склад завантажено!");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Помилка завантеження: " + ex.Message);
+            }
+        }
+
+        private void вихідToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close(); 
+        }
+
+        private void UpdateProductGridHeaders()
+        {
+            if (dgvProducts.Columns.Count == 0) return;
+
+            dgvProducts.Columns["Name"].HeaderText = "Назва";
+            dgvProducts.Columns["Unit"].HeaderText = "Одиниця виміру";
+            dgvProducts.Columns["PricePerUnit"].HeaderText = "Ціна за одиницю";
+            dgvProducts.Columns["Quantity"].HeaderText = "Кількість";
+            dgvProducts.Columns["LastDeliveryDate"].HeaderText = "Дата останнього завезення";
+
         }
     }
 }
