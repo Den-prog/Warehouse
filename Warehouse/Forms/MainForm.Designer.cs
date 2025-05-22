@@ -66,6 +66,7 @@
             // 
             // dgvProducts
             // 
+            dgvProducts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvProducts.Location = new Point(12, 113);
             dgvProducts.Name = "dgvProducts";
@@ -152,21 +153,21 @@
             // зберегтиСкладToolStripMenuItem
             // 
             зберегтиСкладToolStripMenuItem.Name = "зберегтиСкладToolStripMenuItem";
-            зберегтиСкладToolStripMenuItem.Size = new Size(180, 22);
+            зберегтиСкладToolStripMenuItem.Size = new Size(179, 22);
             зберегтиСкладToolStripMenuItem.Text = "Зберегти склад";
             зберегтиСкладToolStripMenuItem.Click += зберегтиСкладToolStripMenuItem_Click;
             // 
             // завантажитиСкладToolStripMenuItem
             // 
             завантажитиСкладToolStripMenuItem.Name = "завантажитиСкладToolStripMenuItem";
-            завантажитиСкладToolStripMenuItem.Size = new Size(180, 22);
+            завантажитиСкладToolStripMenuItem.Size = new Size(179, 22);
             завантажитиСкладToolStripMenuItem.Text = "Завантажити склад";
             завантажитиСкладToolStripMenuItem.Click += завантажитиСкладToolStripMenuItem_Click;
             // 
             // вихідToolStripMenuItem
             // 
             вихідToolStripMenuItem.Name = "вихідToolStripMenuItem";
-            вихідToolStripMenuItem.Size = new Size(180, 22);
+            вихідToolStripMenuItem.Size = new Size(179, 22);
             вихідToolStripMenuItem.Text = "Вихід";
             вихідToolStripMenuItem.Click += вихідToolStripMenuItem_Click;
             // 

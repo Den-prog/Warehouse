@@ -170,5 +170,59 @@ namespace Warehouse.Forms
                 dgvProducts.DataSource = products;
             }
         }
+
+        private void btnDelProduct_Click(object sender, EventArgs e)
+        {
+            if (dgvProducts.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Будь ласка, виберіть товар для видалення");
+                return;
+            }
+
+            var selectedProduct = dgvProducts.SelectedRows[0].DataBoundItem as Product;
+            if (selectedProduct != null)
+            {
+                var confirm = MessageBox.Show($"Ви дійсно хочете видалити товар \"{selectedProduct.Name}\" ? ", "Підтвердження", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirm == DialogResult.Yes)
+                {
+                    products.Remove(selectedProduct);
+                    dgvProducts.DataSource = null;
+                    dgvProducts.DataSource = products;
+                }
+            }
+        }
+
+        private void додатиТоварToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var addProduct = new AddProductForm();
+            if (addProduct.ShowDialog() == DialogResult.OK)
+            {
+                products.Add(addProduct.NewProduct);
+
+                dgvProducts.DataSource = null;
+                dgvProducts.DataSource = products;
+            }
+        }
+
+        private void видалитиТоварToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvProducts.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Будь ласка, виберіть товар для видалення");
+                return;
+            }
+
+            var selectedProduct = dgvProducts.SelectedRows[0].DataBoundItem as Product;
+            if (selectedProduct != null)
+            {
+                var confirm = MessageBox.Show($"Ви дійсно хочете видалити товар \"{selectedProduct.Name}\" ? ", "Підтвердження", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirm == DialogResult.Yes)
+                {
+                    products.Remove(selectedProduct);
+                    dgvProducts.DataSource = null;
+                    dgvProducts.DataSource = products;
+                }
+            }
+        }
     }
 }
