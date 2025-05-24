@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Warehouse.Models;
+
 namespace Warehouse.Forms
 {
     public partial class InvoiceForm : Form
@@ -15,6 +16,12 @@ namespace Warehouse.Forms
         private List<Product> products;
 
         private List<Invoice> allInvoices = new List<Invoice>();
+
+        private List<Product> originalProducts;
+
+        private bool isSaved = false;
+      
+
 
         public InvoiceForm(List<Product> products)
         {
@@ -35,6 +42,15 @@ namespace Warehouse.Forms
             comboBoxInvoiceType.Items.Add(InvoiceType.Outcome);
             comboBoxInvoiceType.SelectedIndex = 0;
 
+            originalProducts = products.Select(p => new Product
+            {
+                Name = p.Name,
+                Unit = p.Unit,
+                Quantity = p.Quantity,
+                PricePerUnit = p.PricePerUnit,
+                LastDeliveryDate = DateTime.Now,
+            }).ToList();
+            this.FormClosing += InvoiceForm_FormClosing;
         }
 
         private Product GetSelectedProduct()
@@ -76,6 +92,13 @@ namespace Warehouse.Forms
             };
             currentItems.Add(newItem);
 
+            //currentItems.Add(new InvoiceItem
+            //{
+            //    Product = selectedProduct,
+            //    Quantity = quantity
+
+            //});
+
             dgvProducts.DataSource = null;
             dgvProducts.DataSource = products;
 
@@ -95,10 +118,18 @@ namespace Warehouse.Forms
         {
             if (currentItems.Count <= 0)
             {
+
                 MessageBox.Show("Накладна порожня");
                 return;
             }
-            Invoice invoice = new Invoice
+            /* Invoice invoice = new Invoice
+             {
+                 InvoiceNumber = GenerateInvoiceNumber(),
+                 Date = DateTime.Now,
+                 Type = (InvoiceType)comboBoxInvoiceType.SelectedItem,
+                 Items = new List<InvoiceItem>(currentItems)
+             };*/
+            var invoice = new Invoice
             {
                 InvoiceNumber = GenerateInvoiceNumber(),
                 Date = DateTime.Now,
@@ -106,7 +137,7 @@ namespace Warehouse.Forms
                 Items = new List<InvoiceItem>(currentItems)
             };
 
-            foreach (var item in invoice.Items)
+           /* foreach (var item in invoice.Items)
             {
                 var exitingProduct = products.FirstOrDefault(p => p.Name == item.Product.Name);
                 if (invoice.Type == InvoiceType.Income)
@@ -149,10 +180,85 @@ namespace Warehouse.Forms
             dgvProducts.DataSource = products;
             //dgvProducts.Refresh();
             //dgvProducts.DataSource = null;
-            MessageBox.Show("Накладну збережено");
+            MessageBox.Show("Накладну збережено");*/
 
+            //foreach (var item in invoice.Items)
+            //{
+            //    var prod = products.First(p => p.Name == item.Product.Name);
+            //    if (prod != null)
+            //    {
+            //        if (invoice.Type == InvoiceType.Income)
+            //        {
+            //            prod.Quantity += item.Quantity;
+            //            prod.LastDeliveryDate = invoice.Date;
+            //        }
+            //        else // Outcome
+            //        {
+                        
+            //           prod.Quantity -= item.Quantity;
+            //        }
+            //    }
+              
+            //}
+
+            allInvoices.Add(invoice);
+            currentItems.Clear();
+
+            // Оновити головну таблицю товарів
+            dgvProducts.DataSource = null;
+            dgvProducts.DataSource = products;
+          
+
+            MessageBox.Show("Накладну збережено!");
+            this.DialogResult = DialogResult.OK;
+            isSaved = true;
+            
+            this.Close();
 
         }
+        private void InvoiceForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if ( !isSaved)
+            {
+                var result = MessageBox.Show(
+                  "Ви не зберегли накладну. Зберегти перед виходом?",
+                  "Підтвердження",
+                  MessageBoxButtons.YesNoCancel,
+                  MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    SaveInvoice.PerformClick();
+                    // форма закриється після збереження
+                }
+                else if (result == DialogResult.No)
+                {
+                    // Відкат змін — приклад нижче
+                    RollbackChanges();
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    e.Cancel = true; // Не закривати форму
+                }
+            }
+        }
+        private void RollbackChanges()
+        {
+            // Відновлює початкові кількості
+            foreach (var original in originalProducts)
+            {
+                var current = products.FirstOrDefault(p => p.Name == original.Name);
+                if (current != null)
+                {
+                    current.Quantity = original.Quantity;
+                    current.PricePerUnit = original.PricePerUnit;
+                    current.LastDeliveryDate = original.LastDeliveryDate;
+                }
+            }
+        }
+
+
 
         private int GenerateInvoiceNumber()
         {
@@ -168,7 +274,11 @@ namespace Warehouse.Forms
 
                 dgvProducts.DataSource = null;
                 dgvProducts.DataSource = products;
+
             }
+           
+
+
         }
 
         private void btnDelProduct_Click(object sender, EventArgs e)
@@ -201,7 +311,11 @@ namespace Warehouse.Forms
 
                 dgvProducts.DataSource = null;
                 dgvProducts.DataSource = products;
+                
             }
+           
+
+
         }
 
         private void видалитиТоварToolStripMenuItem_Click(object sender, EventArgs e)
@@ -223,6 +337,7 @@ namespace Warehouse.Forms
                     dgvProducts.DataSource = products;
                 }
             }
+            
         }
     }
 }

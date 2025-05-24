@@ -17,6 +17,11 @@ namespace Warehouse.Forms
     public partial class MainForm : Form
     {
         private List<Product> allProducts;
+        //private List<Invoice> invoices = new List<Invoice>();
+
+
+
+
         public MainForm()
         {
             InitializeComponent();
@@ -137,10 +142,18 @@ namespace Warehouse.Forms
 
         private void створитиНакладнуToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            var invoiceForm = new InvoiceForm(allProducts);
-            invoiceForm.ShowDialog();
-            RefreshProductGrid();
-            UpdateProductGridHeaders();
+            //var invoiceForm = new InvoiceForm(allProducts);
+            //invoiceForm.ShowDialog();
+            //RefreshProductGrid();
+            //UpdateProductGridHeaders();
+            using (var invoiceForm = new InvoiceForm(allProducts))
+            {
+                if (invoiceForm.ShowDialog() == DialogResult.OK)
+                {
+                    RefreshProductGrid();
+                    UpdateProductGridHeaders();
+                }
+            }
         }
 
         private void зберегтиСкладToolStripMenuItem_Click(object sender, EventArgs e)

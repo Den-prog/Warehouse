@@ -29,16 +29,62 @@
         private void InitializeComponent()
         {
             dgvInventory = new DataGridView();
+            menuStrip1 = new MenuStrip();
+            додатиТоварToolStripMenuItem = new ToolStripMenuItem();
+            видалитиТоварToolStripMenuItem = new ToolStripMenuItem();
+            зберегтиToolStripMenuItem = new ToolStripMenuItem();
+            загрузитиToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dgvInventory).BeginInit();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // dgvInventory
             // 
             dgvInventory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvInventory.Location = new Point(52, 65);
+            dgvInventory.Location = new Point(12, 65);
+            dgvInventory.MultiSelect = false;
             dgvInventory.Name = "dgvInventory";
-            dgvInventory.Size = new Size(532, 150);
+            dgvInventory.ReadOnly = true;
+            dgvInventory.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvInventory.Size = new Size(776, 308);
             dgvInventory.TabIndex = 0;
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.Items.AddRange(new ToolStripItem[] { додатиТоварToolStripMenuItem, видалитиТоварToolStripMenuItem, зберегтиToolStripMenuItem, загрузитиToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(800, 24);
+            menuStrip1.TabIndex = 1;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // додатиТоварToolStripMenuItem
+            // 
+            додатиТоварToolStripMenuItem.Name = "додатиТоварToolStripMenuItem";
+            додатиТоварToolStripMenuItem.Size = new Size(92, 20);
+            додатиТоварToolStripMenuItem.Text = "Додати товар";
+            додатиТоварToolStripMenuItem.Click += додатиТоварToolStripMenuItem_Click;
+            // 
+            // видалитиТоварToolStripMenuItem
+            // 
+            видалитиТоварToolStripMenuItem.Name = "видалитиТоварToolStripMenuItem";
+            видалитиТоварToolStripMenuItem.Size = new Size(105, 20);
+            видалитиТоварToolStripMenuItem.Text = "Видалити товар";
+            видалитиТоварToolStripMenuItem.Click += видалитиТоварToolStripMenuItem_Click;
+            // 
+            // зберегтиToolStripMenuItem
+            // 
+            зберегтиToolStripMenuItem.Name = "зберегтиToolStripMenuItem";
+            зберегтиToolStripMenuItem.Size = new Size(69, 20);
+            зберегтиToolStripMenuItem.Text = "Зберегти";
+            зберегтиToolStripMenuItem.Click += зберегтиToolStripMenuItem_Click;
+            // 
+            // загрузитиToolStripMenuItem
+            // 
+            загрузитиToolStripMenuItem.Name = "загрузитиToolStripMenuItem";
+            загрузитиToolStripMenuItem.Size = new Size(74, 20);
+            загрузитиToolStripMenuItem.Text = "Загрузити";
+            загрузитиToolStripMenuItem.Click += загрузитиToolStripMenuItem_Click;
             // 
             // InventoryForm
             // 
@@ -46,14 +92,24 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(dgvInventory);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             Name = "InventoryForm";
             Text = "InventoryForm";
             ((System.ComponentModel.ISupportInitialize)dgvInventory).EndInit();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private DataGridView dgvInventory;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem додатиТоварToolStripMenuItem;
+        private ToolStripMenuItem видалитиТоварToolStripMenuItem;
+        private ToolStripMenuItem зберегтиToolStripMenuItem;
+        private ToolStripMenuItem загрузитиToolStripMenuItem;
     }
 }

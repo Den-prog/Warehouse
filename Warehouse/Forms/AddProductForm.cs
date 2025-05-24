@@ -45,5 +45,10 @@ namespace Warehouse.Forms
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
+        private void nudQuantity_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

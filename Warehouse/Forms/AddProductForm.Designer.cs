@@ -114,6 +114,7 @@
             nudQuantity.Name = "nudQuantity";
             nudQuantity.Size = new Size(120, 23);
             nudQuantity.TabIndex = 10;
+            nudQuantity.ValueChanged += nudQuantity_ValueChanged;
             // 
             // AddProductForm
             // 
