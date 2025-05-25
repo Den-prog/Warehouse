@@ -17,7 +17,7 @@ namespace Warehouse.Forms
     public partial class MainForm : Form
     {
         private List<Product> allProducts;
-        //private List<Invoice> invoices = new List<Invoice>();
+        private List<Invoice> invoices;
 
 
 
@@ -31,32 +31,22 @@ namespace Warehouse.Forms
         private void LoadTestData()
         {
             allProducts = TestDataGenerator.GetSampleProducts();
-            dgvProducts.DataSource = allProducts;
-            dgvProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProducts.MultiSelect = false;
-            dgvProducts.ReadOnly = true;
+            dgvInvoices.DataSource = allProducts;
+            dgvInvoices.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvInvoices.MultiSelect = false;
+            dgvInvoices.ReadOnly = true;
 
 
         }
         public void RefreshProductGrid()
         {
-            dgvProducts.DataSource = null;
-            dgvProducts.DataSource = allProducts;
+            dgvInvoices.DataSource = null;
+            dgvInvoices.DataSource = allProducts;
             UpdateProductGridHeaders();
 
 
         }
-        private void btnSeaarch_Click(object sender, EventArgs e)
-        {
-            string query = txtSearch.Text.ToLower();
-            var filtered = allProducts
-                .Where(p => p.Name.ToLower().Contains(query))
-                .ToList();
 
-            dgvProducts.DataSource = filtered;
-            UpdateProductGridHeaders();
-
-        }
 
         private void btnCreateInvoice_Click(object sender, EventArgs e)
         {
@@ -74,8 +64,7 @@ namespace Warehouse.Forms
 
         private void Inventory_Click(object sender, EventArgs e)
         {
-            InventoryForm inventoryForm = new InventoryForm(allProducts);
-            inventoryForm.ShowDialog();
+
         }
 
         private void LoadProoductsFormFile()
@@ -85,8 +74,8 @@ namespace Warehouse.Forms
                 string json = File.ReadAllText("products.json");
                 allProducts = JsonSerializer.Deserialize<List<Product>>(json);
 
-                dgvProducts.DataSource = null;
-                dgvProducts.DataSource = allProducts;
+                dgvInvoices.DataSource = null;
+                dgvInvoices.DataSource = allProducts;
                 UpdateProductGridHeaders();
             }
         }
@@ -124,10 +113,7 @@ namespace Warehouse.Forms
             }
         }
 
-        private void btnClearTxtSearch_Click(object sender, EventArgs e)
-        {
-            txtSearch.Clear();
-        }
+
 
         private void файлToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -192,20 +178,42 @@ namespace Warehouse.Forms
 
         private void UpdateProductGridHeaders()
         {
-            if (dgvProducts.Columns.Count == 0) return;
+            if (dgvInvoices.Columns.Count == 0) return;
 
-            dgvProducts.Columns["Name"].HeaderText = "Назва";
-            dgvProducts.Columns["Unit"].HeaderText = "Одиниця виміру";
-            dgvProducts.Columns["PricePerUnit"].HeaderText = "Ціна за одиницю";
-            dgvProducts.Columns["Quantity"].HeaderText = "Кількість";
-            dgvProducts.Columns["LastDeliveryDate"].HeaderText = "Дата останнього завезення";
+            dgvInvoices.Columns["Name"].HeaderText = "Назва";
+            dgvInvoices.Columns["Unit"].HeaderText = "Одиниця виміру";
+            dgvInvoices.Columns["PricePerUnit"].HeaderText = "Ціна за одиницю";
+            dgvInvoices.Columns["Quantity"].HeaderText = "Кількість";
+            dgvInvoices.Columns["LastDeliveryDate"].HeaderText = "Дата останнього завезення";
 
         }
 
         private void bnInventory_Click(object sender, EventArgs e)
         {
-            InventoryForm2 inventoryForm2 = new InventoryForm2();
+            InventoryForm inventoryForm2 = new InventoryForm();
             inventoryForm2.ShowDialog();
+        }
+
+        private void dgvProducts_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgvInvoices_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            /*// Перевіряємо, що клацнули на дійсному рядку (не на заголовку стовпця)
+            if (e.RowIndex >= 0)
+            {
+                // Отримуємо обрану накладну з DataGridView
+                Invoice selectedInvoice = dgvInvoices.Rows[e.RowIndex].DataBoundItem as Invoice;
+
+                if (selectedInvoice != null)
+                {
+                    // Створюємо нову форму деталей і передаємо їй обрану накладну
+                    InvoiceDetailsForm detailsForm = new InvoiceDetailsForm(selectedInvoice);
+                    detailsForm.ShowDialog(); // Відкриваємо форму як діалогове вікно
+                }
+            }*/
         }
     }
 }

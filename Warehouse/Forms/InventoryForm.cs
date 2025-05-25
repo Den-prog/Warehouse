@@ -6,147 +6,32 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Warehouse.Models;
 
-using System.IO;
 namespace Warehouse.Forms
 {
     public partial class InventoryForm : Form
     {
         private List<Product> products;
         private List<Product> originalProducts;
-        private bool changesMade = false;
 
-        private const string ProductsFilePath = "products.json";
-        public InventoryForm(List<Product> products)
+        private string filePath = "products.json";
+
+        private bool isSaved = true;
+        public InventoryForm()
         {
             InitializeComponent();
-            this.products = products;
 
-            originalProducts = products.Select(p => new Product
-            {
-                Name = p.Name,
-                Unit = p.Unit,
-                Quantity = p.Quantity,
-                PricePerUnit = p.PricePerUnit,
-                LastDeliveryDate = p.LastDeliveryDate
-            }).ToList();
+            products = LoadProducts();
+            originalProducts = CloneProductList(products);
 
             dgvInventory.DataSource = null;
             dgvInventory.DataSource = products;
 
-            this.FormClosing += InventoryForm_FormClosing;
-        }
-        private void RefreshInventoryDisplay()
-        {
-            dgvInventory.DataSource = null;
-            dgvInventory.DataSource = products;
-            changesMade = true; // Внесені зміни
-        }
-        private void InventoryForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (changesMade && this.DialogResult != DialogResult.OK && this.DialogResult != DialogResult.Abort)
-            {
-                var result = MessageBox.Show(
-                    "Ви не зберегли зміни. Зберегти перед виходом?",
-                    "Збереження інвентарних змін",
-                    MessageBoxButtons.YesNoCancel,
-                    MessageBoxIcon.Warning
-                );
+            this.FormClosing += InventoryForm2_FormClosing;
 
-                if (result == DialogResult.Yes)
-                {
-                    SaveProductsToFile();
-                    this.DialogResult = DialogResult.OK;
-                }
-                else if (result == DialogResult.No)
-                {
-                    RollbackChanges();
-                    this.DialogResult = DialogResult.Cancel;
-                }
-                else if (result == DialogResult.Cancel)
-                {
-                    e.Cancel = true;
-                }
-            }
-        }
-
-
-        private void RollbackChanges()
-        {
-            products.Clear();
-            foreach (var originalProduct in originalProducts)
-            {
-                products.Add(originalProduct);
-            }
-            dgvInventory.DataSource = null;
-            dgvInventory.DataSource = products;
-            changesMade = false;
-        }
-        private void SaveProductsToFile()
-        {
-            try
-            {
-                // Серіалізуємо список продуктів у JSON-рядок
-                string jsonString = JsonSerializer.Serialize(products, new JsonSerializerOptions { WriteIndented = true });
-
-                // Записуємо JSON-рядок у файл
-                File.WriteAllText(ProductsFilePath, jsonString);
-
-                MessageBox.Show("Зміни успішно збережено у файл " + ProductsFilePath);
-                changesMade = false;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Помилка при збереженні у JSON: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        // Новий метод для завантаження списку продуктів з JSON-файлу
-        private void LoadProductsFromFile()
-        {
-            if (File.Exists(ProductsFilePath))
-            {
-                try
-                {
-                    // Читаємо весь JSON-рядок з файлу
-                    string jsonString = File.ReadAllText(ProductsFilePath);
-
-                    // Десеріалізуємо JSON-рядок у список продуктів
-                    List<Product> loadedProducts = JsonSerializer.Deserialize<List<Product>>(jsonString);
-
-                    if (loadedProducts != null)
-                    {
-                        // Очищаємо поточний список і додаємо завантажені продукти
-                        products.Clear();
-                        foreach (var product in loadedProducts)
-                        {
-                            products.Add(product);
-                        }
-                        // Оновлюємо DataGridView
-                        dgvInventory.DataSource = null;
-                        dgvInventory.DataSource = products;
-                        // Скидаємо прапорець змін, оскільки ми щойно завантажили збережені дані
-                        changesMade = false;
-                        // Також оновлюємо знімок, щоб він відповідав завантаженим даним
-                        originalProducts = products.Select(p => new Product
-                        {
-                            Name = p.Name,
-                            Unit = p.Unit,
-                            Quantity = p.Quantity,
-                            PricePerUnit = p.PricePerUnit,
-                            LastDeliveryDate = p.LastDeliveryDate
-                        }).ToList();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Помилка при завантаженні з JSON: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
         }
 
         private void додатиТоварToolStripMenuItem_Click(object sender, EventArgs e)
@@ -155,12 +40,44 @@ namespace Warehouse.Forms
             if (addProduct.ShowDialog() == DialogResult.OK)
             {
                 products.Add(addProduct.NewProduct);
+                isSaved = false;
 
                 dgvInventory.DataSource = null;
                 dgvInventory.DataSource = products;
 
             }
         }
+
+
+        private void SaveProducts()
+        {
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string json = JsonSerializer.Serialize(products, options);
+            File.WriteAllText(filePath, json);
+        }
+
+        private List<Product> LoadProducts()
+        {
+            if (!File.Exists(filePath))
+                return new List<Product>();
+
+            string json = File.ReadAllText(filePath);
+            return JsonSerializer.Deserialize<List<Product>>(json);
+        }
+
+        private List<Product> CloneProductList(List<Product> source)
+        {
+            return source.Select(p => new Product
+            {
+                Name = p.Name,
+                Quantity = p.Quantity,
+                PricePerUnit = p.PricePerUnit,
+                Unit = p.Unit,
+                LastDeliveryDate = p.LastDeliveryDate,
+            }).ToList();
+        }
+
+
 
         private void видалитиТоварToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -177,22 +94,119 @@ namespace Warehouse.Forms
                 if (confirm == DialogResult.Yes)
                 {
                     products.Remove(selectedProduct);
+                    isSaved = false;
+
                     dgvInventory.DataSource = null;
                     dgvInventory.DataSource = products;
                 }
             }
+
         }
 
         private void зберегтиToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveProducts();
+            isSaved = true;
+            originalProducts = CloneProductList(products);
 
-            SaveProductsToFile();
-
+            MessageBox.Show("Зберіжино успішно.", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void загрузитиToolStripMenuItem_Click(object sender, EventArgs e)
+        private void InventoryForm2_FormClosing(object sender, FormClosingEventArgs e)
         {
-            LoadProductsFromFile();
+            if (!isSaved)
+            {
+                var result = MessageBox.Show(
+                  "Ви не зберегли накладну. Зберегти перед виходом?",
+                  "Підтвердження",
+                  MessageBoxButtons.YesNoCancel,
+                  MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    SaveProducts();
+                    isSaved = true;
+                }
+                else if (result == DialogResult.No)
+                {
+                    // Відкат змін 
+                    RollbackChanges();
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    e.Cancel = true; // Не закривати форму
+                }
+            }
+        }
+        private void RollbackChanges()
+        {
+            // Відновлює початкові кількості
+            products = CloneProductList(originalProducts);
+            dgvInventory.DataSource = null;
+            dgvInventory.DataSource = products;
+        }
+
+        private void зберегтиСкладToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveProducts();
+            isSaved = true;
+            originalProducts = CloneProductList(products);
+
+            MessageBox.Show("Зберіжино успішно.", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        private void LoadProoductsFormFile()
+        {
+            if (File.Exists("products.json"))
+            {
+                string json = File.ReadAllText("products.json");
+                products = JsonSerializer.Deserialize<List<Product>>(json);
+
+                dgvInventory.DataSource = null;
+                dgvInventory.DataSource = products;
+                UpdateProductGridHeaders();
+            }
+        }
+
+        private void UpdateProductGridHeaders()
+        {
+            if (dgvInventory.Columns.Count == 0) return;
+
+            dgvInventory.Columns["Name"].HeaderText = "Назва";
+            dgvInventory.Columns["Unit"].HeaderText = "Одиниця виміру";
+            dgvInventory.Columns["PricePerUnit"].HeaderText = "Ціна за одиницю";
+            dgvInventory.Columns["Quantity"].HeaderText = "Кількість";
+            dgvInventory.Columns["LastDeliveryDate"].HeaderText = "Дата останнього завезення";
+
+        }
+        private void завантажитиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadProoductsFormFile();
+                MessageBox.Show("Склад завантажено!");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Помилка завантеження: " + ex.Message);
+            }
+        }
+
+        private void btnSeaarch_Click(object sender, EventArgs e)
+        {
+            string query = txtSearch.Text.ToLower();
+            var filtered = products
+                .Where(p => p.Name.ToLower().Contains(query))
+                .ToList();
+
+            dgvInventory.DataSource = filtered;
+            UpdateProductGridHeaders();
+        }
+
+        private void btnClearTxtSearch_Click(object sender, EventArgs e)
+        {
+            txtSearch.Clear();
         }
     }
 }

@@ -131,7 +131,7 @@ namespace Warehouse.Forms
              };*/
             var invoice = new Invoice
             {
-                InvoiceNumber = GenerateInvoiceNumber(),
+                Id = GenerateInvoiceNumber(),
                 Date = DateTime.Now,
                 Type = (InvoiceType)comboBoxInvoiceType.SelectedItem,
                 Items = new List<InvoiceItem>(currentItems)

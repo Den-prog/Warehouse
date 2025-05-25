@@ -33,10 +33,8 @@
             comboBoxInvoiceType = new ComboBox();
             btnAddItem = new Button();
             SaveInvoice = new Button();
-            btnAddNewProduct = new Button();
             btnDelProduct = new Button();
             menuStrip1 = new MenuStrip();
-            додатиТоварToolStripMenuItem = new ToolStripMenuItem();
             видалитиТоварToolStripMenuItem = new ToolStripMenuItem();
             зберегтиНакладнуToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
@@ -81,7 +79,7 @@
             // 
             // SaveInvoice
             // 
-            SaveInvoice.Location = new Point(29, 364);
+            SaveInvoice.Location = new Point(12, 502);
             SaveInvoice.Name = "SaveInvoice";
             SaveInvoice.Size = new Size(115, 23);
             SaveInvoice.TabIndex = 5;
@@ -89,19 +87,9 @@
             SaveInvoice.UseVisualStyleBackColor = true;
             SaveInvoice.Click += SaveInvoice_Click;
             // 
-            // btnAddNewProduct
-            // 
-            btnAddNewProduct.Location = new Point(167, 364);
-            btnAddNewProduct.Name = "btnAddNewProduct";
-            btnAddNewProduct.Size = new Size(115, 23);
-            btnAddNewProduct.TabIndex = 6;
-            btnAddNewProduct.Text = "Додати товар";
-            btnAddNewProduct.UseVisualStyleBackColor = true;
-            btnAddNewProduct.Click += btnAddProduct_Click;
-            // 
             // btnDelProduct
             // 
-            btnDelProduct.Location = new Point(167, 393);
+            btnDelProduct.Location = new Point(147, 502);
             btnDelProduct.Name = "btnDelProduct";
             btnDelProduct.Size = new Size(115, 23);
             btnDelProduct.TabIndex = 7;
@@ -111,19 +99,12 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { додатиТоварToolStripMenuItem, видалитиТоварToolStripMenuItem, зберегтиНакладнуToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { видалитиТоварToolStripMenuItem, зберегтиНакладнуToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 24);
             menuStrip1.TabIndex = 8;
             menuStrip1.Text = "menuStrip1";
-            // 
-            // додатиТоварToolStripMenuItem
-            // 
-            додатиТоварToolStripMenuItem.Name = "додатиТоварToolStripMenuItem";
-            додатиТоварToolStripMenuItem.Size = new Size(92, 20);
-            додатиТоварToolStripMenuItem.Text = "Додати товар";
-            додатиТоварToolStripMenuItem.Click += додатиТоварToolStripMenuItem_Click;
             // 
             // видалитиТоварToolStripMenuItem
             // 
@@ -145,7 +126,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 692);
             Controls.Add(btnDelProduct);
-            Controls.Add(btnAddNewProduct);
             Controls.Add(SaveInvoice);
             Controls.Add(btnAddItem);
             Controls.Add(comboBoxInvoiceType);
@@ -170,10 +150,8 @@
         private ComboBox comboBoxInvoiceType;
         private Button btnAddItem;
         private Button SaveInvoice;
-        private Button btnAddNewProduct;
         private Button btnDelProduct;
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem додатиТоварToolStripMenuItem;
         private ToolStripMenuItem видалитиТоварToolStripMenuItem;
         private ToolStripMenuItem зберегтиНакладнуToolStripMenuItem;
     }
