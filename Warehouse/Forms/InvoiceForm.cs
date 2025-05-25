@@ -20,7 +20,7 @@ namespace Warehouse.Forms
         private List<Product> originalProducts;
 
         private bool isSaved = false;
-      
+
 
 
         public InvoiceForm(List<Product> products)
@@ -137,50 +137,50 @@ namespace Warehouse.Forms
                 Items = new List<InvoiceItem>(currentItems)
             };
 
-           /* foreach (var item in invoice.Items)
-            {
-                var exitingProduct = products.FirstOrDefault(p => p.Name == item.Product.Name);
-                if (invoice.Type == InvoiceType.Income)
-                {
-                    if (exitingProduct != null)
-                    {
-                        exitingProduct.Quantity += item.Quantity;
-                        exitingProduct.LastDeliveryDate = invoice.Date;
-                    }
-                    else
-                    {
-                        products.Add(new Product
-                        {
-                            Name = item.Product.Name,
-                            Unit = item.Product.Unit,
-                            PricePerUnit = item.Product.PricePerUnit,
-                            Quantity = item.Quantity,
-                            LastDeliveryDate = invoice.Date
-                        });
-                    }
-                }
-                else if (invoice.Type == InvoiceType.Outcome)
-                {
-                    if (exitingProduct != null && exitingProduct.Quantity >= item.Quantity)
-                    {
-                        exitingProduct.Quantity -= item.Quantity;
-                    }
-                    else
-                    {
-                        MessageBox.Show($"Недостатньо товару: {item.Product.Name}");
-                        return;
-                    }
+            /* foreach (var item in invoice.Items)
+             {
+                 var exitingProduct = products.FirstOrDefault(p => p.Name == item.Product.Name);
+                 if (invoice.Type == InvoiceType.Income)
+                 {
+                     if (exitingProduct != null)
+                     {
+                         exitingProduct.Quantity += item.Quantity;
+                         exitingProduct.LastDeliveryDate = invoice.Date;
+                     }
+                     else
+                     {
+                         products.Add(new Product
+                         {
+                             Name = item.Product.Name,
+                             Unit = item.Product.Unit,
+                             PricePerUnit = item.Product.PricePerUnit,
+                             Quantity = item.Quantity,
+                             LastDeliveryDate = invoice.Date
+                         });
+                     }
+                 }
+                 else if (invoice.Type == InvoiceType.Outcome)
+                 {
+                     if (exitingProduct != null && exitingProduct.Quantity >= item.Quantity)
+                     {
+                         exitingProduct.Quantity -= item.Quantity;
+                     }
+                     else
+                     {
+                         MessageBox.Show($"Недостатньо товару: {item.Product.Name}");
+                         return;
+                     }
 
-                }
-            }
-            allInvoices.Add(invoice);
-            currentItems.Clear();
+                 }
+             }
+             allInvoices.Add(invoice);
+             currentItems.Clear();
 
-            dgvProducts.DataSource = null;
-            dgvProducts.DataSource = products;
-            //dgvProducts.Refresh();
-            //dgvProducts.DataSource = null;
-            MessageBox.Show("Накладну збережено");*/
+             dgvProducts.DataSource = null;
+             dgvProducts.DataSource = products;
+             //dgvProducts.Refresh();
+             //dgvProducts.DataSource = null;
+             MessageBox.Show("Накладну збережено");*/
 
             //foreach (var item in invoice.Items)
             //{
@@ -194,11 +194,11 @@ namespace Warehouse.Forms
             //        }
             //        else // Outcome
             //        {
-                        
+
             //           prod.Quantity -= item.Quantity;
             //        }
             //    }
-              
+
             //}
 
             allInvoices.Add(invoice);
@@ -207,18 +207,18 @@ namespace Warehouse.Forms
             // Оновити головну таблицю товарів
             dgvProducts.DataSource = null;
             dgvProducts.DataSource = products;
-          
+
 
             MessageBox.Show("Накладну збережено!");
             this.DialogResult = DialogResult.OK;
             isSaved = true;
-            
+
             this.Close();
 
         }
         private void InvoiceForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if ( !isSaved)
+            if (!isSaved)
             {
                 var result = MessageBox.Show(
                   "Ви не зберегли накладну. Зберегти перед виходом?",
@@ -276,7 +276,7 @@ namespace Warehouse.Forms
                 dgvProducts.DataSource = products;
 
             }
-           
+
 
 
         }
@@ -311,9 +311,9 @@ namespace Warehouse.Forms
 
                 dgvProducts.DataSource = null;
                 dgvProducts.DataSource = products;
-                
+
             }
-           
+
 
 
         }
@@ -337,7 +337,12 @@ namespace Warehouse.Forms
                     dgvProducts.DataSource = products;
                 }
             }
-            
+
+        }
+
+        private void зберегтиНакладнуToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

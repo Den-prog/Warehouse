@@ -43,6 +43,7 @@
             завантажитиСкладToolStripMenuItem = new ToolStripMenuItem();
             вихідToolStripMenuItem = new ToolStripMenuItem();
             створитиНакладнуToolStripMenuItem1 = new ToolStripMenuItem();
+            bnInventory = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -178,11 +179,22 @@
             створитиНакладнуToolStripMenuItem1.Text = "Створити накладну";
             створитиНакладнуToolStripMenuItem1.Click += створитиНакладнуToolStripMenuItem1_Click;
             // 
+            // bnInventory
+            // 
+            bnInventory.Location = new Point(357, 38);
+            bnInventory.Name = "bnInventory";
+            bnInventory.Size = new Size(173, 23);
+            bnInventory.TabIndex = 10;
+            bnInventory.Text = "Інвентарна відомість 2";
+            bnInventory.UseVisualStyleBackColor = true;
+            bnInventory.Click += bnInventory_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(820, 518);
+            Controls.Add(bnInventory);
             Controls.Add(btnClearTxtSearch);
             Controls.Add(lblSearch);
             Controls.Add(btnLoadFromFile);
@@ -220,5 +232,6 @@
         private ToolStripMenuItem завантажитиСкладToolStripMenuItem;
         private ToolStripMenuItem вихідToolStripMenuItem;
         private ToolStripMenuItem створитиНакладнуToolStripMenuItem1;
+        private Button bnInventory;
     }
 }

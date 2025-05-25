@@ -137,6 +137,7 @@
             зберегтиНакладнуToolStripMenuItem.Name = "зберегтиНакладнуToolStripMenuItem";
             зберегтиНакладнуToolStripMenuItem.Size = new Size(123, 20);
             зберегтиНакладнуToolStripMenuItem.Text = "Зберегти накладну";
+            зберегтиНакладнуToolStripMenuItem.Click += зберегтиНакладнуToolStripMenuItem_Click;
             // 
             // InvoiceForm
             // 

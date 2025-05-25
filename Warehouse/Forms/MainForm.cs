@@ -35,7 +35,7 @@ namespace Warehouse.Forms
             dgvProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvProducts.MultiSelect = false;
             dgvProducts.ReadOnly = true;
-           
+
 
         }
         public void RefreshProductGrid()
@@ -187,7 +187,7 @@ namespace Warehouse.Forms
 
         private void вихідToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Close(); 
+            Close();
         }
 
         private void UpdateProductGridHeaders()
@@ -200,6 +200,12 @@ namespace Warehouse.Forms
             dgvProducts.Columns["Quantity"].HeaderText = "Кількість";
             dgvProducts.Columns["LastDeliveryDate"].HeaderText = "Дата останнього завезення";
 
+        }
+
+        private void bnInventory_Click(object sender, EventArgs e)
+        {
+            InventoryForm2 inventoryForm2 = new InventoryForm2();
+            inventoryForm2.ShowDialog();
         }
     }
 }
