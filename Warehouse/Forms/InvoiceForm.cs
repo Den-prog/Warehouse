@@ -21,6 +21,7 @@ namespace Warehouse.Forms
 
         private bool isSaved = false;
 
+        public Invoice SavedInvoice { get; private set; }
 
 
         public InvoiceForm(List<Product> products)
@@ -33,7 +34,7 @@ namespace Warehouse.Forms
             dgvProducts.MultiSelect = false;
             dgvProducts.ReadOnly = true;
 
-
+           
 
             nudQuantity.Minimum = 1;
             nudQuantity.Maximum = 1000;
@@ -92,12 +93,12 @@ namespace Warehouse.Forms
             };
             currentItems.Add(newItem);
 
-            //currentItems.Add(new InvoiceItem
+            /*//currentItems.Add(new InvoiceItem
             //{
             //    Product = selectedProduct,
             //    Quantity = quantity
 
-            //});
+            //});*/
 
             dgvProducts.DataSource = null;
             dgvProducts.DataSource = products;
@@ -111,6 +112,7 @@ namespace Warehouse.Forms
             {
                 selectedProduct.Quantity -= quantity;
             }
+            MessageBox.Show($"У накладній зараз: {currentItems.Count} товар(ів).");
 
         }
 
@@ -182,38 +184,66 @@ namespace Warehouse.Forms
              //dgvProducts.DataSource = null;
              MessageBox.Show("Накладну збережено");*/
 
-            //foreach (var item in invoice.Items)
-            //{
-            //    var prod = products.First(p => p.Name == item.Product.Name);
-            //    if (prod != null)
-            //    {
-            //        if (invoice.Type == InvoiceType.Income)
-            //        {
-            //            prod.Quantity += item.Quantity;
-            //            prod.LastDeliveryDate = invoice.Date;
-            //        }
-            //        else // Outcome
-            //        {
+            /*   foreach (var item in invoice.Items)
+               {
+                   var prod = products.First(p => p.Name == item.Product.Name);
+                   if (prod != null)
+                   {
+                       if (invoice.Type == InvoiceType.Income)
+                       {
+                           prod.Quantity += item.Quantity;
+                           prod.LastDeliveryDate = invoice.Date;
+                       }
+                       else // Outcome
+                       {
 
-            //           prod.Quantity -= item.Quantity;
-            //        }
-            //    }
+                           prod.Quantity -= item.Quantity;
+                       }
+                   }
 
-            //}
+               }*/
 
-            allInvoices.Add(invoice);
-            currentItems.Clear();
+            foreach (var item in invoice.Items)
+            {
+                var product = products.FirstOrDefault(p => p.Name == item.Product.Name);
+                if (invoice.Type == InvoiceType.Income)
+                {
+                    product.Quantity += item.Quantity;
+                    product.LastDeliveryDate = invoice.Date;
+                }
+                else
+                {
+                    if (product.Quantity >= item.Quantity)
+                        product.Quantity -= item.Quantity;
+                    else
+                    {
+                        MessageBox.Show($"Недостатньо товару: {product.Name}");
+                        return;
+                    }
+                }
+            }
 
-            // Оновити головну таблицю товарів
-            dgvProducts.DataSource = null;
-            dgvProducts.DataSource = products;
-
-
-            MessageBox.Show("Накладну збережено!");
-            this.DialogResult = DialogResult.OK;
+            SavedInvoice = invoice;
+            DialogResult = DialogResult.OK;
             isSaved = true;
+            Close();
 
-            this.Close();
+
+
+            //allInvoices.Add(invoice);
+            //currentItems.Clear();
+
+            //// Оновити головну таблицю товарів
+            //dgvProducts.DataSource = null;
+            //dgvProducts.DataSource = products;
+
+
+            //MessageBox.Show("Накладну збережено!");
+            //SavedInvoice = invoice;
+            //this.DialogResult = DialogResult.OK;
+            //isSaved = true;
+
+            //this.Close();
 
         }
         private void InvoiceForm_FormClosing(object sender, FormClosingEventArgs e)

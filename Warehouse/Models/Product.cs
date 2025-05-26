@@ -15,6 +15,8 @@ namespace Warehouse.Models
         public int Quantity {  get; set; }
         public DateTime LastDeliveryDate { get; set; }
 
+        public decimal TotalValue => PricePerUnit * Quantity;
+
         public override string ToString()
         {
             return Name;

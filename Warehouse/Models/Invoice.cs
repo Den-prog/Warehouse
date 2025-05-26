@@ -13,11 +13,15 @@ namespace Warehouse.Models
         public DateTime Date { get; set; }
         public List<InvoiceItem> Items { get; set; }
         public InvoiceType Type { get; set; }
+
+       
     }
     public class InvoiceItem
     {
         public Product Product { get; set; }
         public int Quantity { get; set; }
+
+       
     }
    /* public static class InvoiceManager
     {

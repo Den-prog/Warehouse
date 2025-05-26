@@ -82,6 +82,7 @@ namespace Warehouse.Forms
             InitializeComponent();
             this.invoice = invoice;
             DisplayInvoiceDetails();
+            
         }
 
         private void DisplayInvoiceDetails()
@@ -90,12 +91,17 @@ namespace Warehouse.Forms
             lblInvoiceDate.Text = $"Дата: {invoice.Date.ToShortDateString()}";
             lblInvoiceType.Text = $"Тип: {invoice.Type}";
 
-            dgvInvoiceItems.DataSource = null;
-            dgvInvoiceItems.DataSource = invoice.Items;
+            var itemsForGrid = invoice.Items.Select(item => new
+            {
+                ProductName = item.Product.Name,
+                ProductUnit = item.Product.Unit,
+                Quantity = item.Quantity,
+                TotalUniy = item.Product.TotalValue
+            }).ToList();
 
-            // Налаштування заголовків стовпців
-            dgvInvoiceItems.Columns["Product"].HeaderText = "Товар";
-            dgvInvoiceItems.Columns["Quantity"].HeaderText = "Кількість";
+            dgvInvoiceItems.DataSource = null;
+            dgvInvoiceItems.DataSource = itemsForGrid;
+
         }
     }
 }

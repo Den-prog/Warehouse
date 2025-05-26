@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Warehouse.Models;
 using System.Text.Json;
 using System.IO;
+using System.Text.Json.Serialization;
 
 
 namespace Warehouse.Forms
@@ -17,9 +18,11 @@ namespace Warehouse.Forms
     public partial class MainForm : Form
     {
         private List<Product> allProducts;
-        private List<Invoice> invoices;
+        //private List<Invoice> invoices;
 
+        private List<Invoice> invoices = new List<Invoice>();
 
+        private AllInvoicesForm allInvoicesForm;
 
 
         public MainForm()
@@ -27,6 +30,7 @@ namespace Warehouse.Forms
             InitializeComponent();
             LoadTestData();
             UpdateProductGridHeaders();
+            LoadInvoicesFromFile();
         }
         private void LoadTestData()
         {
@@ -52,12 +56,27 @@ namespace Warehouse.Forms
         {
             //InvoiceForm invoiceForm = new InvoiceForm(allProducts);
             //invoiceForm.ShowDialog();
-            var invoiceForm = new InvoiceForm(allProducts);
-            invoiceForm.ShowDialog();
-            //invoiceForm.FormClosing += (s, args) => RefreshProductGrid();
+            //var invoiceForm = new InvoiceForm(allProducts);
             //invoiceForm.ShowDialog();
-            RefreshProductGrid();
-            UpdateProductGridHeaders();
+            ////invoiceForm.FormClosing += (s, args) => RefreshProductGrid();
+            ////invoiceForm.ShowDialog();
+            //RefreshProductGrid();
+            //UpdateProductGridHeaders();
+            using (var invoiceForm = new InvoiceForm(allProducts))
+            {
+                if (invoiceForm.ShowDialog() == DialogResult.OK)
+                {
+                    if (invoiceForm.SavedInvoice != null)
+                    {
+                        invoices.Add(invoiceForm.SavedInvoice);
+                        if (allInvoicesForm != null && !allInvoicesForm.IsDisposed)
+                        {
+                            allInvoicesForm.UpdateInvoices(invoices);
+                        }
+                    }
+                    RefreshProductGrid();
+                }
+            }
 
 
         }
@@ -128,16 +147,31 @@ namespace Warehouse.Forms
 
         private void створитиНакладнуToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            //var invoiceForm = new InvoiceForm(allProducts);
-            //invoiceForm.ShowDialog();
-            //RefreshProductGrid();
-            //UpdateProductGridHeaders();
+            /* //var invoiceForm = new InvoiceForm(allProducts);
+             //invoiceForm.ShowDialog();
+             //RefreshProductGrid();
+             //UpdateProductGridHeaders();
+             using (var invoiceForm = new InvoiceForm(allProducts))
+             {
+                 if (invoiceForm.ShowDialog() == DialogResult.OK)
+                 {
+                     RefreshProductGrid();
+                     UpdateProductGridHeaders();
+                 }
+             }*/
             using (var invoiceForm = new InvoiceForm(allProducts))
             {
                 if (invoiceForm.ShowDialog() == DialogResult.OK)
                 {
+                    if (invoiceForm.SavedInvoice != null)
+                    {
+                        invoices.Add(invoiceForm.SavedInvoice);
+                        if (allInvoicesForm != null && !allInvoicesForm.IsDisposed)
+                        {
+                            allInvoicesForm.UpdateInvoices(invoices);
+                        }
+                    }
                     RefreshProductGrid();
-                    UpdateProductGridHeaders();
                 }
             }
         }
@@ -214,6 +248,63 @@ namespace Warehouse.Forms
                     detailsForm.ShowDialog(); // Відкриваємо форму як діалогове вікно
                 }
             }*/
+        }
+
+        private void прибутокToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //using (var invoiceForm = new InvoiceForm(allProducts))
+            //{
+            //    if (invoiceForm.ShowDialog() == DialogResult.OK)
+            //    {
+            //        RefreshProductGrid();
+            //        UpdateProductGridHeaders();
+            //    }
+            //}
+            using (var invoiceForm = new InvoiceForm(allProducts))
+            {
+                if (invoiceForm.ShowDialog() == DialogResult.OK)
+                {
+                    if (invoiceForm.SavedInvoice != null)
+                    {
+                        invoices.Add(invoiceForm.SavedInvoice);
+                        if (allInvoicesForm != null && !allInvoicesForm.IsDisposed)
+                        {
+                            allInvoicesForm.UpdateInvoices(invoices);
+                        }
+                    }
+                    RefreshProductGrid();
+                }
+            }
+        }
+
+        private void всіНакладніToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (allInvoicesForm == null || allInvoicesForm.IsDisposed)
+            {
+                allInvoicesForm = new AllInvoicesForm(invoices);
+                allInvoicesForm.Show();
+            }
+            else
+            {
+                allInvoicesForm.UpdateInvoices(invoices);
+                allInvoicesForm.BringToFront(); // піднімає форму на передній план
+            }
+
+        }
+
+
+        private void LoadInvoicesFromFile()
+        {
+            if (File.Exists("invoices.json"))
+            {
+                var json = File.ReadAllText("invoices.json");
+                invoices = JsonSerializer.Deserialize<List<Invoice>>(json) ?? new List<Invoice>();
+            }
+        }
+
+        private void документиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
