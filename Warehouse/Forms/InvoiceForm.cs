@@ -58,13 +58,17 @@ namespace Warehouse.Forms
                 LastDeliveryDate = DateTime.Now,
             }).ToList();
             //this.FormClosing += InvoiceForm_FormClosing;
+            UpdateProductsGrid();
         }
 
         private Product GetSelectedProduct()
         {
             if (dgvProducts.SelectedRows.Count > 0)
             {
-                return dgvProducts.SelectedRows[0].DataBoundItem as Product;
+                var name  = dgvProducts.SelectedRows[0].Cells["Name"].Value.ToString();
+                if(name != null){
+                    return products.FirstOrDefault(p => p.Name == name);
+                }
             }
             return null;
         }
@@ -100,22 +104,50 @@ namespace Warehouse.Forms
             currentItems.Add(newItem);
 
 
-            dgvProducts.DataSource = null;
-            dgvProducts.DataSource = products;
+            UpdateProductsGrid();
 
 
-            if (invoiceType == InvoiceType.Income)
-            {
-                selectedProduct.Quantity += quantity;
-            }
-            else if (invoiceType == InvoiceType.Outcome)
-            {
-                selectedProduct.Quantity -= quantity;
-            }
+            /* if (invoiceType == InvoiceType.Income)
+             {
+                 selectedProduct.Quantity += quantity;
+             }
+             else if (invoiceType == InvoiceType.Outcome)
+             {
+                 selectedProduct.Quantity -= quantity;
+             }*/
 
 
         }
 
+        private void UpdateProductsGrid()
+        {
+            var displayList = products.Select(p => new
+            {
+                Name = p.Name,
+                Unit = p.Unit,
+                PricePerUnit = p.PricePerUnit,
+                Quantity = GetVirtualQuantity(p),
+                LastDeliveryDate = p.LastDeliveryDate
+            }).ToList();
+
+            dgvProducts.DataSource = null;
+            dgvProducts.DataSource = displayList;
+        }
+        private int GetVirtualQuantity(Product product)
+        {
+            int delta = 0;
+            foreach (var item in currentItems)
+            {
+                if (item.Product == product)
+                {
+                    if ((InvoiceType)comboBoxInvoiceType.SelectedItem == InvoiceType.Income)
+                        delta += item.Quantity;
+                    else
+                        delta -= item.Quantity;
+                }
+            }
+            return product.Quantity + delta;
+        }
         private void SaveInvoiceToFile(Invoice invoice, string filePath)
         {
             string json = JsonSerializer.Serialize(invoice, new JsonSerializerOptions { WriteIndented = true });
@@ -235,8 +267,7 @@ namespace Warehouse.Forms
             {
                 products.Add(addProduct.NewProduct);
 
-                dgvProducts.DataSource = null;
-                dgvProducts.DataSource = products;
+                UpdateProductsGrid();
 
             }
 
@@ -259,8 +290,7 @@ namespace Warehouse.Forms
                 if (confirm == DialogResult.Yes)
                 {
                     products.Remove(selectedProduct);
-                    dgvProducts.DataSource = null;
-                    dgvProducts.DataSource = products;
+                    UpdateProductsGrid();
                 }
             }
         }

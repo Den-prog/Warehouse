@@ -17,7 +17,7 @@ namespace Warehouse.Forms
 {
     public partial class MainForm : Form
     {
-        private List<Product> allProducts;
+        //private List<Product> allProducts;
         //private List<Invoice> invoices;
 
         private List<Invoice> invoices = new List<Invoice>();
@@ -25,8 +25,8 @@ namespace Warehouse.Forms
         private AllInvoicesForm allInvoicesForm;
 
         //public List<Invoice> AllInvoices { get; private set; }
+        private List<Product> allProducts = new List<Product>(); //общий список
 
-     
 
         public MainForm()
         {
@@ -225,8 +225,8 @@ namespace Warehouse.Forms
 
         private void bnInventory_Click(object sender, EventArgs e)
         {
-            InventoryForm inventoryForm2 = new InventoryForm();
-            inventoryForm2.ShowDialog();
+            var inventoryForm = new InventoryForm(allProducts);
+            inventoryForm.ShowDialog();
         }
 
         private void dgvProducts_CellContentClick(object sender, DataGridViewCellEventArgs e)

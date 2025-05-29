@@ -20,11 +20,11 @@ namespace Warehouse.Forms
         private string filePath = "products.json";
 
         private bool isSaved = true;
-        public InventoryForm()
+        public InventoryForm(List<Product> products)
         {
             InitializeComponent();
-
-            products = LoadProducts();
+            this.products = products;
+            //products = LoadProducts();
             originalProducts = CloneProductList(products);
 
             dgvInventory.DataSource = null;
