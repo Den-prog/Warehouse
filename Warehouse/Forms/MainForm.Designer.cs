@@ -28,44 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dgvInvoices = new DataGridView();
-            btnCreateInvoice = new Button();
             menuStrip1 = new MenuStrip();
             файлToolStripMenuItem = new ToolStripMenuItem();
             вихідToolStripMenuItem = new ToolStripMenuItem();
-            створитиНакладнуToolStripMenuItem1 = new ToolStripMenuItem();
             документиToolStripMenuItem = new ToolStripMenuItem();
-            прибутокToolStripMenuItem = new ToolStripMenuItem();
             всіНакладніToolStripMenuItem = new ToolStripMenuItem();
             bnInventory = new Button();
-            ((System.ComponentModel.ISupportInitialize)dgvInvoices).BeginInit();
+            створитиНакладнуToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
-            // dgvInvoices
-            // 
-            dgvInvoices.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvInvoices.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvInvoices.Location = new Point(12, 115);
-            dgvInvoices.Name = "dgvInvoices";
-            dgvInvoices.Size = new Size(810, 210);
-            dgvInvoices.TabIndex = 2;
-            dgvInvoices.CellContentClick += dgvProducts_CellContentClick;
-            dgvInvoices.CellDoubleClick += dgvInvoices_CellDoubleClick;
-            // 
-            // btnCreateInvoice
-            // 
-            btnCreateInvoice.Location = new Point(12, 38);
-            btnCreateInvoice.Name = "btnCreateInvoice";
-            btnCreateInvoice.Size = new Size(127, 23);
-            btnCreateInvoice.TabIndex = 3;
-            btnCreateInvoice.Text = "Створити накладну";
-            btnCreateInvoice.UseVisualStyleBackColor = true;
-            btnCreateInvoice.Click += btnCreateInvoice_Click;
-            // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { файлToolStripMenuItem, створитиНакладнуToolStripMenuItem1, документиToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { файлToolStripMenuItem, документиToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(834, 24);
@@ -87,27 +62,13 @@
             вихідToolStripMenuItem.Text = "Вихід";
             вихідToolStripMenuItem.Click += вихідToolStripMenuItem_Click;
             // 
-            // створитиНакладнуToolStripMenuItem1
-            // 
-            створитиНакладнуToolStripMenuItem1.Name = "створитиНакладнуToolStripMenuItem1";
-            створитиНакладнуToolStripMenuItem1.Size = new Size(125, 20);
-            створитиНакладнуToolStripMenuItem1.Text = "Створити накладну";
-            створитиНакладнуToolStripMenuItem1.Click += створитиНакладнуToolStripMenuItem1_Click;
-            // 
             // документиToolStripMenuItem
             // 
-            документиToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { прибутокToolStripMenuItem, всіНакладніToolStripMenuItem });
+            документиToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { створитиНакладнуToolStripMenuItem, всіНакладніToolStripMenuItem });
             документиToolStripMenuItem.Name = "документиToolStripMenuItem";
             документиToolStripMenuItem.Size = new Size(80, 20);
             документиToolStripMenuItem.Text = "Документи";
             документиToolStripMenuItem.Click += документиToolStripMenuItem_Click;
-            // 
-            // прибутокToolStripMenuItem
-            // 
-            прибутокToolStripMenuItem.Name = "прибутокToolStripMenuItem";
-            прибутокToolStripMenuItem.Size = new Size(180, 22);
-            прибутокToolStripMenuItem.Text = "Створити накладну";
-            прибутокToolStripMenuItem.Click += прибутокToolStripMenuItem_Click;
             // 
             // всіНакладніToolStripMenuItem
             // 
@@ -126,19 +87,23 @@
             bnInventory.UseVisualStyleBackColor = true;
             bnInventory.Click += bnInventory_Click;
             // 
+            // створитиНакладнуToolStripMenuItem
+            // 
+            створитиНакладнуToolStripMenuItem.Name = "створитиНакладнуToolStripMenuItem";
+            створитиНакладнуToolStripMenuItem.Size = new Size(180, 22);
+            створитиНакладнуToolStripMenuItem.Text = "Створити накладну";
+            створитиНакладнуToolStripMenuItem.Click += створитиНакладнуToolStripMenuItem_Click_1;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(834, 724);
             Controls.Add(bnInventory);
-            Controls.Add(btnCreateInvoice);
-            Controls.Add(dgvInvoices);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "MainForm";
             Text = "MainForm";
-            ((System.ComponentModel.ISupportInitialize)dgvInvoices).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);
@@ -146,15 +111,12 @@
         }
 
         #endregion
-        private DataGridView dgvInvoices;
-        private Button btnCreateInvoice;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem файлToolStripMenuItem;
         private ToolStripMenuItem вихідToolStripMenuItem;
-        private ToolStripMenuItem створитиНакладнуToolStripMenuItem1;
         private Button bnInventory;
         private ToolStripMenuItem документиToolStripMenuItem;
-        private ToolStripMenuItem прибутокToolStripMenuItem;
         private ToolStripMenuItem всіНакладніToolStripMenuItem;
+        private ToolStripMenuItem створитиНакладнуToolStripMenuItem;
     }
 }

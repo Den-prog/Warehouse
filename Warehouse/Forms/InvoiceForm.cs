@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Warehouse.Models;
@@ -19,15 +22,18 @@ namespace Warehouse.Forms
 
         private List<Product> originalProducts;
 
+        private List<InvoiceItem> currentItems = new List<InvoiceItem>();
+
         private bool isSaved = false;
 
         public Invoice SavedInvoice { get; private set; }
 
 
-        public InvoiceForm(List<Product> products)
+        public InvoiceForm(List<Product> products, List<Invoice> allInvoices)
         {
             InitializeComponent();
             this.products = products;
+            this.allInvoices = allInvoices;
 
             dgvProducts.DataSource = products;
             dgvProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -51,7 +57,7 @@ namespace Warehouse.Forms
                 PricePerUnit = p.PricePerUnit,
                 LastDeliveryDate = DateTime.Now,
             }).ToList();
-            this.FormClosing += InvoiceForm_FormClosing;
+            //this.FormClosing += InvoiceForm_FormClosing;
         }
 
         private Product GetSelectedProduct()
@@ -67,7 +73,7 @@ namespace Warehouse.Forms
         {
 
         }
-        private List<InvoiceItem> currentItems = new List<InvoiceItem>();
+    
 
         private void btnAddItem_Click(object sender, EventArgs e)
         {
@@ -93,12 +99,6 @@ namespace Warehouse.Forms
             };
             currentItems.Add(newItem);
 
-            /*//currentItems.Add(new InvoiceItem
-            //{
-            //    Product = selectedProduct,
-            //    Quantity = quantity
-
-            //});*/
 
             dgvProducts.DataSource = null;
             dgvProducts.DataSource = products;
@@ -112,8 +112,14 @@ namespace Warehouse.Forms
             {
                 selectedProduct.Quantity -= quantity;
             }
-            MessageBox.Show($"У накладній зараз: {currentItems.Count} товар(ів).");
+           
 
+        }
+
+        private void SaveInvoiceToFile(Invoice invoice, string filePath)
+        {
+            string json = JsonSerializer.Serialize(invoice, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(filePath, json);
         }
 
         private void SaveInvoice_Click(object sender, EventArgs e)
@@ -124,84 +130,16 @@ namespace Warehouse.Forms
                 MessageBox.Show("Накладна порожня");
                 return;
             }
-            /* Invoice invoice = new Invoice
-             {
-                 InvoiceNumber = GenerateInvoiceNumber(),
-                 Date = DateTime.Now,
-                 Type = (InvoiceType)comboBoxInvoiceType.SelectedItem,
-                 Items = new List<InvoiceItem>(currentItems)
-             };*/
+          
             var invoice = new Invoice
             {
                 Id = GenerateInvoiceNumber(),
                 Date = DateTime.Now,
                 Type = (InvoiceType)comboBoxInvoiceType.SelectedItem,
-                Items = new List<InvoiceItem>(currentItems)
+                Items = new BindingList<InvoiceItem>(currentItems)
             };
 
-            /* foreach (var item in invoice.Items)
-             {
-                 var exitingProduct = products.FirstOrDefault(p => p.Name == item.Product.Name);
-                 if (invoice.Type == InvoiceType.Income)
-                 {
-                     if (exitingProduct != null)
-                     {
-                         exitingProduct.Quantity += item.Quantity;
-                         exitingProduct.LastDeliveryDate = invoice.Date;
-                     }
-                     else
-                     {
-                         products.Add(new Product
-                         {
-                             Name = item.Product.Name,
-                             Unit = item.Product.Unit,
-                             PricePerUnit = item.Product.PricePerUnit,
-                             Quantity = item.Quantity,
-                             LastDeliveryDate = invoice.Date
-                         });
-                     }
-                 }
-                 else if (invoice.Type == InvoiceType.Outcome)
-                 {
-                     if (exitingProduct != null && exitingProduct.Quantity >= item.Quantity)
-                     {
-                         exitingProduct.Quantity -= item.Quantity;
-                     }
-                     else
-                     {
-                         MessageBox.Show($"Недостатньо товару: {item.Product.Name}");
-                         return;
-                     }
-
-                 }
-             }
-             allInvoices.Add(invoice);
-             currentItems.Clear();
-
-             dgvProducts.DataSource = null;
-             dgvProducts.DataSource = products;
-             //dgvProducts.Refresh();
-             //dgvProducts.DataSource = null;
-             MessageBox.Show("Накладну збережено");*/
-
-            /*   foreach (var item in invoice.Items)
-               {
-                   var prod = products.First(p => p.Name == item.Product.Name);
-                   if (prod != null)
-                   {
-                       if (invoice.Type == InvoiceType.Income)
-                       {
-                           prod.Quantity += item.Quantity;
-                           prod.LastDeliveryDate = invoice.Date;
-                       }
-                       else // Outcome
-                       {
-
-                           prod.Quantity -= item.Quantity;
-                       }
-                   }
-
-               }*/
+          
 
             foreach (var item in invoice.Items)
             {
@@ -223,6 +161,8 @@ namespace Warehouse.Forms
                 }
             }
 
+
+
             SavedInvoice = invoice;
             DialogResult = DialogResult.OK;
             isSaved = true;
@@ -230,22 +170,13 @@ namespace Warehouse.Forms
 
 
 
-            //allInvoices.Add(invoice);
-            //currentItems.Clear();
+            //var detailsForm = new InvoiceDetailsForm(SavedInvoice);
+            //detailsForm.ShowDialog();
 
-            //// Оновити головну таблицю товарів
-            //dgvProducts.DataSource = null;
-            //dgvProducts.DataSource = products;
-
-
-            //MessageBox.Show("Накладну збережено!");
-            //SavedInvoice = invoice;
-            //this.DialogResult = DialogResult.OK;
-            //isSaved = true;
-
-            //this.Close();
 
         }
+
+      
         private void InvoiceForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!isSaved)
@@ -292,7 +223,9 @@ namespace Warehouse.Forms
 
         private int GenerateInvoiceNumber()
         {
-            return allInvoices.Count + 1;
+            if (allInvoices == null || allInvoices.Count == 0)
+                return 1;
+            return allInvoices.Max(i => i.Id) + 1;
         }
 
         private void btnAddProduct_Click(object sender, EventArgs e)

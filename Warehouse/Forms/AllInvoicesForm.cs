@@ -17,12 +17,13 @@ namespace Warehouse.Forms
         {
             InitializeComponent();
             allInvoices = invoices;
-            LoadInvoices(allInvoices);
+            LoadInvoices(allInvoices?.ToList() ?? new List<Invoice>());
         }
         private void LoadInvoices(List<Invoice> invoicesToShow)
         {
-            dgvInvoices.DataSource = null;
-            dgvInvoices.DataSource = invoicesToShow.Select(inv => new
+            dgvAllInvoices.AutoGenerateColumns = true;
+            dgvAllInvoices.DataSource = null;
+            dgvAllInvoices.DataSource = invoicesToShow.Select(inv => new
             {
                 inv.Id,
                 inv.Type,
@@ -30,19 +31,21 @@ namespace Warehouse.Forms
                 КількістьТоварів = inv.Items?.Count ?? 0
             }).ToList();
 
-            dgvInvoices.Columns[0].HeaderText = "ID";
-            dgvInvoices.Columns[1].HeaderText = "Тип";
-            dgvInvoices.Columns[2].HeaderText = "Дата";
-            dgvInvoices.Columns[3].HeaderText = "Кількість товарів";
+            dgvAllInvoices.Columns[0].HeaderText = "ID";
+            dgvAllInvoices.Columns[1].HeaderText = "Тип";
+            dgvAllInvoices.Columns[2].HeaderText = "Дата";
+            dgvAllInvoices.Columns[3].HeaderText = "Кількість товарів";
 
 
         }
-
+       
+       
         private void dgvInvoices_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+
             if (e.RowIndex >= 0)
             {
-                int id = (int)dgvInvoices.Rows[e.RowIndex].Cells[0].Value;
+                int id = (int)dgvAllInvoices.Rows[e.RowIndex].Cells[0].Value;
                 var selected = allInvoices.FirstOrDefault(i => i.Id == id);
                 if (selected != null)
                 {
@@ -55,7 +58,8 @@ namespace Warehouse.Forms
         public void UpdateInvoices(List<Invoice> updatedInvoices)
         {
             this.allInvoices = updatedInvoices;
-           
+            LoadInvoices(allInvoices);
+
         }
 
     }

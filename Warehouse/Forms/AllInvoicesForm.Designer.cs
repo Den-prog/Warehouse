@@ -28,33 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dgvInvoices = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)dgvInvoices).BeginInit();
+            dgvAllInvoices = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dgvAllInvoices).BeginInit();
             SuspendLayout();
             // 
-            // dgvInvoices
+            // dgvAllInvoices
             // 
-            dgvInvoices.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvInvoices.Location = new Point(12, 109);
-            dgvInvoices.Name = "dgvInvoices";
-            dgvInvoices.Size = new Size(739, 204);
-            dgvInvoices.TabIndex = 0;
-            dgvInvoices.CellDoubleClick += dgvInvoices_CellDoubleClick;
+            dgvAllInvoices.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvAllInvoices.Location = new Point(12, 109);
+            dgvAllInvoices.Name = "dgvAllInvoices";
+            dgvAllInvoices.Size = new Size(739, 204);
+            dgvAllInvoices.TabIndex = 0;
+            dgvAllInvoices.CellDoubleClick += dgvInvoices_CellDoubleClick;
             // 
-            // AllInvoices
+            // AllInvoicesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(dgvInvoices);
-            Name = "AllInvoices";
+            Controls.Add(dgvAllInvoices);
+            Name = "AllInvoicesForm";
             Text = "AllInvoices";
-            ((System.ComponentModel.ISupportInitialize)dgvInvoices).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvAllInvoices).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private DataGridView dgvInvoices;
+        private DataGridView dgvAllInvoices;
     }
 }

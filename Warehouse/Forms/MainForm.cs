@@ -24,45 +24,47 @@ namespace Warehouse.Forms
 
         private AllInvoicesForm allInvoicesForm;
 
+        //public List<Invoice> AllInvoices { get; private set; }
+
+        private List<Invoice> allInvoices = new List<Invoice>();
+
 
         public MainForm()
         {
             InitializeComponent();
             LoadTestData();
-            UpdateProductGridHeaders();
-            LoadInvoicesFromFile();
+            //UpdateProductGridHeaders();
+            //LoadInvoicesFromFile();
+
         }
         private void LoadTestData()
         {
             allProducts = TestDataGenerator.GetSampleProducts();
-            dgvInvoices.DataSource = allProducts;
-            dgvInvoices.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvInvoices.MultiSelect = false;
-            dgvInvoices.ReadOnly = true;
 
 
         }
-        public void RefreshProductGrid()
-        {
-            dgvInvoices.DataSource = null;
-            dgvInvoices.DataSource = allProducts;
-            UpdateProductGridHeaders();
+
+        /* public void RefreshProductGrid()
+         {
+             dgvInvoices.DataSource = null;
+             dgvInvoices.DataSource = allProducts;
+             UpdateProductGridHeaders();
 
 
-        }
+         }*/
 
 
         private void btnCreateInvoice_Click(object sender, EventArgs e)
         {
-            //InvoiceForm invoiceForm = new InvoiceForm(allProducts);
+            /*//InvoiceForm invoiceForm = new InvoiceForm(allProducts);
             //invoiceForm.ShowDialog();
             //var invoiceForm = new InvoiceForm(allProducts);
             //invoiceForm.ShowDialog();
             ////invoiceForm.FormClosing += (s, args) => RefreshProductGrid();
             ////invoiceForm.ShowDialog();
             //RefreshProductGrid();
-            //UpdateProductGridHeaders();
-            using (var invoiceForm = new InvoiceForm(allProducts))
+            //UpdateProductGridHeaders();*/
+            using (var invoiceForm = new InvoiceForm(allProducts, invoices))
             {
                 if (invoiceForm.ShowDialog() == DialogResult.OK)
                 {
@@ -74,7 +76,7 @@ namespace Warehouse.Forms
                             allInvoicesForm.UpdateInvoices(invoices);
                         }
                     }
-                    RefreshProductGrid();
+                    //RefreshProductGrid();
                 }
             }
 
@@ -86,52 +88,52 @@ namespace Warehouse.Forms
 
         }
 
-        private void LoadProoductsFormFile()
-        {
-            if (File.Exists("products.json"))
-            {
-                string json = File.ReadAllText("products.json");
-                allProducts = JsonSerializer.Deserialize<List<Product>>(json);
+        /* private void LoadProoductsFormFile()
+         {
+             if (File.Exists("products.json"))
+             {
+                 string json = File.ReadAllText("products.json");
+                 allProducts = JsonSerializer.Deserialize<List<Product>>(json);
 
-                dgvInvoices.DataSource = null;
-                dgvInvoices.DataSource = allProducts;
-                UpdateProductGridHeaders();
-            }
-        }
-        private void SaveProductsToFile()
-        {
-            string json = JsonSerializer.Serialize(allProducts, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText("products.json", json);
-        }
+                 dgvInvoices.DataSource = null;
+                 dgvInvoices.DataSource = allProducts;
+                 UpdateProductGridHeaders();
+             }
+         }
+         private void SaveProductsToFile()
+         {
+             string json = JsonSerializer.Serialize(allProducts, new JsonSerializerOptions { WriteIndented = true });
+             File.WriteAllText("products.json", json);
+         }*/
 
-        private void btnSaveToFile_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                SaveProductsToFile();
-                MessageBox.Show("Склад збережено");
+        /* private void btnSaveToFile_Click(object sender, EventArgs e)
+         {
+             try
+             {
+                 SaveProductsToFile();
+                 MessageBox.Show("Склад збережено");
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Помилка збереження: " + ex.Message);
-            }
-        }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Помилка збереження: " + ex.Message);
+             }
+         }*/
 
-        private void btnLoadFormFile_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                LoadProoductsFormFile();
-                MessageBox.Show("Склад завантажено!");
+        /*  private void btnLoadFormFile_Click(object sender, EventArgs e)
+          {
+              try
+              {
+                  LoadProoductsFormFile();
+                  MessageBox.Show("Склад завантажено!");
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Помилка завантеження: " + ex.Message);
-            }
-        }
-
+              }
+              catch (Exception ex)
+              {
+                  MessageBox.Show("Помилка завантеження: " + ex.Message);
+              }
+          }
+  */
 
 
         private void файлToolStripMenuItem_Click(object sender, EventArgs e)
@@ -159,7 +161,7 @@ namespace Warehouse.Forms
                      UpdateProductGridHeaders();
                  }
              }*/
-            using (var invoiceForm = new InvoiceForm(allProducts))
+            using (var invoiceForm = new InvoiceForm(allProducts, invoices))
             {
                 if (invoiceForm.ShowDialog() == DialogResult.OK)
                 {
@@ -171,56 +173,56 @@ namespace Warehouse.Forms
                             allInvoicesForm.UpdateInvoices(invoices);
                         }
                     }
-                    RefreshProductGrid();
+                    //RefreshProductGrid();
                 }
             }
         }
 
-        private void зберегтиСкладToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                SaveProductsToFile();
-                MessageBox.Show("Склад збережено");
+        /*  private void зберегтиСкладToolStripMenuItem_Click(object sender, EventArgs e)
+          {
+              try
+              {
+                  SaveProductsToFile();
+                  MessageBox.Show("Склад збережено");
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Помилка збереження: " + ex.Message);
-            }
+              }
+              catch (Exception ex)
+              {
+                  MessageBox.Show("Помилка збереження: " + ex.Message);
+              }
 
-        }
+          }*/
 
-        private void завантажитиСкладToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                LoadProoductsFormFile();
-                MessageBox.Show("Склад завантажено!");
+        /*  private void завантажитиСкладToolStripMenuItem_Click(object sender, EventArgs e)
+          {
+              try
+              {
+                  LoadProoductsFormFile();
+                  MessageBox.Show("Склад завантажено!");
 
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Помилка завантеження: " + ex.Message);
-            }
-        }
-
+              }
+              catch (Exception ex)
+              {
+                  MessageBox.Show("Помилка завантеження: " + ex.Message);
+              }
+          }
+  */
         private void вихідToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void UpdateProductGridHeaders()
-        {
-            if (dgvInvoices.Columns.Count == 0) return;
+        /*  private void UpdateProductGridHeaders()
+          {
+              if (dgvInvoices.Columns.Count == 0) return;
 
-            dgvInvoices.Columns["Name"].HeaderText = "Назва";
-            dgvInvoices.Columns["Unit"].HeaderText = "Одиниця виміру";
-            dgvInvoices.Columns["PricePerUnit"].HeaderText = "Ціна за одиницю";
-            dgvInvoices.Columns["Quantity"].HeaderText = "Кількість";
-            dgvInvoices.Columns["LastDeliveryDate"].HeaderText = "Дата останнього завезення";
+              dgvInvoices.Columns["Name"].HeaderText = "Назва";
+              dgvInvoices.Columns["Unit"].HeaderText = "Одиниця виміру";
+              dgvInvoices.Columns["PricePerUnit"].HeaderText = "Ціна за одиницю";
+              dgvInvoices.Columns["Quantity"].HeaderText = "Кількість";
+              dgvInvoices.Columns["LastDeliveryDate"].HeaderText = "Дата останнього завезення";
 
-        }
+          }*/
 
         private void bnInventory_Click(object sender, EventArgs e)
         {
@@ -235,7 +237,7 @@ namespace Warehouse.Forms
 
         private void dgvInvoices_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            /*// Перевіряємо, що клацнули на дійсному рядку (не на заголовку стовпця)
+            /*
             if (e.RowIndex >= 0)
             {
                 // Отримуємо обрану накладну з DataGridView
@@ -250,32 +252,7 @@ namespace Warehouse.Forms
             }*/
         }
 
-        private void прибутокToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //using (var invoiceForm = new InvoiceForm(allProducts))
-            //{
-            //    if (invoiceForm.ShowDialog() == DialogResult.OK)
-            //    {
-            //        RefreshProductGrid();
-            //        UpdateProductGridHeaders();
-            //    }
-            //}
-            using (var invoiceForm = new InvoiceForm(allProducts))
-            {
-                if (invoiceForm.ShowDialog() == DialogResult.OK)
-                {
-                    if (invoiceForm.SavedInvoice != null)
-                    {
-                        invoices.Add(invoiceForm.SavedInvoice);
-                        if (allInvoicesForm != null && !allInvoicesForm.IsDisposed)
-                        {
-                            allInvoicesForm.UpdateInvoices(invoices);
-                        }
-                    }
-                    RefreshProductGrid();
-                }
-            }
-        }
+
 
         private void всіНакладніToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -287,24 +264,43 @@ namespace Warehouse.Forms
             else
             {
                 allInvoicesForm.UpdateInvoices(invoices);
-                allInvoicesForm.BringToFront(); // піднімає форму на передній план
+                allInvoicesForm.BringToFront();
             }
 
         }
 
 
-        private void LoadInvoicesFromFile()
+        /*private void LoadInvoicesFromFile()
         {
             if (File.Exists("invoices.json"))
             {
                 var json = File.ReadAllText("invoices.json");
                 invoices = JsonSerializer.Deserialize<List<Invoice>>(json) ?? new List<Invoice>();
             }
-        }
+        }*/
 
         private void документиToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void створитиНакладнуToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            using (var invoiceForm = new InvoiceForm(allProducts, invoices))
+            {
+                if (invoiceForm.ShowDialog() == DialogResult.OK)
+                {
+                    if (invoiceForm.SavedInvoice != null)
+                    {
+                        allInvoices.Add(invoiceForm.SavedInvoice);
+                        if (allInvoicesForm != null && !allInvoicesForm.IsDisposed)
+                        {
+                            allInvoicesForm.UpdateInvoices(invoices);
+                        }
+                    }
+                    //RefreshProductGrid();
+                }
+            }
         }
     }
 }
