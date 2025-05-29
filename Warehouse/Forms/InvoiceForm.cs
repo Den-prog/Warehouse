@@ -29,7 +29,7 @@ namespace Warehouse.Forms
         public Invoice SavedInvoice { get; private set; }
 
 
-        public InvoiceForm(List<Product> products, List<Invoice> allInvoices)
+        public InvoiceForm(List<Product> products)
         {
             InitializeComponent();
             this.products = products;
@@ -40,7 +40,7 @@ namespace Warehouse.Forms
             dgvProducts.MultiSelect = false;
             dgvProducts.ReadOnly = true;
 
-           
+
 
             nudQuantity.Minimum = 1;
             nudQuantity.Maximum = 1000;
@@ -73,7 +73,7 @@ namespace Warehouse.Forms
         {
 
         }
-    
+
 
         private void btnAddItem_Click(object sender, EventArgs e)
         {
@@ -112,7 +112,7 @@ namespace Warehouse.Forms
             {
                 selectedProduct.Quantity -= quantity;
             }
-           
+
 
         }
 
@@ -130,16 +130,16 @@ namespace Warehouse.Forms
                 MessageBox.Show("Накладна порожня");
                 return;
             }
-          
+
             var invoice = new Invoice
             {
-                Id = GenerateInvoiceNumber(),
+                 
                 Date = DateTime.Now,
                 Type = (InvoiceType)comboBoxInvoiceType.SelectedItem,
                 Items = new BindingList<InvoiceItem>(currentItems)
             };
 
-          
+
 
             foreach (var item in invoice.Items)
             {
@@ -176,7 +176,7 @@ namespace Warehouse.Forms
 
         }
 
-      
+
         private void InvoiceForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!isSaved)
@@ -221,12 +221,12 @@ namespace Warehouse.Forms
 
 
 
-        private int GenerateInvoiceNumber()
-        {
-            if (allInvoices == null || allInvoices.Count == 0)
-                return 1;
-            return allInvoices.Max(i => i.Id) + 1;
-        }
+        //private int GenerateInvoiceNumber()
+        //{
+        //    if (allInvoices == null || allInvoices.Count == 0)
+        //        return 1;
+        //    return allInvoices.Max(i => i.Id) + 1;
+        //}
 
         private void btnAddProduct_Click(object sender, EventArgs e)
         {

@@ -32,9 +32,9 @@
             файлToolStripMenuItem = new ToolStripMenuItem();
             вихідToolStripMenuItem = new ToolStripMenuItem();
             документиToolStripMenuItem = new ToolStripMenuItem();
+            створитиНакладнуToolStripMenuItem = new ToolStripMenuItem();
             всіНакладніToolStripMenuItem = new ToolStripMenuItem();
             bnInventory = new Button();
-            створитиНакладнуToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -70,6 +70,13 @@
             документиToolStripMenuItem.Text = "Документи";
             документиToolStripMenuItem.Click += документиToolStripMenuItem_Click;
             // 
+            // створитиНакладнуToolStripMenuItem
+            // 
+            створитиНакладнуToolStripMenuItem.Name = "створитиНакладнуToolStripMenuItem";
+            створитиНакладнуToolStripMenuItem.Size = new Size(180, 22);
+            створитиНакладнуToolStripMenuItem.Text = "Створити накладну";
+            створитиНакладнуToolStripMenuItem.Click += створитиНакладнуToolStripMenuItem_Click_2;
+            // 
             // всіНакладніToolStripMenuItem
             // 
             всіНакладніToolStripMenuItem.Name = "всіНакладніToolStripMenuItem";
@@ -86,13 +93,6 @@
             bnInventory.Text = "Інвентарна відомість ";
             bnInventory.UseVisualStyleBackColor = true;
             bnInventory.Click += bnInventory_Click;
-            // 
-            // створитиНакладнуToolStripMenuItem
-            // 
-            створитиНакладнуToolStripMenuItem.Name = "створитиНакладнуToolStripMenuItem";
-            створитиНакладнуToolStripMenuItem.Size = new Size(180, 22);
-            створитиНакладнуToolStripMenuItem.Text = "Створити накладну";
-            створитиНакладнуToolStripMenuItem.Click += створитиНакладнуToolStripMenuItem_Click_1;
             // 
             // MainForm
             // 

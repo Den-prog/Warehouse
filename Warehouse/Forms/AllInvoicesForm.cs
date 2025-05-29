@@ -23,23 +23,39 @@ namespace Warehouse.Forms
         {
             dgvAllInvoices.AutoGenerateColumns = true;
             dgvAllInvoices.DataSource = null;
-            dgvAllInvoices.DataSource = invoicesToShow.Select(inv => new
-            {
-                inv.Id,
-                inv.Type,
-                Date = inv.Date.ToShortDateString(),
-                КількістьТоварів = inv.Items?.Count ?? 0
-            }).ToList();
 
-            dgvAllInvoices.Columns[0].HeaderText = "ID";
-            dgvAllInvoices.Columns[1].HeaderText = "Тип";
-            dgvAllInvoices.Columns[2].HeaderText = "Дата";
-            dgvAllInvoices.Columns[3].HeaderText = "Кількість товарів";
+            // Check if there are any invoices to show
+            var data = invoicesToShow?
+                .Select(inv => new
+                {
+                    inv.Id,
+                    inv.Type,
+                    Date = inv.Date.ToShortDateString(),
+                    КількістьТоварів = inv.Items?.Count ?? 0
+                })
+                .ToList();
+
+            dgvAllInvoices.DataSource = data;
+
+            // Only set headers if columns exist
+            if (dgvAllInvoices.Columns.Count >= 4)
+            {
+                dgvAllInvoices.Columns[0].HeaderText = "ID";
+                dgvAllInvoices.Columns[1].HeaderText = "Тип";
+                dgvAllInvoices.Columns[2].HeaderText = "Дата";
+                dgvAllInvoices.Columns[3].HeaderText = "Кількість товарів";
+            }
+
+            // Debug: Show a message if there are no invoices
+            if (data == null || data.Count == 0)
+            {
+                MessageBox.Show("Нет накладных для отображения.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
 
 
         }
-       
-       
+
+
         private void dgvInvoices_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
 

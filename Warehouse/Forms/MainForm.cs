@@ -26,8 +26,7 @@ namespace Warehouse.Forms
 
         //public List<Invoice> AllInvoices { get; private set; }
 
-        private List<Invoice> allInvoices = new List<Invoice>();
-
+     
 
         public MainForm()
         {
@@ -64,7 +63,7 @@ namespace Warehouse.Forms
             ////invoiceForm.ShowDialog();
             //RefreshProductGrid();
             //UpdateProductGridHeaders();*/
-            using (var invoiceForm = new InvoiceForm(allProducts, invoices))
+            using (var invoiceForm = new InvoiceForm(allProducts))
             {
                 if (invoiceForm.ShowDialog() == DialogResult.OK)
                 {
@@ -161,7 +160,7 @@ namespace Warehouse.Forms
                      UpdateProductGridHeaders();
                  }
              }*/
-            using (var invoiceForm = new InvoiceForm(allProducts, invoices))
+            using (var invoiceForm = new InvoiceForm(allProducts))
             {
                 if (invoiceForm.ShowDialog() == DialogResult.OK)
                 {
@@ -286,13 +285,32 @@ namespace Warehouse.Forms
 
         private void створитиНакладнуToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            using (var invoiceForm = new InvoiceForm(allProducts, invoices))
+            using (var invoiceForm = new InvoiceForm(allProducts))
             {
                 if (invoiceForm.ShowDialog() == DialogResult.OK)
                 {
                     if (invoiceForm.SavedInvoice != null)
                     {
-                        allInvoices.Add(invoiceForm.SavedInvoice);
+                        invoices.Add(invoiceForm.SavedInvoice);
+                        if (allInvoicesForm != null && !allInvoicesForm.IsDisposed)
+                        {
+                            allInvoicesForm.UpdateInvoices(invoices);
+                        }
+                    }
+                    //RefreshProductGrid();
+                }
+            }
+        }
+
+        private void створитиНакладнуToolStripMenuItem_Click_2(object sender, EventArgs e)
+        {
+            using (var invoiceForm = new InvoiceForm(allProducts))
+            {
+                if (invoiceForm.ShowDialog() == DialogResult.OK)
+                {
+                    if (invoiceForm.SavedInvoice != null)
+                    {
+                        invoices.Add(invoiceForm.SavedInvoice);
                         if (allInvoicesForm != null && !allInvoicesForm.IsDisposed)
                         {
                             allInvoicesForm.UpdateInvoices(invoices);

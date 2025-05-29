@@ -10,7 +10,13 @@ namespace Warehouse.Models
 {
     public class Invoice
     {
+        private static int _nextId = 1;
         public int Id { get; set; }
+        public Invoice()
+        {
+            Id = _nextId++;
+            //Items = new BindingList<InvoiceItem>();
+        }
         public DateTime Date { get; set; }
         public BindingList<InvoiceItem> Items{ get; set; }
         public InvoiceType Type { get; set; }
