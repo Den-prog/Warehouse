@@ -36,7 +36,6 @@
             SaveInvoice = new Button();
             btnDelProduct = new Button();
             menuStrip1 = new MenuStrip();
-            видалитиТоварToolStripMenuItem = new ToolStripMenuItem();
             зберегтиНакладнуToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudQuantity).BeginInit();
@@ -100,19 +99,12 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { видалитиТоварToolStripMenuItem, зберегтиНакладнуToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { зберегтиНакладнуToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 24);
             menuStrip1.TabIndex = 8;
             menuStrip1.Text = "menuStrip1";
-            // 
-            // видалитиТоварToolStripMenuItem
-            // 
-            видалитиТоварToolStripMenuItem.Name = "видалитиТоварToolStripMenuItem";
-            видалитиТоварToolStripMenuItem.Size = new Size(105, 20);
-            видалитиТоварToolStripMenuItem.Text = "Видалити товар";
-            видалитиТоварToolStripMenuItem.Click += видалитиТоварToolStripMenuItem_Click;
             // 
             // зберегтиНакладнуToolStripMenuItem
             // 
@@ -153,7 +145,6 @@
         private Button SaveInvoice;
         private Button btnDelProduct;
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem видалитиТоварToolStripMenuItem;
         private ToolStripMenuItem зберегтиНакладнуToolStripMenuItem;
     }
 }

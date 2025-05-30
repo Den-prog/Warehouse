@@ -65,8 +65,8 @@ namespace Warehouse.Forms
         {
             if (dgvProducts.SelectedRows.Count > 0)
             {
-                var name  = dgvProducts.SelectedRows[0].Cells["Name"].Value.ToString();
-                if(name != null){
+                var name  = dgvProducts.SelectedRows[0].Cells["Name"].Value as string;//Value.ToString() - поменял;
+                if (name != null){
                     return products.FirstOrDefault(p => p.Name == name);
                 }
             }
@@ -121,6 +121,12 @@ namespace Warehouse.Forms
 
         private void UpdateProductsGrid()
         {
+            string selectedName = null; 
+            if (dgvProducts.SelectedRows.Count > 0)
+            {
+                selectedName = dgvProducts.SelectedRows[0].Cells["Name"].Value as string;
+            }
+
             var displayList = products.Select(p => new
             {
                 Name = p.Name,
@@ -132,6 +138,19 @@ namespace Warehouse.Forms
 
             dgvProducts.DataSource = null;
             dgvProducts.DataSource = displayList;
+
+            if(selectedName != null)
+            {
+                foreach (DataGridViewRow row in dgvProducts.Rows)
+                {
+                    if (row.Cells["Name"].Value as string == selectedName)
+                    {
+                        row.Selected = true;
+                        dgvProducts.CurrentCell = row.Cells[0]; // Встановлюємо курсор на першу клітинку вибраного рядка
+                        break;
+                    }
+                }
+            }
         }
         private int GetVirtualQuantity(Product product)
         {
@@ -227,7 +246,7 @@ namespace Warehouse.Forms
                 }
                 else if (result == DialogResult.No)
                 {
-                    // Відкат змін — приклад нижче
+                    // Відкат змін 
                     RollbackChanges();
                 }
                 else if (result == DialogResult.Cancel)
