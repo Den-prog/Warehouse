@@ -34,9 +34,9 @@
             comboBoxInvoiceType = new ComboBox();
             btnAddItem = new Button();
             SaveInvoice = new Button();
-            btnDelProduct = new Button();
             menuStrip1 = new MenuStrip();
-            зберегтиНакладнуToolStripMenuItem = new ToolStripMenuItem();
+            File = new ToolStripMenuItem();
+            зберегтиНакладнууФайлToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudQuantity).BeginInit();
             menuStrip1.SuspendLayout();
@@ -46,7 +46,7 @@
             // 
             dgvProducts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProducts.Location = new Point(29, 92);
+            dgvProducts.Location = new Point(12, 60);
             dgvProducts.Name = "dgvProducts";
             dgvProducts.Size = new Size(616, 150);
             dgvProducts.TabIndex = 0;
@@ -79,7 +79,7 @@
             // 
             // SaveInvoice
             // 
-            SaveInvoice.Location = new Point(12, 502);
+            SaveInvoice.Location = new Point(29, 412);
             SaveInvoice.Name = "SaveInvoice";
             SaveInvoice.Size = new Size(115, 23);
             SaveInvoice.TabIndex = 5;
@@ -87,38 +87,36 @@
             SaveInvoice.UseVisualStyleBackColor = true;
             SaveInvoice.Click += SaveInvoice_Click;
             // 
-            // btnDelProduct
-            // 
-            btnDelProduct.Location = new Point(147, 502);
-            btnDelProduct.Name = "btnDelProduct";
-            btnDelProduct.Size = new Size(115, 23);
-            btnDelProduct.TabIndex = 7;
-            btnDelProduct.Text = "Видалити товар";
-            btnDelProduct.UseVisualStyleBackColor = true;
-            btnDelProduct.Click += btnDelProduct_Click;
-            // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { зберегтиНакладнуToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { File });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 24);
             menuStrip1.TabIndex = 8;
             menuStrip1.Text = "menuStrip1";
             // 
-            // зберегтиНакладнуToolStripMenuItem
+            // File
             // 
-            зберегтиНакладнуToolStripMenuItem.Name = "зберегтиНакладнуToolStripMenuItem";
-            зберегтиНакладнуToolStripMenuItem.Size = new Size(123, 20);
-            зберегтиНакладнуToolStripMenuItem.Text = "Зберегти накладну";
-            зберегтиНакладнуToolStripMenuItem.Click += зберегтиНакладнуToolStripMenuItem_Click;
+            File.DropDownItems.AddRange(new ToolStripItem[] { зберегтиНакладнууФайлToolStripMenuItem });
+            File.Name = "File";
+            File.Size = new Size(48, 20);
+            File.Text = "Файл";
+            File.Click += зберегтиНакладнуToolStripMenuItem_Click;
+            // 
+            // зберегтиНакладнууФайлToolStripMenuItem
+            // 
+            зберегтиНакладнууФайлToolStripMenuItem.Name = "зберегтиНакладнууФайлToolStripMenuItem";
+            зберегтиНакладнууФайлToolStripMenuItem.Size = new Size(227, 22);
+            зберегтиНакладнууФайлToolStripMenuItem.Text = "Зберегти накладну(на диск)";
+            зберегтиНакладнууФайлToolStripMenuItem.ToolTipText = "(.json)";
+            зберегтиНакладнууФайлToolStripMenuItem.Click += зберегтиНакладнууФайлToolStripMenuItem_Click;
             // 
             // InvoiceForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 692);
-            Controls.Add(btnDelProduct);
             Controls.Add(SaveInvoice);
             Controls.Add(btnAddItem);
             Controls.Add(comboBoxInvoiceType);
@@ -143,8 +141,8 @@
         private ComboBox comboBoxInvoiceType;
         private Button btnAddItem;
         private Button SaveInvoice;
-        private Button btnDelProduct;
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem зберегтиНакладнуToolStripMenuItem;
+        private ToolStripMenuItem File;
+        private ToolStripMenuItem зберегтиНакладнууФайлToolStripMenuItem;
     }
 }

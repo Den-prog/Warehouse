@@ -18,7 +18,7 @@ namespace Warehouse.Forms
     {
         private List<Product> products;
 
-        private List<Invoice> allInvoices = new List<Invoice>();
+        private List<Invoice> allInvoices = new List<Invoice>();//empty
 
         private List<Product> originalProducts;
 
@@ -28,7 +28,11 @@ namespace Warehouse.Forms
 
         public Invoice SavedInvoice { get; private set; }
 
-
+        private void SaveInvoiceToFile(List<Invoice> invoice, string filePath)
+        {
+            string json = JsonSerializer.Serialize(invoice, new JsonSerializerOptions { WriteIndented = true });
+            System.IO.File.WriteAllText(filePath, json);
+        }
         public InvoiceForm(List<Product> products)
         {
             InitializeComponent();
@@ -57,7 +61,7 @@ namespace Warehouse.Forms
                 PricePerUnit = p.PricePerUnit,
                 LastDeliveryDate = DateTime.Now,
             }).ToList();
-            //this.FormClosing += InvoiceForm_FormClosing;
+            this.FormClosing += InvoiceForm_FormClosing;
             UpdateProductsGrid();
         }
 
@@ -65,8 +69,9 @@ namespace Warehouse.Forms
         {
             if (dgvProducts.SelectedRows.Count > 0)
             {
-                var name  = dgvProducts.SelectedRows[0].Cells["Name"].Value as string;//Value.ToString() - поменял;
-                if (name != null){
+                var name = dgvProducts.SelectedRows[0].Cells["Name"].Value as string;//Value.ToString() - поменял;
+                if (name != null)
+                {
                     return products.FirstOrDefault(p => p.Name == name);
                 }
             }
@@ -121,7 +126,7 @@ namespace Warehouse.Forms
 
         private void UpdateProductsGrid()
         {
-            string selectedName = null; 
+            string selectedName = null;
             if (dgvProducts.SelectedRows.Count > 0)
             {
                 selectedName = dgvProducts.SelectedRows[0].Cells["Name"].Value as string;
@@ -139,7 +144,7 @@ namespace Warehouse.Forms
             dgvProducts.DataSource = null;
             dgvProducts.DataSource = displayList;
 
-            if(selectedName != null)
+            if (selectedName != null)
             {
                 foreach (DataGridViewRow row in dgvProducts.Rows)
                 {
@@ -167,11 +172,7 @@ namespace Warehouse.Forms
             }
             return product.Quantity + delta;
         }
-        private void SaveInvoiceToFile(Invoice invoice, string filePath)
-        {
-            string json = JsonSerializer.Serialize(invoice, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(filePath, json);
-        }
+        
 
         private void SaveInvoice_Click(object sender, EventArgs e)
         {
@@ -184,7 +185,7 @@ namespace Warehouse.Forms
 
             var invoice = new Invoice
             {
-                 
+
                 Date = DateTime.Now,
                 Type = (InvoiceType)comboBoxInvoiceType.SelectedItem,
                 Items = new BindingList<InvoiceItem>(currentItems)
@@ -230,7 +231,7 @@ namespace Warehouse.Forms
 
         private void InvoiceForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!isSaved)
+            if (!isSaved && currentItems.Count > 0)
             {
                 var result = MessageBox.Show(
                   "Ви не зберегли накладну. Зберегти перед виходом?",
@@ -272,12 +273,7 @@ namespace Warehouse.Forms
 
 
 
-        //private int GenerateInvoiceNumber()
-        //{
-        //    if (allInvoices == null || allInvoices.Count == 0)
-        //        return 1;
-        //    return allInvoices.Max(i => i.Id) + 1;
-        //}
+
 
         private void btnAddProduct_Click(object sender, EventArgs e)
         {
@@ -355,6 +351,20 @@ namespace Warehouse.Forms
         private void зберегтиНакладнуToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+
+        }
+
+        private void зберегтиНакладнууФайлToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var invoice = new Invoice
+            {
+                Date = DateTime.Now,
+                Type = (InvoiceType)comboBoxInvoiceType.SelectedItem,
+                Items = new BindingList<InvoiceItem>(currentItems)
+            };
+            allInvoices.Add(invoice);
+            SaveInvoiceToFile(allInvoices, "invoices.json");
+            MessageBox.Show("Накладна збережена у файл");
         }
     }
 }
