@@ -29,42 +29,27 @@
         private void InitializeComponent()
         {
             menuStrip1 = new MenuStrip();
-            файлToolStripMenuItem = new ToolStripMenuItem();
-            вихідToolStripMenuItem = new ToolStripMenuItem();
             документиToolStripMenuItem = new ToolStripMenuItem();
             створитиНакладнуToolStripMenuItem = new ToolStripMenuItem();
             всіНакладніToolStripMenuItem = new ToolStripMenuItem();
+            зберегтиВсіНакладніToolStripMenuItem1 = new ToolStripMenuItem();
+            завантажитиНакладніToolStripMenuItem = new ToolStripMenuItem();
             bnInventory = new Button();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { файлToolStripMenuItem, документиToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { документиToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(834, 24);
             menuStrip1.TabIndex = 9;
             menuStrip1.Text = "menuStrip1";
             // 
-            // файлToolStripMenuItem
-            // 
-            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { вихідToolStripMenuItem });
-            файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            файлToolStripMenuItem.Size = new Size(48, 20);
-            файлToolStripMenuItem.Text = "Файл";
-            файлToolStripMenuItem.Click += файлToolStripMenuItem_Click;
-            // 
-            // вихідToolStripMenuItem
-            // 
-            вихідToolStripMenuItem.Name = "вихідToolStripMenuItem";
-            вихідToolStripMenuItem.Size = new Size(103, 22);
-            вихідToolStripMenuItem.Text = "Вихід";
-            вихідToolStripMenuItem.Click += вихідToolStripMenuItem_Click;
-            // 
             // документиToolStripMenuItem
             // 
-            документиToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { створитиНакладнуToolStripMenuItem, всіНакладніToolStripMenuItem });
+            документиToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { створитиНакладнуToolStripMenuItem, всіНакладніToolStripMenuItem, зберегтиВсіНакладніToolStripMenuItem1, завантажитиНакладніToolStripMenuItem });
             документиToolStripMenuItem.Name = "документиToolStripMenuItem";
             документиToolStripMenuItem.Size = new Size(80, 20);
             документиToolStripMenuItem.Text = "Документи";
@@ -73,16 +58,30 @@
             // створитиНакладнуToolStripMenuItem
             // 
             створитиНакладнуToolStripMenuItem.Name = "створитиНакладнуToolStripMenuItem";
-            створитиНакладнуToolStripMenuItem.Size = new Size(180, 22);
+            створитиНакладнуToolStripMenuItem.Size = new Size(196, 22);
             створитиНакладнуToolStripMenuItem.Text = "Створити накладну";
             створитиНакладнуToolStripMenuItem.Click += створитиНакладнуToolStripMenuItem_Click_2;
             // 
             // всіНакладніToolStripMenuItem
             // 
             всіНакладніToolStripMenuItem.Name = "всіНакладніToolStripMenuItem";
-            всіНакладніToolStripMenuItem.Size = new Size(180, 22);
+            всіНакладніToolStripMenuItem.Size = new Size(196, 22);
             всіНакладніToolStripMenuItem.Text = "Всі накладні";
             всіНакладніToolStripMenuItem.Click += всіНакладніToolStripMenuItem_Click;
+            // 
+            // зберегтиВсіНакладніToolStripMenuItem1
+            // 
+            зберегтиВсіНакладніToolStripMenuItem1.Name = "зберегтиВсіНакладніToolStripMenuItem1";
+            зберегтиВсіНакладніToolStripMenuItem1.Size = new Size(196, 22);
+            зберегтиВсіНакладніToolStripMenuItem1.Text = "Зберегти всі накладні";
+            зберегтиВсіНакладніToolStripMenuItem1.Click += зберегтиВсіНакладніToolStripMenuItem1_Click;
+            // 
+            // завантажитиНакладніToolStripMenuItem
+            // 
+            завантажитиНакладніToolStripMenuItem.Name = "завантажитиНакладніToolStripMenuItem";
+            завантажитиНакладніToolStripMenuItem.Size = new Size(196, 22);
+            завантажитиНакладніToolStripMenuItem.Text = "Завантажити накладні";
+            завантажитиНакладніToolStripMenuItem.Click += завантажитиНакладніToolStripMenuItem_Click;
             // 
             // bnInventory
             // 
@@ -112,11 +111,11 @@
 
         #endregion
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem файлToolStripMenuItem;
-        private ToolStripMenuItem вихідToolStripMenuItem;
         private Button bnInventory;
         private ToolStripMenuItem документиToolStripMenuItem;
         private ToolStripMenuItem всіНакладніToolStripMenuItem;
         private ToolStripMenuItem створитиНакладнуToolStripMenuItem;
+        private ToolStripMenuItem зберегтиВсіНакладніToolStripMenuItem1;
+        private ToolStripMenuItem завантажитиНакладніToolStripMenuItem;
     }
 }

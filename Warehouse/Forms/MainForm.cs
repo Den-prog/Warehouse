@@ -17,14 +17,10 @@ namespace Warehouse.Forms
 {
     public partial class MainForm : Form
     {
-        //private List<Product> allProducts;
-        //private List<Invoice> invoices;
-
         private List<Invoice> invoices = new List<Invoice>();
 
         private AllInvoicesForm allInvoicesForm;
 
-        //public List<Invoice> AllInvoices { get; private set; }
         private List<Product> allProducts = new List<Product>(); //общий список
 
 
@@ -32,17 +28,36 @@ namespace Warehouse.Forms
         {
             InitializeComponent();
             LoadTestData();
-            //UpdateProductGridHeaders();
-            //LoadInvoicesFromFile();
-
         }
         private void LoadTestData()
         {
             allProducts = TestDataGenerator.GetSampleProducts();
-
-
         }
 
+        
+        //для авто созранения и загрузки данных
+        private void AutoSaveData()
+        {
+            // Сохранение
+            var data = new WarehouseData { Products = allProducts, Invoices = invoices };
+            string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText("warehouse_data.json", json);      
+        }
+
+        private void AutoLoadData()
+        {
+            // Загрузка
+            if (File.Exists("warehouse_data.json"))
+            {
+                string json = File.ReadAllText("warehouse_data.json");
+                var data = JsonSerializer.Deserialize<WarehouseData>(json);
+                if (data != null)
+                {
+                    allProducts = data.Products ?? new List<Product>();
+                    invoices = data.Invoices ?? new List<Invoice>();
+                }
+            }
+        }
         /* public void RefreshProductGrid()
          {
              dgvInvoices.DataSource = null;
@@ -87,54 +102,6 @@ namespace Warehouse.Forms
 
         }
 
-        /* private void LoadProoductsFormFile()
-         {
-             if (File.Exists("products.json"))
-             {
-                 string json = File.ReadAllText("products.json");
-                 allProducts = JsonSerializer.Deserialize<List<Product>>(json);
-
-                 dgvInvoices.DataSource = null;
-                 dgvInvoices.DataSource = allProducts;
-                 UpdateProductGridHeaders();
-             }
-         }
-         private void SaveProductsToFile()
-         {
-             string json = JsonSerializer.Serialize(allProducts, new JsonSerializerOptions { WriteIndented = true });
-             File.WriteAllText("products.json", json);
-         }*/
-
-        /* private void btnSaveToFile_Click(object sender, EventArgs e)
-         {
-             try
-             {
-                 SaveProductsToFile();
-                 MessageBox.Show("Склад збережено");
-
-             }
-             catch (Exception ex)
-             {
-                 MessageBox.Show("Помилка збереження: " + ex.Message);
-             }
-         }*/
-
-        /*  private void btnLoadFormFile_Click(object sender, EventArgs e)
-          {
-              try
-              {
-                  LoadProoductsFormFile();
-                  MessageBox.Show("Склад завантажено!");
-
-              }
-              catch (Exception ex)
-              {
-                  MessageBox.Show("Помилка завантеження: " + ex.Message);
-              }
-          }
-  */
-
-
         private void файлToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -143,23 +110,10 @@ namespace Warehouse.Forms
         private void створитиНакладнуToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-
         }
 
         private void створитиНакладнуToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            /* //var invoiceForm = new InvoiceForm(allProducts);
-             //invoiceForm.ShowDialog();
-             //RefreshProductGrid();
-             //UpdateProductGridHeaders();
-             using (var invoiceForm = new InvoiceForm(allProducts))
-             {
-                 if (invoiceForm.ShowDialog() == DialogResult.OK)
-                 {
-                     RefreshProductGrid();
-                     UpdateProductGridHeaders();
-                 }
-             }*/
             using (var invoiceForm = new InvoiceForm(allProducts))
             {
                 if (invoiceForm.ShowDialog() == DialogResult.OK)
@@ -172,56 +126,14 @@ namespace Warehouse.Forms
                             allInvoicesForm.UpdateInvoices(invoices);
                         }
                     }
-                    //RefreshProductGrid();
                 }
             }
         }
 
-        /*  private void зберегтиСкладToolStripMenuItem_Click(object sender, EventArgs e)
-          {
-              try
-              {
-                  SaveProductsToFile();
-                  MessageBox.Show("Склад збережено");
-
-              }
-              catch (Exception ex)
-              {
-                  MessageBox.Show("Помилка збереження: " + ex.Message);
-              }
-
-          }*/
-
-        /*  private void завантажитиСкладToolStripMenuItem_Click(object sender, EventArgs e)
-          {
-              try
-              {
-                  LoadProoductsFormFile();
-                  MessageBox.Show("Склад завантажено!");
-
-              }
-              catch (Exception ex)
-              {
-                  MessageBox.Show("Помилка завантеження: " + ex.Message);
-              }
-          }
-  */
         private void вихідToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
-
-        /*  private void UpdateProductGridHeaders()
-          {
-              if (dgvInvoices.Columns.Count == 0) return;
-
-              dgvInvoices.Columns["Name"].HeaderText = "Назва";
-              dgvInvoices.Columns["Unit"].HeaderText = "Одиниця виміру";
-              dgvInvoices.Columns["PricePerUnit"].HeaderText = "Ціна за одиницю";
-              dgvInvoices.Columns["Quantity"].HeaderText = "Кількість";
-              dgvInvoices.Columns["LastDeliveryDate"].HeaderText = "Дата останнього завезення";
-
-          }*/
 
         private void bnInventory_Click(object sender, EventArgs e)
         {
@@ -236,22 +148,8 @@ namespace Warehouse.Forms
 
         private void dgvInvoices_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            /*
-            if (e.RowIndex >= 0)
-            {
-                // Отримуємо обрану накладну з DataGridView
-                Invoice selectedInvoice = dgvInvoices.Rows[e.RowIndex].DataBoundItem as Invoice;
 
-                if (selectedInvoice != null)
-                {
-                    // Створюємо нову форму деталей і передаємо їй обрану накладну
-                    InvoiceDetailsForm detailsForm = new InvoiceDetailsForm(selectedInvoice);
-                    detailsForm.ShowDialog(); // Відкриваємо форму як діалогове вікно
-                }
-            }*/
         }
-
-
 
         private void всіНакладніToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -265,18 +163,7 @@ namespace Warehouse.Forms
                 allInvoicesForm.UpdateInvoices(invoices);
                 allInvoicesForm.BringToFront();
             }
-
         }
-
-
-        /*private void LoadInvoicesFromFile()
-        {
-            if (File.Exists("invoices.json"))
-            {
-                var json = File.ReadAllText("invoices.json");
-                invoices = JsonSerializer.Deserialize<List<Invoice>>(json) ?? new List<Invoice>();
-            }
-        }*/
 
         private void документиToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -297,7 +184,6 @@ namespace Warehouse.Forms
                             allInvoicesForm.UpdateInvoices(invoices);
                         }
                     }
-                    //RefreshProductGrid();
                 }
             }
         }
@@ -316,9 +202,71 @@ namespace Warehouse.Forms
                             allInvoicesForm.UpdateInvoices(invoices);
                         }
                     }
-                    //RefreshProductGrid();
                 }
             }
         }
+
+        private void зберегтиВсіНакладніToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var allProducts = new List<Product>();
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            saveFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 1;
+            saveFileDialog.RestoreDirectory = true;
+            saveFileDialog.FileName = "invoices.json";
+            saveFileDialog.Title = "Зберегти всі накладні";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string filePath = saveFileDialog.FileName;
+
+                    string json = JsonSerializer.Serialize(invoices, new JsonSerializerOptions { WriteIndented = true });
+                    File.WriteAllText(filePath, json);
+
+                    MessageBox.Show("Накладні успішно збережено!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Помилка збереження накладних: " + ex.Message, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void завантажитиНакладніToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.Title = "Завантажити накладні";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string filepath = openFileDialog.FileName;
+                    string json = File.ReadAllText(filepath);
+
+                    var LoadAllInvoices = JsonSerializer.Deserialize<List<Invoice>>(json);
+                    invoices = LoadAllInvoices;
+                    MessageBox.Show($"Накладні завантажені", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (JsonException jsonEx)
+                {
+                    MessageBox.Show($"Помилка десеріалізації JSON: {jsonEx.Message}\n Переконайтеся, що файл має коректний формат JSON та відповідає структурі даних.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Помилка при завантажені: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        
+      
     }
 }
