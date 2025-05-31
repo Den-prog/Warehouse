@@ -35,11 +35,8 @@
             btnAddItem = new Button();
             SaveInvoice = new Button();
             menuStrip1 = new MenuStrip();
-            File = new ToolStripMenuItem();
-            зберегтиНакладнууФайлToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudQuantity).BeginInit();
-            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // dgvProducts
@@ -66,6 +63,7 @@
             comboBoxInvoiceType.Name = "comboBoxInvoiceType";
             comboBoxInvoiceType.Size = new Size(121, 23);
             comboBoxInvoiceType.TabIndex = 3;
+            comboBoxInvoiceType.SelectedIndexChanged += comboBoxInvoiceType_SelectedIndexChanged;
             // 
             // btnAddItem
             // 
@@ -89,28 +87,11 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { File });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 24);
             menuStrip1.TabIndex = 8;
             menuStrip1.Text = "menuStrip1";
-            // 
-            // File
-            // 
-            File.DropDownItems.AddRange(new ToolStripItem[] { зберегтиНакладнууФайлToolStripMenuItem });
-            File.Name = "File";
-            File.Size = new Size(48, 20);
-            File.Text = "Файл";
-            File.Click += зберегтиНакладнуToolStripMenuItem_Click;
-            // 
-            // зберегтиНакладнууФайлToolStripMenuItem
-            // 
-            зберегтиНакладнууФайлToolStripMenuItem.Name = "зберегтиНакладнууФайлToolStripMenuItem";
-            зберегтиНакладнууФайлToolStripMenuItem.Size = new Size(227, 22);
-            зберегтиНакладнууФайлToolStripMenuItem.Text = "Зберегти накладну(на диск)";
-            зберегтиНакладнууФайлToolStripMenuItem.ToolTipText = "(.json)";
-            зберегтиНакладнууФайлToolStripMenuItem.Click += зберегтиНакладнууФайлToolStripMenuItem_Click;
             // 
             // InvoiceForm
             // 
@@ -128,8 +109,6 @@
             Text = "InvoiceForm";
             ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudQuantity).EndInit();
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -142,7 +121,5 @@
         private Button btnAddItem;
         private Button SaveInvoice;
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem File;
-        private ToolStripMenuItem зберегтиНакладнууФайлToolStripMenuItem;
     }
 }

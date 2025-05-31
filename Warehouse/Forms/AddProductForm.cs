@@ -23,20 +23,30 @@ namespace Warehouse.Forms
 
             nudQuantity.Minimum = 0;
             nudQuantity.Maximum = 100000;
+
+            cmbUnit.Items.AddRange(new string[] { "шт", "кг", "л", "м" });
+
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtName.Text) || string.IsNullOrWhiteSpace(txtUnit.Text))
+            if (string.IsNullOrWhiteSpace(txtName.Text))
             {
                 MessageBox.Show("Усі поля мають бути заповнені.");
+                return;
+            }
+
+            var unit = cmbUnit.SelectedItem?.ToString();
+            if (string.IsNullOrEmpty(unit))
+            {
+                MessageBox.Show("Оберіть одиницю виміру!");
                 return;
             }
 
             NewProduct = new Product
             {
                 Name = txtName.Text,
-                Unit = txtUnit.Text,
+                Unit = unit,
                 PricePerUnit = nudPrice.Value,
                 Quantity = (int)nudQuantity.Value,
                 LastDeliveryDate = DateTime.Now
@@ -47,6 +57,11 @@ namespace Warehouse.Forms
         }
 
         private void nudQuantity_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtUnit_TextChanged(object sender, EventArgs e)
         {
 
         }

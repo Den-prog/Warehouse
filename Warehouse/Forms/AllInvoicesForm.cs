@@ -35,6 +35,8 @@ namespace Warehouse.Forms
             dgvAllInvoices.Columns[2].HeaderText = "Дата";
             dgvAllInvoices.Columns[3].HeaderText = "Кількість товарів";
 
+            
+
             //// Debug: Show a message if there are no invoices
             //if (data == null || data.Count == 0)
             //{

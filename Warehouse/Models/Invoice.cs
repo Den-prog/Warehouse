@@ -27,8 +27,9 @@ namespace Warehouse.Models
     {
         public Product Product { get; set; }
         public int Quantity { get; set; }
+        public decimal TotalValue { get; set; }
 
-       
+
     }
 
     public enum InvoiceType

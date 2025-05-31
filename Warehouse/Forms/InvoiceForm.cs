@@ -46,12 +46,18 @@ namespace Warehouse.Forms
 
 
 
+
+
+
             nudQuantity.Minimum = 1;
             nudQuantity.Maximum = 1000;
 
-            comboBoxInvoiceType.Items.Add(InvoiceType.Income);
-            comboBoxInvoiceType.Items.Add(InvoiceType.Outcome);
-            comboBoxInvoiceType.SelectedIndex = 0;
+            //comboBoxInvoiceType.Items.Add(InvoiceType.Income);
+            //comboBoxInvoiceType.Items.Add(InvoiceType.Outcome);
+            //comboBoxInvoiceType.SelectedIndex = 0;
+            comboBoxInvoiceType.Items.Add("Прибуткова накладна");
+            comboBoxInvoiceType.Items.Add("Витратна накладна");
+            comboBoxInvoiceType.SelectedIndex = 0; 
 
             originalProducts = products.Select(p => new Product
             {
@@ -63,6 +69,12 @@ namespace Warehouse.Forms
             }).ToList();
             this.FormClosing += InvoiceForm_FormClosing;
             UpdateProductsGrid();
+        }
+
+        private InvoiceType GetSelectedInvoiceType()
+        {
+            var selectedItem = comboBoxInvoiceType.SelectedItem?.ToString();
+            return selectedItem == "Прибуткова накладна" ? InvoiceType.Income : InvoiceType.Outcome;
         }
 
         private Product GetSelectedProduct()
@@ -88,8 +100,8 @@ namespace Warehouse.Forms
         {
             var selectedProduct = GetSelectedProduct();
             var quantity = (int)nudQuantity.Value;
-            var invoiceType = (InvoiceType)comboBoxInvoiceType.SelectedItem;
-            if (selectedProduct == null)
+            var invoiceType = GetSelectedInvoiceType();
+            if (invoiceType == null)
             {
                 MessageBox.Show("Будь ласка, виберіть товар.");
                 return;
@@ -144,6 +156,12 @@ namespace Warehouse.Forms
             dgvProducts.DataSource = null;
             dgvProducts.DataSource = displayList;
 
+            dgvProducts.Columns["Name"].HeaderText = "Назва";
+            dgvProducts.Columns["Unit"].HeaderText = "Одиниця виміру";
+            dgvProducts.Columns["PricePerUnit"].HeaderText = "Ціна за одиницю";
+            dgvProducts.Columns["Quantity"].HeaderText = "Кількість";
+            dgvProducts.Columns["LastDeliveryDate"].HeaderText = "Дата останньої поставки";
+
             if (selectedName != null)
             {
                 foreach (DataGridViewRow row in dgvProducts.Rows)
@@ -151,7 +169,7 @@ namespace Warehouse.Forms
                     if (row.Cells["Name"].Value as string == selectedName)
                     {
                         row.Selected = true;
-                        dgvProducts.CurrentCell = row.Cells[0]; // Встановлюємо курсор на першу клітинку вибраного рядка
+                        dgvProducts.CurrentCell = row.Cells[0];
                         break;
                     }
                 }
@@ -160,11 +178,12 @@ namespace Warehouse.Forms
         private int GetVirtualQuantity(Product product)
         {
             int delta = 0;
+            var invoiceType = GetSelectedInvoiceType();
             foreach (var item in currentItems)
             {
                 if (item.Product == product)
                 {
-                    if ((InvoiceType)comboBoxInvoiceType.SelectedItem == InvoiceType.Income)
+                    if (invoiceType == InvoiceType.Income)
                         delta += item.Quantity;
                     else
                         delta -= item.Quantity;
@@ -172,7 +191,7 @@ namespace Warehouse.Forms
             }
             return product.Quantity + delta;
         }
-        
+
 
         private void SaveInvoice_Click(object sender, EventArgs e)
         {
@@ -187,7 +206,7 @@ namespace Warehouse.Forms
             {
 
                 Date = DateTime.Now,
-                Type = (InvoiceType)comboBoxInvoiceType.SelectedItem,
+                Type = GetSelectedInvoiceType(),
                 Items = new BindingList<InvoiceItem>(currentItems)
             };
 
@@ -365,6 +384,11 @@ namespace Warehouse.Forms
             allInvoices.Add(invoice);
             SaveInvoiceToFile(allInvoices, "invoices.json");
             MessageBox.Show("Накладна збережена у файл");
+        }
+
+        private void comboBoxInvoiceType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

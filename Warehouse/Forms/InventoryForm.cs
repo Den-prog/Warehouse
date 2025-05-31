@@ -29,6 +29,7 @@ namespace Warehouse.Forms
 
             dgvInventory.DataSource = null;
             dgvInventory.DataSource = products;
+            UpdateProductGridHeaders();
 
             this.FormClosing += InventoryForm2_FormClosing;
 
@@ -44,6 +45,7 @@ namespace Warehouse.Forms
 
                 dgvInventory.DataSource = null;
                 dgvInventory.DataSource = products;
+                UpdateProductGridHeaders();
 
             }
         }
@@ -75,6 +77,7 @@ namespace Warehouse.Forms
                 Unit = p.Unit,
                 LastDeliveryDate = p.LastDeliveryDate,
             }).ToList();
+            UpdateProductGridHeaders();
         }
 
 
@@ -98,6 +101,7 @@ namespace Warehouse.Forms
 
                     dgvInventory.DataSource = null;
                     dgvInventory.DataSource = products;
+                    UpdateProductGridHeaders();
                 }
             }
 
@@ -145,6 +149,7 @@ namespace Warehouse.Forms
             products = CloneProductList(originalProducts);
             dgvInventory.DataSource = null;
             dgvInventory.DataSource = products;
+            UpdateProductGridHeaders();
         }
 
         private void зберегтиСкладToolStripMenuItem_Click(object sender, EventArgs e)
@@ -177,7 +182,7 @@ namespace Warehouse.Forms
             dgvInventory.Columns["PricePerUnit"].HeaderText = "Ціна за одиницю";
             dgvInventory.Columns["Quantity"].HeaderText = "Кількість";
             dgvInventory.Columns["LastDeliveryDate"].HeaderText = "Дата останнього завезення";
-
+            dgvInventory.Columns["TotalValue"].HeaderText = "Загальна вартість";
         }
         private void завантажитиToolStripMenuItem_Click(object sender, EventArgs e)
         {

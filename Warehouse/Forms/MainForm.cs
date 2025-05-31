@@ -28,20 +28,28 @@ namespace Warehouse.Forms
         {
             InitializeComponent();
             LoadTestData();
+            this.FormClosing += MainForm_FormClosing;
+            this.Load += MainForm_Load;
         }
         private void LoadTestData()
         {
             allProducts = TestDataGenerator.GetSampleProducts();
         }
 
-        
-        //для авто созранения и загрузки данных
+        private void MainForm_FormClosing(object sender, EventArgs e)
+        {
+            AutoSaveData();
+        }
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            AutoLoadData();
+        }
         private void AutoSaveData()
         {
             // Сохранение
             var data = new WarehouseData { Products = allProducts, Invoices = invoices };
             string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText("warehouse_data.json", json);      
+            File.WriteAllText("warehouse_data.json", json);
         }
 
         private void AutoLoadData()
@@ -266,7 +274,6 @@ namespace Warehouse.Forms
             }
         }
 
-        
-      
+       
     }
 }
