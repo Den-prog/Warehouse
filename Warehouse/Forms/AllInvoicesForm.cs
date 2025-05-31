@@ -25,13 +25,12 @@ namespace Warehouse.Forms
             dgvAllInvoices.DataSource = invoicesToShow.Select(inv => new
             {
                 inv.Id,
-                inv.Type,
+                Тип = inv.Type == InvoiceType.Income ? "Прибуткова накладна" : "Витратна накладна",
                 Date = inv.Date.ToShortDateString(),
                 КількістьТоварів = inv.Items?.Count ?? 0
             }).ToList();
 
             dgvAllInvoices.Columns[0].HeaderText = "ID";
-            dgvAllInvoices.Columns[1].HeaderText = "Тип";
             dgvAllInvoices.Columns[2].HeaderText = "Дата";
             dgvAllInvoices.Columns[3].HeaderText = "Кількість товарів";
 

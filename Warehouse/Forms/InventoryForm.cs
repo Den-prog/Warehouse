@@ -58,14 +58,14 @@ namespace Warehouse.Forms
             File.WriteAllText(filePath, json);
         }
 
-        private List<Product> LoadProducts()
-        {
-            if (!File.Exists(filePath))
-                return new List<Product>();
+        //private List<Product> LoadProducts()
+        //{
+        //    if (!File.Exists(filePath))
+        //        return new List<Product>();
 
-            string json = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<List<Product>>(json);
-        }
+        //    string json = File.ReadAllText(filePath);
+        //    return JsonSerializer.Deserialize<List<Product>>(json);
+        //}
 
         private List<Product> CloneProductList(List<Product> source)
         {
@@ -154,11 +154,31 @@ namespace Warehouse.Forms
 
         private void зберегтиСкладToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveProducts();
-            isSaved = true;
-            originalProducts = CloneProductList(products);
+            
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
 
-            MessageBox.Show("Зберіжино успішно.", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            saveFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 1;
+            saveFileDialog.RestoreDirectory = true;
+            saveFileDialog.FileName = "products.json";
+            saveFileDialog.Title = "Зберегти склад";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string filePath = saveFileDialog.FileName;
+
+                    string json = JsonSerializer.Serialize(products, new JsonSerializerOptions { WriteIndented = true });
+                    File.WriteAllText(filePath, json);
+
+                    MessageBox.Show("Склад успішно збережено!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Помилка збереження складу: " + ex.Message, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
         private void LoadProoductsFormFile()
         {
@@ -186,15 +206,39 @@ namespace Warehouse.Forms
         }
         private void завантажитиToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                LoadProoductsFormFile();
-                MessageBox.Show("Склад завантажено!");
+            OpenFileDialog openFileDialog = new OpenFileDialog();
 
-            }
-            catch (Exception ex)
+            openFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.Title = "Завантажити склад";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("Помилка завантеження: " + ex.Message);
+                try
+                {
+                    string filepath = openFileDialog.FileName;
+                    string json = File.ReadAllText(filepath);
+
+                    var LoadProducts = JsonSerializer.Deserialize<List<Product>>(json);
+                    products = LoadProducts;
+                    isSaved = true;
+                    originalProducts = CloneProductList(products);
+
+                    dgvInventory.DataSource = null;
+                    dgvInventory.DataSource = products;
+                    UpdateProductGridHeaders();
+
+                    MessageBox.Show($"Cклад завантажений", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (JsonException jsonEx)
+                {
+                    MessageBox.Show($"Помилка десеріалізації JSON: {jsonEx.Message}\n Переконайтеся, що файл має коректний формат JSON та відповідає структурі даних.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Помилка при завантажені: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -212,6 +256,11 @@ namespace Warehouse.Forms
         private void btnClearTxtSearch_Click(object sender, EventArgs e)
         {
             txtSearch.Clear();
+        }
+
+        private void складToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -65,7 +65,7 @@ namespace Warehouse.Forms
                 Unit = p.Unit,
                 Quantity = p.Quantity,
                 PricePerUnit = p.PricePerUnit,
-                LastDeliveryDate = DateTime.Now,
+                
             }).ToList();
             this.FormClosing += InvoiceForm_FormClosing;
             UpdateProductsGrid();
@@ -150,17 +150,25 @@ namespace Warehouse.Forms
                 Unit = p.Unit,
                 PricePerUnit = p.PricePerUnit,
                 Quantity = GetVirtualQuantity(p),
-                LastDeliveryDate = p.LastDeliveryDate
+            
             }).ToList();
 
             dgvProducts.DataSource = null;
             dgvProducts.DataSource = displayList;
 
+            if(dgvProducts.Columns.Contains("PricePerUnit"))
+            {
+                DataGridViewColumn priceColumn = dgvProducts.Columns["PricePerUnit"];
+                priceColumn.DefaultCellStyle.Format = "C2"; // Форматування як валюти
+                //priceColumn.DefaultCellStyle.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("uk-UA");
+            }
+       
+
             dgvProducts.Columns["Name"].HeaderText = "Назва";
             dgvProducts.Columns["Unit"].HeaderText = "Одиниця виміру";
             dgvProducts.Columns["PricePerUnit"].HeaderText = "Ціна за одиницю";
             dgvProducts.Columns["Quantity"].HeaderText = "Кількість";
-            dgvProducts.Columns["LastDeliveryDate"].HeaderText = "Дата останньої поставки";
+           
 
             if (selectedName != null)
             {
@@ -218,7 +226,7 @@ namespace Warehouse.Forms
                 if (invoice.Type == InvoiceType.Income)
                 {
                     product.Quantity += item.Quantity;
-                    product.LastDeliveryDate = invoice.Date;
+                    
                 }
                 else
                 {
@@ -285,7 +293,7 @@ namespace Warehouse.Forms
                 {
                     current.Quantity = original.Quantity;
                     current.PricePerUnit = original.PricePerUnit;
-                    current.LastDeliveryDate = original.LastDeliveryDate;
+                    
                 }
             }
         }

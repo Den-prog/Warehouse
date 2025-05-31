@@ -30,8 +30,8 @@
         {
             dgvInventory = new DataGridView();
             menuStrip1 = new MenuStrip();
-            файлToolStripMenuItem = new ToolStripMenuItem();
-            зберегтиСкладToolStripMenuItem = new ToolStripMenuItem();
+            складToolStripMenuItem = new ToolStripMenuItem();
+            зберегтиСкладНаДискToolStripMenuItem = new ToolStripMenuItem();
             завантажитиToolStripMenuItem = new ToolStripMenuItem();
             додатиТоварToolStripMenuItem = new ToolStripMenuItem();
             видалитиТоварToolStripMenuItem = new ToolStripMenuItem();
@@ -57,31 +57,32 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { файлToolStripMenuItem, додатиТоварToolStripMenuItem, видалитиТоварToolStripMenuItem, зберегтиToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { складToolStripMenuItem, додатиТоварToolStripMenuItem, видалитиТоварToolStripMenuItem, зберегтиToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(800, 24);
             menuStrip1.TabIndex = 2;
             menuStrip1.Text = "menuStrip1";
             // 
-            // файлToolStripMenuItem
+            // складToolStripMenuItem
             // 
-            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { зберегтиСкладToolStripMenuItem, завантажитиToolStripMenuItem });
-            файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            файлToolStripMenuItem.Size = new Size(48, 20);
-            файлToolStripMenuItem.Text = "Файл";
+            складToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { зберегтиСкладНаДискToolStripMenuItem, завантажитиToolStripMenuItem });
+            складToolStripMenuItem.Name = "складToolStripMenuItem";
+            складToolStripMenuItem.Size = new Size(52, 20);
+            складToolStripMenuItem.Text = "Склад";
+            складToolStripMenuItem.Click += складToolStripMenuItem_Click;
             // 
-            // зберегтиСкладToolStripMenuItem
+            // зберегтиСкладНаДискToolStripMenuItem
             // 
-            зберегтиСкладToolStripMenuItem.Name = "зберегтиСкладToolStripMenuItem";
-            зберегтиСкладToolStripMenuItem.Size = new Size(179, 22);
-            зберегтиСкладToolStripMenuItem.Text = "Зберегти склад";
-            зберегтиСкладToolStripMenuItem.Click += зберегтиСкладToolStripMenuItem_Click;
+            зберегтиСкладНаДискToolStripMenuItem.Name = "зберегтиСкладНаДискToolStripMenuItem";
+            зберегтиСкладНаДискToolStripMenuItem.Size = new Size(207, 22);
+            зберегтиСкладНаДискToolStripMenuItem.Text = "Зберегти склад(на диск)";
+            зберегтиСкладНаДискToolStripMenuItem.Click += зберегтиСкладToolStripMenuItem_Click;
             // 
             // завантажитиToolStripMenuItem
             // 
             завантажитиToolStripMenuItem.Name = "завантажитиToolStripMenuItem";
-            завантажитиToolStripMenuItem.Size = new Size(179, 22);
+            завантажитиToolStripMenuItem.Size = new Size(207, 22);
             завантажитиToolStripMenuItem.Text = "Завантажити склад";
             завантажитиToolStripMenuItem.Click += завантажитиToolStripMenuItem_Click;
             // 
@@ -143,7 +144,7 @@
             btnClearTxtSearch.UseVisualStyleBackColor = true;
             btnClearTxtSearch.Click += btnClearTxtSearch_Click;
             // 
-            // InventoryForm2
+            // InventoryForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -155,7 +156,7 @@
             Controls.Add(dgvInventory);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
-            Name = "InventoryForm2";
+            Name = "InventoryForm";
             Text = "InventoryForm2";
             ((System.ComponentModel.ISupportInitialize)dgvInventory).EndInit();
             menuStrip1.ResumeLayout(false);
@@ -171,8 +172,8 @@
         private ToolStripMenuItem додатиТоварToolStripMenuItem;
         private ToolStripMenuItem видалитиТоварToolStripMenuItem;
         private ToolStripMenuItem зберегтиToolStripMenuItem;
-        private ToolStripMenuItem файлToolStripMenuItem;
-        private ToolStripMenuItem зберегтиСкладToolStripMenuItem;
+        private ToolStripMenuItem складToolStripMenuItem;
+        private ToolStripMenuItem зберегтиСкладНаДискToolStripMenuItem;
         private ToolStripMenuItem завантажитиToolStripMenuItem;
         private Label lblSearch;
         private TextBox txtSearch;
