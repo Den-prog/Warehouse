@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Warehouse.Models;
-using System.Text.Json;
-using System.IO;
-using System.Text.Json.Serialization;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace Warehouse.Forms
@@ -274,6 +275,78 @@ namespace Warehouse.Forms
             }
         }
 
-       
+        private void інвентарнаВідомістьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var inventoryForm = new InventoryForm(allProducts);
+            inventoryForm.ShowDialog();
+        }
+
+        private void зберегтиДаніToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var data = new WarehouseData { Products = allProducts, Invoices = invoices };
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 1;
+            saveFileDialog.RestoreDirectory = true;
+            saveFileDialog.FileName = "warehouse_склад_накладні.json";
+            saveFileDialog.Title = "Зберегти склад і накладні";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string filePath = saveFileDialog.FileName;
+
+                    string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
+                    File.WriteAllText(filePath, json);
+
+                    MessageBox.Show("Збережено успішно!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Помилка збереження даних: " + ex.Message, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void імпортToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 1;
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.Title = "Імпорт складу і накладних";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string filepath = openFileDialog.FileName;
+                    string json = File.ReadAllText(filepath);
+
+                    var LoadWareHouseData = JsonSerializer.Deserialize<WarehouseData>(json);
+                    if (LoadWareHouseData != null)
+                    {
+                        allProducts = LoadWareHouseData.Products ?? new List<Product>();
+                        invoices = LoadWareHouseData.Invoices ?? new List<Invoice>();
+                    }
+
+                    MessageBox.Show($"Дані завантажені!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (JsonException jsonEx)
+                {
+                    MessageBox.Show($"Помилка десеріалізації JSON: {jsonEx.Message}\n Переконайтеся, що файл має коректний формат JSON та відповідає структурі даних.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Помилка при завантажені: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+        }
+
+        private void вихідToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

@@ -28,24 +28,59 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             menuStrip1 = new MenuStrip();
+            файлToolStripMenuItem = new ToolStripMenuItem();
+            зберегтиДаніToolStripMenuItem = new ToolStripMenuItem();
+            імпортToolStripMenuItem = new ToolStripMenuItem();
+            вихідToolStripMenuItem = new ToolStripMenuItem();
             документиToolStripMenuItem = new ToolStripMenuItem();
             створитиНакладнуToolStripMenuItem = new ToolStripMenuItem();
             всіНакладніToolStripMenuItem = new ToolStripMenuItem();
             зберегтиВсіНакладніToolStripMenuItem1 = new ToolStripMenuItem();
             завантажитиНакладніToolStripMenuItem = new ToolStripMenuItem();
-            bnInventory = new Button();
+            інвентарнаВідомістьToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { документиToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { файлToolStripMenuItem, документиToolStripMenuItem, інвентарнаВідомістьToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(834, 24);
+            menuStrip1.Padding = new Padding(7, 2, 0, 2);
+            menuStrip1.Size = new Size(884, 24);
             menuStrip1.TabIndex = 9;
             menuStrip1.Text = "menuStrip1";
+            // 
+            // файлToolStripMenuItem
+            // 
+            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { зберегтиДаніToolStripMenuItem, імпортToolStripMenuItem, вихідToolStripMenuItem });
+            файлToolStripMenuItem.Name = "файлToolStripMenuItem";
+            файлToolStripMenuItem.Size = new Size(48, 20);
+            файлToolStripMenuItem.Text = "Файл";
+            // 
+            // зберегтиДаніToolStripMenuItem
+            // 
+            зберегтиДаніToolStripMenuItem.Name = "зберегтиДаніToolStripMenuItem";
+            зберегтиДаніToolStripMenuItem.Size = new Size(167, 22);
+            зберегтиДаніToolStripMenuItem.Tag = "";
+            зберегтиДаніToolStripMenuItem.Text = "Зберегти дані";
+            зберегтиДаніToolStripMenuItem.Click += зберегтиДаніToolStripMenuItem_Click;
+            // 
+            // імпортToolStripMenuItem
+            // 
+            імпортToolStripMenuItem.Name = "імпортToolStripMenuItem";
+            імпортToolStripMenuItem.Size = new Size(167, 22);
+            імпортToolStripMenuItem.Text = "Імпортувати дані";
+            імпортToolStripMenuItem.Click += імпортToolStripMenuItem_Click;
+            // 
+            // вихідToolStripMenuItem
+            // 
+            вихідToolStripMenuItem.Name = "вихідToolStripMenuItem";
+            вихідToolStripMenuItem.Size = new Size(167, 22);
+            вихідToolStripMenuItem.Text = "Вихід";
+            вихідToolStripMenuItem.Click += вихідToolStripMenuItem_Click_1;
             // 
             // документиToolStripMenuItem
             // 
@@ -83,26 +118,26 @@
             завантажитиНакладніToolStripMenuItem.Text = "Завантажити накладні";
             завантажитиНакладніToolStripMenuItem.Click += завантажитиНакладніToolStripMenuItem_Click;
             // 
-            // bnInventory
+            // інвентарнаВідомістьToolStripMenuItem
             // 
-            bnInventory.Location = new Point(175, 38);
-            bnInventory.Name = "bnInventory";
-            bnInventory.Size = new Size(173, 23);
-            bnInventory.TabIndex = 10;
-            bnInventory.Text = "Інвентарна відомість ";
-            bnInventory.UseVisualStyleBackColor = true;
-            bnInventory.Click += bnInventory_Click;
+            інвентарнаВідомістьToolStripMenuItem.Name = "інвентарнаВідомістьToolStripMenuItem";
+            інвентарнаВідомістьToolStripMenuItem.Size = new Size(133, 20);
+            інвентарнаВідомістьToolStripMenuItem.Text = "Інвентарна відомість";
+            інвентарнаВідомістьToolStripMenuItem.Click += інвентарнаВідомістьToolStripMenuItem_Click;
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(834, 724);
-            Controls.Add(bnInventory);
+            ClientSize = new Size(884, 575);
             Controls.Add(menuStrip1);
+            Font = new Font("Segoe UI", 10F);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
+            MinimumSize = new Size(300, 104);
             Name = "MainForm";
-            Text = "MainForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Головна";
             Load += MainForm_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
@@ -112,11 +147,15 @@
 
         #endregion
         private MenuStrip menuStrip1;
-        private Button bnInventory;
         private ToolStripMenuItem документиToolStripMenuItem;
         private ToolStripMenuItem всіНакладніToolStripMenuItem;
         private ToolStripMenuItem створитиНакладнуToolStripMenuItem;
         private ToolStripMenuItem зберегтиВсіНакладніToolStripMenuItem1;
         private ToolStripMenuItem завантажитиНакладніToolStripMenuItem;
+        private ToolStripMenuItem інвентарнаВідомістьToolStripMenuItem;
+        private ToolStripMenuItem файлToolStripMenuItem;
+        private ToolStripMenuItem імпортToolStripMenuItem;
+        private ToolStripMenuItem зберегтиДаніToolStripMenuItem;
+        private ToolStripMenuItem вихідToolStripMenuItem;
     }
 }

@@ -121,7 +121,7 @@ namespace Warehouse.Forms
             if (!isSaved)
             {
                 var result = MessageBox.Show(
-                  "Ви не зберегли накладну. Зберегти перед виходом?",
+                  "Ви не зберегли дані. Зберегти перед виходом?",
                   "Підтвердження",
                   MessageBoxButtons.YesNoCancel,
                   MessageBoxIcon.Warning
@@ -154,7 +154,7 @@ namespace Warehouse.Forms
 
         private void зберегтиСкладToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
             saveFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
@@ -220,8 +220,9 @@ namespace Warehouse.Forms
                     string filepath = openFileDialog.FileName;
                     string json = File.ReadAllText(filepath);
 
-                    var LoadProducts = JsonSerializer.Deserialize<List<Product>>(json);
-                    products = LoadProducts;
+                    var LoadProducts = JsonSerializer.Deserialize<List<Product>>(json) ?? new List<Product>();
+                    products.Clear();
+                    products.AddRange(LoadProducts);
                     isSaved = true;
                     originalProducts = CloneProductList(products);
 
@@ -259,6 +260,11 @@ namespace Warehouse.Forms
         }
 
         private void складToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblSearch_Click(object sender, EventArgs e)
         {
 
         }

@@ -27,7 +27,12 @@ namespace Warehouse.Forms
         {
             lblInvoiceNumber.Text = $"Номер накладної: {invoice.Id}";
             lblInvoiceDate.Text = $"Дата: {invoice.Date.ToShortDateString()}";
-            lblInvoiceType.Text = $"Тип: {invoice.Type}";
+            lblInvoiceType.Text = $"Тип: {(invoice.Type == InvoiceType.Income? "Прибуткова накладна" : "Витратна накладна")}";
+            
+           
+
+
+
 
             var itemsForGrid = invoice.Items.Select(item => new
             {
@@ -42,6 +47,8 @@ namespace Warehouse.Forms
             dgvInvoiceItems.DataSource = itemsForGrid;
             UpdateProductGridHeaders();
 
+            decimal totalValueInvoice = itemsForGrid.Sum(item => item.TotalValue);
+            lblInvoiceSuma.Text = $"Сума: {totalValueInvoice:C2}";
         }
         private void UpdateProductGridHeaders()
         {

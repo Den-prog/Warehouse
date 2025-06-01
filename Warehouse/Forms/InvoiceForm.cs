@@ -40,9 +40,9 @@ namespace Warehouse.Forms
             this.allInvoices = allInvoices;
 
             dgvProducts.DataSource = products;
-            dgvProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+           /* dgvProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvProducts.MultiSelect = false;
-            dgvProducts.ReadOnly = true;
+            dgvProducts.ReadOnly = true;*/
 
 
 
@@ -206,7 +206,7 @@ namespace Warehouse.Forms
             if (currentItems.Count <= 0)
             {
 
-                MessageBox.Show("Накладна порожня");
+                MessageBox.Show("Накладна не містить товару.", "Попередження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

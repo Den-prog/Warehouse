@@ -30,97 +30,98 @@
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvoiceForm));
             dgvProducts = new DataGridView();
             nudQuantity = new NumericUpDown();
             comboBoxInvoiceType = new ComboBox();
             btnAddItem = new Button();
             SaveInvoice = new Button();
-            menuStrip1 = new MenuStrip();
             ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudQuantity).BeginInit();
             SuspendLayout();
             // 
             // dgvProducts
             // 
+            dgvProducts.AllowUserToAddRows = false;
+            dgvProducts.AllowUserToDeleteRows = false;
+            dgvProducts.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvProducts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvProducts.BorderStyle = BorderStyle.None;
             dgvProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = SystemColors.Window;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 10F);
             dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
             dataGridViewCellStyle1.NullValue = null;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
             dgvProducts.DefaultCellStyle = dataGridViewCellStyle1;
-            dgvProducts.Location = new Point(12, 60);
+            dgvProducts.Location = new Point(12, 62);
+            dgvProducts.MultiSelect = false;
             dgvProducts.Name = "dgvProducts";
-            dgvProducts.Size = new Size(616, 150);
+            dgvProducts.ReadOnly = true;
+            dgvProducts.Size = new Size(725, 590);
             dgvProducts.TabIndex = 0;
             dgvProducts.CellContentClick += dgvProducts_CellContentClick;
             // 
             // nudQuantity
             // 
-            nudQuantity.Location = new Point(197, 266);
+            nudQuantity.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            nudQuantity.Location = new Point(756, 74);
             nudQuantity.Name = "nudQuantity";
-            nudQuantity.Size = new Size(120, 23);
+            nudQuantity.Size = new Size(126, 25);
             nudQuantity.TabIndex = 2;
             // 
             // comboBoxInvoiceType
             // 
             comboBoxInvoiceType.FormattingEnabled = true;
-            comboBoxInvoiceType.Location = new Point(49, 266);
+            comboBoxInvoiceType.Location = new Point(12, 14);
             comboBoxInvoiceType.Name = "comboBoxInvoiceType";
-            comboBoxInvoiceType.Size = new Size(121, 23);
+            comboBoxInvoiceType.Size = new Size(187, 25);
             comboBoxInvoiceType.TabIndex = 3;
             comboBoxInvoiceType.SelectedIndexChanged += comboBoxInvoiceType_SelectedIndexChanged;
             // 
             // btnAddItem
             // 
-            btnAddItem.Location = new Point(197, 301);
+            btnAddItem.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnAddItem.Location = new Point(756, 118);
             btnAddItem.Name = "btnAddItem";
-            btnAddItem.Size = new Size(75, 23);
+            btnAddItem.Size = new Size(126, 27);
             btnAddItem.TabIndex = 4;
-            btnAddItem.Text = "AddItem";
+            btnAddItem.Text = "Додати позицію";
             btnAddItem.UseVisualStyleBackColor = true;
             btnAddItem.Click += btnAddItem_Click;
             // 
             // SaveInvoice
             // 
-            SaveInvoice.Location = new Point(29, 412);
+            SaveInvoice.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            SaveInvoice.Location = new Point(784, 164);
             SaveInvoice.Name = "SaveInvoice";
-            SaveInvoice.Size = new Size(115, 23);
+            SaveInvoice.Size = new Size(78, 42);
             SaveInvoice.TabIndex = 5;
-            SaveInvoice.Text = "SaveInvoice";
+            SaveInvoice.Text = "ОК";
             SaveInvoice.UseVisualStyleBackColor = true;
             SaveInvoice.Click += SaveInvoice_Click;
             // 
-            // menuStrip1
-            // 
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 24);
-            menuStrip1.TabIndex = 8;
-            menuStrip1.Text = "menuStrip1";
-            // 
             // InvoiceForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 692);
+            ClientSize = new Size(894, 706);
             Controls.Add(SaveInvoice);
             Controls.Add(btnAddItem);
             Controls.Add(comboBoxInvoiceType);
             Controls.Add(nudQuantity);
             Controls.Add(dgvProducts);
-            Controls.Add(menuStrip1);
-            MainMenuStrip = menuStrip1;
+            Font = new Font("Segoe UI", 10F);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(910, 745);
             Name = "InvoiceForm";
-            Text = "InvoiceForm";
+            Text = "Накладна";
             ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudQuantity).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -130,6 +131,5 @@
         private ComboBox comboBoxInvoiceType;
         private Button btnAddItem;
         private Button SaveInvoice;
-        private MenuStrip menuStrip1;
     }
 }
