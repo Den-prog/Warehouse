@@ -46,7 +46,7 @@
             dgvProducts.AllowUserToDeleteRows = false;
             dgvProducts.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvProducts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvProducts.BorderStyle = BorderStyle.None;
+            dgvProducts.BackgroundColor = SystemColors.Control;
             dgvProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = SystemColors.Window;
@@ -57,10 +57,11 @@
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
             dgvProducts.DefaultCellStyle = dataGridViewCellStyle1;
+            dgvProducts.GridColor = SystemColors.ControlLight;
             dgvProducts.Location = new Point(12, 62);
-            dgvProducts.MultiSelect = false;
             dgvProducts.Name = "dgvProducts";
             dgvProducts.ReadOnly = true;
+            dgvProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvProducts.Size = new Size(725, 590);
             dgvProducts.TabIndex = 0;
             dgvProducts.CellContentClick += dgvProducts_CellContentClick;
@@ -76,7 +77,7 @@
             // comboBoxInvoiceType
             // 
             comboBoxInvoiceType.FormattingEnabled = true;
-            comboBoxInvoiceType.Location = new Point(12, 14);
+            comboBoxInvoiceType.Location = new Point(12, 22);
             comboBoxInvoiceType.Name = "comboBoxInvoiceType";
             comboBoxInvoiceType.Size = new Size(187, 25);
             comboBoxInvoiceType.TabIndex = 3;

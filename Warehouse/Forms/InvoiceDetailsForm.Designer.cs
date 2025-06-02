@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvoiceDetailsForm));
             dgvInvoiceItems = new DataGridView();
             lblInvoiceNumber = new Label();
             lblInvoiceDate = new Label();
@@ -38,60 +39,72 @@
             // 
             // dgvInvoiceItems
             // 
+            dgvInvoiceItems.AllowUserToAddRows = false;
+            dgvInvoiceItems.AllowUserToDeleteRows = false;
+            dgvInvoiceItems.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgvInvoiceItems.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvInvoiceItems.BackgroundColor = SystemColors.Control;
             dgvInvoiceItems.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvInvoiceItems.Location = new Point(19, 71);
+            dgvInvoiceItems.GridColor = SystemColors.ControlLight;
+            dgvInvoiceItems.Location = new Point(12, 80);
+            dgvInvoiceItems.MultiSelect = false;
             dgvInvoiceItems.Name = "dgvInvoiceItems";
-            dgvInvoiceItems.Size = new Size(652, 150);
+            dgvInvoiceItems.ReadOnly = true;
+            dgvInvoiceItems.Size = new Size(805, 430);
             dgvInvoiceItems.TabIndex = 0;
             // 
             // lblInvoiceNumber
             // 
             lblInvoiceNumber.AutoSize = true;
-            lblInvoiceNumber.Location = new Point(12, 31);
+            lblInvoiceNumber.Location = new Point(12, 14);
             lblInvoiceNumber.Name = "lblInvoiceNumber";
-            lblInvoiceNumber.Size = new Size(106, 15);
+            lblInvoiceNumber.Size = new Size(122, 19);
             lblInvoiceNumber.TabIndex = 1;
             lblInvoiceNumber.Text = "Номер накладної:";
             // 
             // lblInvoiceDate
             // 
             lblInvoiceDate.AutoSize = true;
-            lblInvoiceDate.Location = new Point(159, 31);
+            lblInvoiceDate.Location = new Point(12, 42);
             lblInvoiceDate.Name = "lblInvoiceDate";
-            lblInvoiceDate.Size = new Size(38, 15);
+            lblInvoiceDate.Size = new Size(115, 19);
             lblInvoiceDate.TabIndex = 2;
-            lblInvoiceDate.Text = "Дата: ";
+            lblInvoiceDate.Text = "Дата створення: ";
             // 
             // lblInvoiceType
             // 
             lblInvoiceType.AutoSize = true;
-            lblInvoiceType.Location = new Point(275, 31);
+            lblInvoiceType.Location = new Point(202, 14);
             lblInvoiceType.Name = "lblInvoiceType";
-            lblInvoiceType.Size = new Size(30, 15);
+            lblInvoiceType.Size = new Size(35, 19);
             lblInvoiceType.TabIndex = 3;
             lblInvoiceType.Text = "Тип:";
             // 
             // lblInvoiceSuma
             // 
+            lblInvoiceSuma.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblInvoiceSuma.AutoSize = true;
-            lblInvoiceSuma.Location = new Point(29, 320);
+            lblInvoiceSuma.Location = new Point(638, 523);
             lblInvoiceSuma.Name = "lblInvoiceSuma";
-            lblInvoiceSuma.Size = new Size(42, 15);
+            lblInvoiceSuma.Size = new Size(49, 19);
             lblInvoiceSuma.TabIndex = 4;
             lblInvoiceSuma.Text = "Сума: ";
             // 
             // InvoiceDetailsForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(829, 551);
             Controls.Add(lblInvoiceSuma);
             Controls.Add(lblInvoiceType);
             Controls.Add(lblInvoiceDate);
             Controls.Add(lblInvoiceNumber);
             Controls.Add(dgvInvoiceItems);
+            Font = new Font("Segoe UI", 10F);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(845, 590);
             Name = "InvoiceDetailsForm";
-            Text = "InvoiceDetailsForm";
+            Text = "Перегляд накладної";
             ((System.ComponentModel.ISupportInitialize)dgvInvoiceItems).EndInit();
             ResumeLayout(false);
             PerformLayout();

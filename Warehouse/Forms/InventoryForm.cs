@@ -79,7 +79,7 @@ namespace Warehouse.Forms
             }).ToList();
             UpdateProductGridHeaders();
         }
-
+       
 
 
         private void видалитиТоварToolStripMenuItem_Click(object sender, EventArgs e)
@@ -203,6 +203,22 @@ namespace Warehouse.Forms
             dgvInventory.Columns["Quantity"].HeaderText = "Кількість";
             dgvInventory.Columns["LastDeliveryDate"].HeaderText = "Дата останнього завезення";
             dgvInventory.Columns["TotalValue"].HeaderText = "Загальна вартість";
+
+            if(dgvInventory.Columns.Contains("TotalValue") && dgvInventory.Columns.Contains("PricePerUnit"))
+            {
+                DataGridViewColumn totalValueColumn = dgvInventory.Columns["TotalValue"];
+                DataGridViewColumn priceColumn = dgvInventory.Columns["PricePerUnit"];
+                totalValueColumn.DefaultCellStyle.Format = "C2";
+                priceColumn.DefaultCellStyle.Format = "C2";// Форматування як валюти
+                //totalValueColumn.DefaultCellStyle.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("uk-UA");
+            }
+
+            /* if(dgvProducts.Columns.Contains("PricePerUnit"))
+           {
+               DataGridViewColumn priceColumn = dgvProducts.Columns["PricePerUnit"];
+       priceColumn.DefaultCellStyle.Format = "C2"; // Форматування як валюти
+               //priceColumn.DefaultCellStyle.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("uk-UA");
+           }*/
         }
         private void завантажитиToolStripMenuItem_Click(object sender, EventArgs e)
         {

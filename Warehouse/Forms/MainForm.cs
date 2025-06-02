@@ -47,7 +47,7 @@ namespace Warehouse.Forms
         }
         private void AutoSaveData()
         {
-            // Сохранение
+           
             var data = new WarehouseData { Products = allProducts, Invoices = invoices };
             string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText("warehouse_data.json", json);
@@ -55,15 +55,17 @@ namespace Warehouse.Forms
 
         private void AutoLoadData()
         {
-            // Загрузка
+            
             if (File.Exists("warehouse_data.json"))
             {
                 string json = File.ReadAllText("warehouse_data.json");
                 var data = JsonSerializer.Deserialize<WarehouseData>(json);
+                
                 if (data != null)
                 {
                     allProducts = data.Products ?? new List<Product>();
                     invoices = data.Invoices ?? new List<Invoice>();
+                    Invoice.UpdateNextId(invoices); // Обновляем ID накладных
                 }
             }
         }
@@ -261,6 +263,8 @@ namespace Warehouse.Forms
                     string json = File.ReadAllText(filepath);
 
                     var LoadAllInvoices = JsonSerializer.Deserialize<List<Invoice>>(json);
+                    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    Invoice.UpdateNextId(LoadAllInvoices);
                     invoices = LoadAllInvoices;
                     MessageBox.Show($"Накладні завантажені", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -328,6 +332,8 @@ namespace Warehouse.Forms
                     {
                         allProducts = LoadWareHouseData.Products ?? new List<Product>();
                         invoices = LoadWareHouseData.Invoices ?? new List<Invoice>();
+                        // !!!!!!!!!
+                        Invoice.UpdateNextId(invoices);
                     }
 
                     MessageBox.Show($"Дані завантажені!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -341,7 +347,6 @@ namespace Warehouse.Forms
                     MessageBox.Show($"Помилка при завантажені: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
         }
 
         private void вихідToolStripMenuItem_Click_1(object sender, EventArgs e)

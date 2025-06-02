@@ -11,11 +11,27 @@ namespace Warehouse.Models
     public class Invoice
     {
         private static int _nextId = 1;
-        public int Id { get; set; }
-        public Invoice()
+        public int Id { get;  set; }
+       /* public Invoice()
+        {
+           Id = _nextId++;
+           
+
+        }*/
+        public void AssignId()
         {
             Id = _nextId++;
-            //Items = new BindingList<InvoiceItem>();
+        }
+        public static void UpdateNextId(IEnumerable<Invoice> invoices)
+        {
+            if (invoices == null || !invoices.Any())
+            {
+                _nextId = 1;
+            }
+            else
+            {
+                _nextId = invoices.Max(i => i.Id) + 1;
+            }
         }
         public DateTime Date { get; set; }
         public BindingList<InvoiceItem> Items{ get; set; }

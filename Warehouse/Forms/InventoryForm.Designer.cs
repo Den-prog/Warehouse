@@ -54,7 +54,9 @@
             dgvInventory.AllowUserToDeleteRows = false;
             dgvInventory.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvInventory.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvInventory.BackgroundColor = SystemColors.Control;
             dgvInventory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvInventory.GridColor = SystemColors.ControlLight;
             dgvInventory.Location = new Point(12, 165);
             dgvInventory.MultiSelect = false;
             dgvInventory.Name = "dgvInventory";
@@ -138,7 +140,7 @@
             btnSeaarch.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
             btnSeaarch.Location = new Point(185, 58);
             btnSeaarch.Name = "btnSeaarch";
-            btnSeaarch.Size = new Size(75, 26);
+            btnSeaarch.Size = new Size(75, 27);
             btnSeaarch.TabIndex = 10;
             btnSeaarch.Text = "Знайти";
             btnSeaarch.UseVisualStyleBackColor = true;

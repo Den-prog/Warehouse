@@ -17,7 +17,14 @@ namespace Warehouse.Forms
         {
             InitializeComponent();
             allInvoices = invoices;
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            Invoice.UpdateNextId(allInvoices);
             LoadInvoices(allInvoices);
+
+            cmbType.Items.Add("Всі");
+            cmbType.Items.Add("Прибуткова накладна");
+            cmbType.Items.Add("Витратна накладна");
+            cmbType.SelectedIndex = 0;
         }
         private void LoadInvoices(List<Invoice> invoicesToShow)
         {
@@ -34,7 +41,7 @@ namespace Warehouse.Forms
             dgvAllInvoices.Columns[2].HeaderText = "Дата";
             dgvAllInvoices.Columns[3].HeaderText = "Кількість товарів";
 
-            
+
 
             //// Debug: Show a message if there are no invoices
             //if (data == null || data.Count == 0)
@@ -68,5 +75,60 @@ namespace Warehouse.Forms
 
         }
 
+        private void btnFilter_Click(object sender, EventArgs e)
+        {
+            var filtered = allInvoices.AsEnumerable();
+
+            if (cmbType.SelectedIndex > 0)
+            {
+                InvoiceType selectedType = cmbType.SelectedIndex == 1 ? InvoiceType.Income : InvoiceType.Outcome;
+                filtered = filtered.Where(inv => inv.Type == selectedType);
+
+            }
+            if (dateTimePicker1.Checked)
+            {
+
+                var selectedDate = dateTimePicker1.Value.Date;
+                filtered = filtered.Where(inv => inv.Date.Date == selectedDate);
+            }
+            if (nudCount.Value > 0)
+            {
+                int count = (int)nudCount.Value;
+                filtered = filtered.Where(inv => inv.Items.Count == count);
+            }
+            LoadInvoices(filtered.ToList());
+        }
+
+        private void btnDeleteInvoice_Click(object sender, EventArgs e)
+        {
+            if (dgvAllInvoices.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Будь ласка, виберіть накладну для видалення.", "Попередження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            
+            int id = (int)dgvAllInvoices.SelectedRows[0].Cells[0].Value;
+            var invoiceToDelete = allInvoices.FirstOrDefault(i => i.Id == id);
+
+            if (invoiceToDelete == null)
+            {
+                MessageBox.Show("Не вдалося знайти накладну для видалення.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var confirm = MessageBox.Show(
+                $"Ви дійсно хочете видалити накладну №{invoiceToDelete.Id}?",
+                "Підтвердження",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm == DialogResult.Yes)
+            {
+                allInvoices.Remove(invoiceToDelete);
+                LoadInvoices(allInvoices);
+            }
+
+        }
     }
 }

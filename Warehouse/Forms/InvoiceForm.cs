@@ -111,15 +111,21 @@ namespace Warehouse.Forms
                 MessageBox.Show("Недостатньо товару на складі.");
                 return;
             }
-
-            InvoiceItem newItem = new InvoiceItem
+            var exisitingItem = currentItems.FirstOrDefault(i => i.Product.Name == selectedProduct.Name);
+            if (exisitingItem != null)
             {
-                Product = selectedProduct,
-                Quantity = quantity
+                exisitingItem.Quantity += quantity;
+            }
+            else
+            {
+                InvoiceItem newItem = new InvoiceItem
+                {
+                    Product = selectedProduct,
+                    Quantity = quantity
 
-            };
-            currentItems.Add(newItem);
-
+                };
+                currentItems.Add(newItem);
+            }
 
             UpdateProductsGrid();
 
@@ -217,6 +223,7 @@ namespace Warehouse.Forms
                 Type = GetSelectedInvoiceType(),
                 Items = new BindingList<InvoiceItem>(currentItems)
             };
+            invoice.AssignId();
 
 
 
@@ -258,6 +265,8 @@ namespace Warehouse.Forms
 
         private void InvoiceForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+
+
             if (!isSaved && currentItems.Count > 0)
             {
                 var result = MessageBox.Show(
@@ -269,18 +278,31 @@ namespace Warehouse.Forms
 
                 if (result == DialogResult.Yes)
                 {
-                    SaveInvoice.PerformClick();
-                    // форма закриється після збереження
+                    if (result == DialogResult.Yes)
+                    {
+                        // Сохраняем только если есть товары
+                        if (currentItems.Count > 0)
+                        {
+                            SaveInvoice.PerformClick();
+                            // форма закроется после сохранения
+                        }
+                        else
+                        {
+                            MessageBox.Show("Накладна не містить товару.", "Попередження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            e.Cancel = true; // Не закрывать форму, если пользователь хочет сохранить, но товаров нет
+                        }
+                    }
+                    else if (result == DialogResult.No)
+                    {
+                        // Відкат змін 
+                        RollbackChanges();
+                    }
+                    else if (result == DialogResult.Cancel)
+                    {
+                        e.Cancel = true; // Не закривати форму
+                    }
                 }
-                else if (result == DialogResult.No)
-                {
-                    // Відкат змін 
-                    RollbackChanges();
-                }
-                else if (result == DialogResult.Cancel)
-                {
-                    e.Cancel = true; // Не закривати форму
-                }
+
             }
         }
         private void RollbackChanges()
@@ -353,7 +375,7 @@ namespace Warehouse.Forms
 
         }
 
-        private void видалитиТоварToolStripMenuItem_Click(object sender, EventArgs e)
+    /*    private void видалитиТоварToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dgvProducts.SelectedRows.Count == 0)
             {
@@ -373,7 +395,7 @@ namespace Warehouse.Forms
                 }
             }
 
-        }
+        }*/
 
         private void зберегтиНакладнуToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -383,12 +405,18 @@ namespace Warehouse.Forms
 
         private void зберегтиНакладнууФайлToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (currentItems.Count == 0)
+            {
+                MessageBox.Show("Накладна не містить товару.", "Попередження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             var invoice = new Invoice
             {
                 Date = DateTime.Now,
                 Type = (InvoiceType)comboBoxInvoiceType.SelectedItem,
                 Items = new BindingList<InvoiceItem>(currentItems)
             };
+            invoice.AssignId(); // Присвоюємо унікальний ID
             allInvoices.Add(invoice);
             SaveInvoiceToFile(allInvoices, "invoices.json");
             MessageBox.Show("Накладна збережена у файл");

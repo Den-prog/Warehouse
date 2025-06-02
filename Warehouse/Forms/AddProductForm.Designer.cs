@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddProductForm));
             txtName = new TextBox();
             nudPrice = new NumericUpDown();
             label1 = new Label();
@@ -43,69 +44,69 @@
             // 
             // txtName
             // 
-            txtName.Location = new Point(136, 89);
+            txtName.Location = new Point(135, 12);
             txtName.Name = "txtName";
-            txtName.Size = new Size(100, 23);
+            txtName.Size = new Size(288, 25);
             txtName.TabIndex = 0;
             // 
             // nudPrice
             // 
-            nudPrice.Location = new Point(136, 201);
+            nudPrice.Location = new Point(135, 163);
             nudPrice.Name = "nudPrice";
-            nudPrice.Size = new Size(120, 23);
+            nudPrice.Size = new Size(120, 25);
             nudPrice.TabIndex = 3;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(10, 92);
+            label1.Location = new Point(12, 18);
             label1.Name = "label1";
-            label1.Size = new Size(39, 15);
+            label1.Size = new Size(46, 19);
             label1.TabIndex = 4;
             label1.Text = "Назва";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(10, 135);
+            label2.Location = new Point(12, 60);
             label2.Name = "label2";
-            label2.Size = new Size(97, 15);
+            label2.Size = new Size(114, 19);
             label2.TabIndex = 5;
             label2.Text = "Одиниця виміру";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(25, 203);
+            label3.Location = new Point(12, 165);
             label3.Name = "label3";
-            label3.Size = new Size(100, 15);
+            label3.Size = new Size(117, 19);
             label3.TabIndex = 6;
             label3.Text = "Ціна за одиницю";
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(116, 264);
+            btnSave.Location = new Point(12, 216);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(75, 23);
+            btnSave.Size = new Size(114, 30);
             btnSave.TabIndex = 7;
-            btnSave.Text = "ОК";
+            btnSave.Text = "Додати товар";
             btnSave.UseVisualStyleBackColor = true;
             btnSave.Click += btnSave_Click;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(25, 174);
+            label4.Location = new Point(12, 108);
             label4.Name = "label4";
-            label4.Size = new Size(56, 15);
+            label4.Size = new Size(63, 19);
             label4.TabIndex = 9;
             label4.Text = "Кількість";
             // 
             // nudQuantity
             // 
-            nudQuantity.Location = new Point(136, 172);
+            nudQuantity.Location = new Point(135, 108);
             nudQuantity.Name = "nudQuantity";
-            nudQuantity.Size = new Size(120, 23);
+            nudQuantity.Size = new Size(120, 25);
             nudQuantity.TabIndex = 10;
             nudQuantity.ValueChanged += nudQuantity_ValueChanged;
             // 
@@ -113,16 +114,16 @@
             // 
             cmbUnit.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbUnit.FormattingEnabled = true;
-            cmbUnit.Location = new Point(136, 132);
+            cmbUnit.Location = new Point(135, 60);
             cmbUnit.Name = "cmbUnit";
-            cmbUnit.Size = new Size(121, 23);
+            cmbUnit.Size = new Size(120, 25);
             cmbUnit.TabIndex = 11;
             // 
             // AddProductForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(494, 286);
             Controls.Add(cmbUnit);
             Controls.Add(nudQuantity);
             Controls.Add(label4);
@@ -132,8 +133,12 @@
             Controls.Add(label1);
             Controls.Add(nudPrice);
             Controls.Add(txtName);
+            Font = new Font("Segoe UI", 10F);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(510, 325);
             Name = "AddProductForm";
-            Text = "AddProductForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Новий товар";
             ((System.ComponentModel.ISupportInitialize)nudPrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)nudQuantity).EndInit();
             ResumeLayout(false);
