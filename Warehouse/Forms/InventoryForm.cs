@@ -24,7 +24,7 @@ namespace Warehouse.Forms
         {
             InitializeComponent();
             this.products = products;
-            //products = LoadProducts();
+      
             originalProducts = CloneProductList(products);
 
             dgvInventory.DataSource = null;
@@ -79,7 +79,7 @@ namespace Warehouse.Forms
             }).ToList();
             UpdateProductGridHeaders();
         }
-       
+
 
 
         private void видалитиТоварToolStripMenuItem_Click(object sender, EventArgs e)
@@ -109,11 +109,7 @@ namespace Warehouse.Forms
 
         private void зберегтиToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveProducts();
-            isSaved = true;
-            originalProducts = CloneProductList(products);
-
-            MessageBox.Show("Зберіжино успішно.", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
+           
         }
 
         private void InventoryForm2_FormClosing(object sender, FormClosingEventArgs e)
@@ -145,8 +141,33 @@ namespace Warehouse.Forms
         }
         private void RollbackChanges()
         {
-            // Відновлює початкові кількості
-            products = CloneProductList(originalProducts);
+           
+            foreach (var originalProduct in originalProducts)
+            {
+                var product = products.FirstOrDefault(p => p.Name == originalProduct.Name);
+                if (product != null)
+                {
+                    product.Quantity = originalProduct.Quantity;
+                    product.Unit = originalProduct.Unit;
+                    product.PricePerUnit = originalProduct.PricePerUnit;
+                    product.LastDeliveryDate = originalProduct.LastDeliveryDate;
+                }
+                else
+                {
+                                       
+                    products.Add(new Product
+                    {
+                        Name = originalProduct.Name,
+                        Quantity = originalProduct.Quantity,
+                        Unit = originalProduct.Unit,
+                        PricePerUnit = originalProduct.PricePerUnit,
+                        LastDeliveryDate = originalProduct.LastDeliveryDate
+                    });
+                }
+                
+            }
+            products.RemoveAll(p => !originalProducts.Any(o => o.Name == p.Name));
+
             dgvInventory.DataSource = null;
             dgvInventory.DataSource = products;
             UpdateProductGridHeaders();
@@ -160,7 +181,7 @@ namespace Warehouse.Forms
             saveFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
             saveFileDialog.FilterIndex = 1;
             saveFileDialog.RestoreDirectory = true;
-            saveFileDialog.FileName = "products.json";
+            saveFileDialog.FileName = "склад_продукти.json";
             saveFileDialog.Title = "Зберегти склад";
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -204,7 +225,7 @@ namespace Warehouse.Forms
             dgvInventory.Columns["LastDeliveryDate"].HeaderText = "Дата останнього завезення";
             dgvInventory.Columns["TotalValue"].HeaderText = "Загальна вартість";
 
-            if(dgvInventory.Columns.Contains("TotalValue") && dgvInventory.Columns.Contains("PricePerUnit"))
+            if (dgvInventory.Columns.Contains("TotalValue") && dgvInventory.Columns.Contains("PricePerUnit"))
             {
                 DataGridViewColumn totalValueColumn = dgvInventory.Columns["TotalValue"];
                 DataGridViewColumn priceColumn = dgvInventory.Columns["PricePerUnit"];
@@ -246,7 +267,7 @@ namespace Warehouse.Forms
                     dgvInventory.DataSource = products;
                     UpdateProductGridHeaders();
 
-                    MessageBox.Show($"Cклад завантажений", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Cклад завантажений!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (JsonException jsonEx)
                 {
@@ -273,6 +294,7 @@ namespace Warehouse.Forms
         private void btnClearTxtSearch_Click(object sender, EventArgs e)
         {
             txtSearch.Clear();
+            dgvInventory.DataSource = products; 
         }
 
         private void складToolStripMenuItem_Click(object sender, EventArgs e)
@@ -283,6 +305,15 @@ namespace Warehouse.Forms
         private void lblSearch_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnSaveWrHouse_Click(object sender, EventArgs e)
+        {
+            SaveProducts();
+            isSaved = true;
+            originalProducts = CloneProductList(products);
+
+            MessageBox.Show("Збережено успішно!", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

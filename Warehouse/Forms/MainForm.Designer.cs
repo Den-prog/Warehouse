@@ -33,7 +33,6 @@
             файлToolStripMenuItem = new ToolStripMenuItem();
             зберегтиДаніToolStripMenuItem = new ToolStripMenuItem();
             імпортToolStripMenuItem = new ToolStripMenuItem();
-            вихідToolStripMenuItem = new ToolStripMenuItem();
             документиToolStripMenuItem = new ToolStripMenuItem();
             створитиНакладнуToolStripMenuItem = new ToolStripMenuItem();
             всіНакладніToolStripMenuItem = new ToolStripMenuItem();
@@ -55,7 +54,7 @@
             // 
             // файлToolStripMenuItem
             // 
-            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { зберегтиДаніToolStripMenuItem, імпортToolStripMenuItem, вихідToolStripMenuItem });
+            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { зберегтиДаніToolStripMenuItem, імпортToolStripMenuItem });
             файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             файлToolStripMenuItem.Size = new Size(48, 20);
             файлToolStripMenuItem.Text = "Файл";
@@ -63,7 +62,7 @@
             // зберегтиДаніToolStripMenuItem
             // 
             зберегтиДаніToolStripMenuItem.Name = "зберегтиДаніToolStripMenuItem";
-            зберегтиДаніToolStripMenuItem.Size = new Size(167, 22);
+            зберегтиДаніToolStripMenuItem.Size = new Size(180, 22);
             зберегтиДаніToolStripMenuItem.Tag = "";
             зберегтиДаніToolStripMenuItem.Text = "Зберегти дані";
             зберегтиДаніToolStripMenuItem.Click += зберегтиДаніToolStripMenuItem_Click;
@@ -71,16 +70,9 @@
             // імпортToolStripMenuItem
             // 
             імпортToolStripMenuItem.Name = "імпортToolStripMenuItem";
-            імпортToolStripMenuItem.Size = new Size(167, 22);
+            імпортToolStripMenuItem.Size = new Size(180, 22);
             імпортToolStripMenuItem.Text = "Імпортувати дані";
             імпортToolStripMenuItem.Click += імпортToolStripMenuItem_Click;
-            // 
-            // вихідToolStripMenuItem
-            // 
-            вихідToolStripMenuItem.Name = "вихідToolStripMenuItem";
-            вихідToolStripMenuItem.Size = new Size(167, 22);
-            вихідToolStripMenuItem.Text = "Вихід";
-            вихідToolStripMenuItem.Click += вихідToolStripMenuItem_Click_1;
             // 
             // документиToolStripMenuItem
             // 
@@ -156,6 +148,5 @@
         private ToolStripMenuItem файлToolStripMenuItem;
         private ToolStripMenuItem імпортToolStripMenuItem;
         private ToolStripMenuItem зберегтиДаніToolStripMenuItem;
-        private ToolStripMenuItem вихідToolStripMenuItem;
     }
 }

@@ -97,11 +97,11 @@
             // SaveInvoice
             // 
             SaveInvoice.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            SaveInvoice.Location = new Point(784, 164);
+            SaveInvoice.Location = new Point(773, 170);
             SaveInvoice.Name = "SaveInvoice";
-            SaveInvoice.Size = new Size(78, 42);
+            SaveInvoice.Size = new Size(91, 48);
             SaveInvoice.TabIndex = 5;
-            SaveInvoice.Text = "ОК";
+            SaveInvoice.Text = "Зберегти накладну";
             SaveInvoice.UseVisualStyleBackColor = true;
             SaveInvoice.Click += SaveInvoice_Click;
             // 

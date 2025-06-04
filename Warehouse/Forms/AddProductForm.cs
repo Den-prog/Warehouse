@@ -24,7 +24,7 @@ namespace Warehouse.Forms
             nudQuantity.Minimum = 0;
             nudQuantity.Maximum = 100000;
 
-            cmbUnit.Items.AddRange(new string[] { "шт", "кг", "л", "м" });
+            cmbUnit.Items.AddRange(new string[] { "шт", "кг", "л" });
 
         }
 

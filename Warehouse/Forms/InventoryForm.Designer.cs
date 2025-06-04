@@ -36,13 +36,13 @@
             завантажитиToolStripMenuItem = new ToolStripMenuItem();
             додатиТоварToolStripMenuItem = new ToolStripMenuItem();
             видалитиТоварToolStripMenuItem = new ToolStripMenuItem();
-            зберегтиToolStripMenuItem = new ToolStripMenuItem();
             lblSearch = new Label();
             txtSearch = new TextBox();
             btnSeaarch = new Button();
             btnClearTxtSearch = new Button();
             panel1 = new Panel();
             label1 = new Label();
+            btnSaveWrHouse = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvInventory).BeginInit();
             menuStrip1.SuspendLayout();
             panel1.SuspendLayout();
@@ -67,7 +67,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { складToolStripMenuItem, додатиТоварToolStripMenuItem, видалитиТоварToolStripMenuItem, зберегтиToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { складToolStripMenuItem, додатиТоварToolStripMenuItem, видалитиТоварToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(899, 24);
@@ -109,13 +109,6 @@
             видалитиТоварToolStripMenuItem.Size = new Size(105, 20);
             видалитиТоварToolStripMenuItem.Text = "Видалити товар";
             видалитиТоварToolStripMenuItem.Click += видалитиТоварToolStripMenuItem_Click;
-            // 
-            // зберегтиToolStripMenuItem
-            // 
-            зберегтиToolStripMenuItem.Name = "зберегтиToolStripMenuItem";
-            зберегтиToolStripMenuItem.Size = new Size(69, 20);
-            зберегтиToolStripMenuItem.Text = "Зберегти";
-            зберегтиToolStripMenuItem.Click += зберегтиToolStripMenuItem_Click;
             // 
             // lblSearch
             // 
@@ -179,11 +172,22 @@
             label1.TabIndex = 14;
             label1.Text = "Пошук товару";
             // 
+            // btnSaveWrHouse
+            // 
+            btnSaveWrHouse.Location = new Point(809, 117);
+            btnSaveWrHouse.Name = "btnSaveWrHouse";
+            btnSaveWrHouse.Size = new Size(78, 36);
+            btnSaveWrHouse.TabIndex = 15;
+            btnSaveWrHouse.Text = "Зберегти";
+            btnSaveWrHouse.UseVisualStyleBackColor = true;
+            btnSaveWrHouse.Click += btnSaveWrHouse_Click;
+            // 
             // InventoryForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(899, 791);
+            Controls.Add(btnSaveWrHouse);
             Controls.Add(label1);
             Controls.Add(panel1);
             Controls.Add(dgvInventory);
@@ -209,7 +213,6 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem додатиТоварToolStripMenuItem;
         private ToolStripMenuItem видалитиТоварToolStripMenuItem;
-        private ToolStripMenuItem зберегтиToolStripMenuItem;
         private ToolStripMenuItem складToolStripMenuItem;
         private ToolStripMenuItem зберегтиСкладНаДискToolStripMenuItem;
         private ToolStripMenuItem завантажитиToolStripMenuItem;
@@ -219,5 +222,6 @@
         private Button btnClearTxtSearch;
         private Panel panel1;
         private Label label1;
+        private Button btnSaveWrHouse;
     }
 }

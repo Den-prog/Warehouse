@@ -56,27 +56,30 @@
             // lblInvoiceNumber
             // 
             lblInvoiceNumber.AutoSize = true;
+            lblInvoiceNumber.Font = new Font("Segoe UI", 9.75F);
             lblInvoiceNumber.Location = new Point(12, 14);
             lblInvoiceNumber.Name = "lblInvoiceNumber";
-            lblInvoiceNumber.Size = new Size(122, 19);
+            lblInvoiceNumber.Size = new Size(115, 17);
             lblInvoiceNumber.TabIndex = 1;
             lblInvoiceNumber.Text = "Номер накладної:";
             // 
             // lblInvoiceDate
             // 
             lblInvoiceDate.AutoSize = true;
-            lblInvoiceDate.Location = new Point(12, 42);
+            lblInvoiceDate.Font = new Font("Segoe UI", 9.75F);
+            lblInvoiceDate.Location = new Point(12, 46);
             lblInvoiceDate.Name = "lblInvoiceDate";
-            lblInvoiceDate.Size = new Size(115, 19);
+            lblInvoiceDate.Size = new Size(109, 17);
             lblInvoiceDate.TabIndex = 2;
             lblInvoiceDate.Text = "Дата створення: ";
             // 
             // lblInvoiceType
             // 
             lblInvoiceType.AutoSize = true;
-            lblInvoiceType.Location = new Point(202, 14);
+            lblInvoiceType.Font = new Font("Segoe UI", 9.75F);
+            lblInvoiceType.Location = new Point(207, 14);
             lblInvoiceType.Name = "lblInvoiceType";
-            lblInvoiceType.Size = new Size(35, 19);
+            lblInvoiceType.Size = new Size(32, 17);
             lblInvoiceType.TabIndex = 3;
             lblInvoiceType.Text = "Тип:";
             // 
@@ -84,9 +87,10 @@
             // 
             lblInvoiceSuma.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lblInvoiceSuma.AutoSize = true;
+            lblInvoiceSuma.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
             lblInvoiceSuma.Location = new Point(638, 523);
             lblInvoiceSuma.Name = "lblInvoiceSuma";
-            lblInvoiceSuma.Size = new Size(49, 19);
+            lblInvoiceSuma.Size = new Size(48, 17);
             lblInvoiceSuma.TabIndex = 4;
             lblInvoiceSuma.Text = "Сума: ";
             // 

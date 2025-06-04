@@ -225,7 +225,7 @@ namespace Warehouse.Forms
             saveFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
             saveFileDialog.FilterIndex = 1;
             saveFileDialog.RestoreDirectory = true;
-            saveFileDialog.FileName = "invoices.json";
+            saveFileDialog.FileName = "накладні.json";
             saveFileDialog.Title = "Зберегти всі накладні";
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -292,7 +292,7 @@ namespace Warehouse.Forms
             saveFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
             saveFileDialog.FilterIndex = 1;
             saveFileDialog.RestoreDirectory = true;
-            saveFileDialog.FileName = "warehouse_склад_накладні.json";
+            saveFileDialog.FileName = "склад_накладні.json";
             saveFileDialog.Title = "Зберегти склад і накладні";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
