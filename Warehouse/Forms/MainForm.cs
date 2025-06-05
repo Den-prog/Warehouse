@@ -78,31 +78,7 @@ namespace Warehouse.Forms
                 }
             }
         }
-
-
-        // Метод відкриває форму для створення нової накладної та додає її до списку, якщо збережено.
-        private void btnCreateInvoice_Click(object sender, EventArgs e)
-        {
-
-            using (var invoiceForm = new InvoiceForm(allProducts))
-            {
-                if (invoiceForm.ShowDialog() == DialogResult.OK)
-                {
-                    if (invoiceForm.SavedInvoice != null)
-                    {
-                        invoices.Add(invoiceForm.SavedInvoice);
-                        if (allInvoicesForm != null && !allInvoicesForm.IsDisposed)
-                        {
-                            allInvoicesForm.UpdateInvoices(invoices);
-                        }
-                    }
-
-                }
-            }
-
-        }
-
-
+  
 
         // Метод відкриває вікно інвентаризації для перегляду поточного списку товарів.
         private void bnInventory_Click(object sender, EventArgs e)
