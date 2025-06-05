@@ -10,11 +10,13 @@ using System.Windows.Forms;
 using Warehouse.Models;
 namespace Warehouse.Forms
 {
+    // Клас InvoiceDetailsForm відповідає за відображення детальної інформації про вибрану накладну.
     public partial class InvoiceDetailsForm : Form
     {
        
         private Invoice invoice;
 
+        // Метод ініціалізує форму, приймає накладну та відображає її деталі.
         public InvoiceDetailsForm(Invoice invoice)
         {
             InitializeComponent();
@@ -23,17 +25,13 @@ namespace Warehouse.Forms
 
         }
 
+        // Метод відображає основну інформацію та список товарів накладної у відповідних елементах керування.
         private void DisplayInvoiceDetails()
         {
             lblInvoiceNumber.Text = $"Номер накладної: {invoice.Id}";
             lblInvoiceDate.Text = $"Дата: {invoice.Date.ToShortDateString()}";
             lblInvoiceType.Text = $"Тип: {(invoice.Type == InvoiceType.Income? "Прибуткова накладна" : "Витратна накладна")}";
-            
-           
-
-
-
-
+                       
             var itemsForGrid = invoice.Items.Select(item => new
             {
                 Name = item.Product.Name,
@@ -50,6 +48,7 @@ namespace Warehouse.Forms
             decimal totalValueInvoice = itemsForGrid.Sum(item => item.TotalValue);
             lblInvoiceSuma.Text = $"Сума: {totalValueInvoice:C2}";
         }
+        // Метод оновлює заголовки стовпців таблиці товарів у накладній.
         private void UpdateProductGridHeaders()
         {
             dgvInvoiceItems.Columns["Name"].HeaderText = "Назва";

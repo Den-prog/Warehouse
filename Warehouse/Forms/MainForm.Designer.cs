@@ -32,7 +32,7 @@
             menuStrip1 = new MenuStrip();
             файлToolStripMenuItem = new ToolStripMenuItem();
             зберегтиДаніToolStripMenuItem = new ToolStripMenuItem();
-            імпортToolStripMenuItem = new ToolStripMenuItem();
+            завантаженняДанихToolStripMenuItem1 = new ToolStripMenuItem();
             документиToolStripMenuItem = new ToolStripMenuItem();
             створитиНакладнуToolStripMenuItem = new ToolStripMenuItem();
             всіНакладніToolStripMenuItem = new ToolStripMenuItem();
@@ -54,7 +54,7 @@
             // 
             // файлToolStripMenuItem
             // 
-            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { зберегтиДаніToolStripMenuItem, імпортToolStripMenuItem });
+            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { зберегтиДаніToolStripMenuItem, завантаженняДанихToolStripMenuItem1 });
             файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             файлToolStripMenuItem.Size = new Size(48, 20);
             файлToolStripMenuItem.Text = "Файл";
@@ -62,17 +62,17 @@
             // зберегтиДаніToolStripMenuItem
             // 
             зберегтиДаніToolStripMenuItem.Name = "зберегтиДаніToolStripMenuItem";
-            зберегтиДаніToolStripMenuItem.Size = new Size(180, 22);
+            зберегтиДаніToolStripMenuItem.Size = new Size(187, 22);
             зберегтиДаніToolStripMenuItem.Tag = "";
             зберегтиДаніToolStripMenuItem.Text = "Зберегти дані";
             зберегтиДаніToolStripMenuItem.Click += зберегтиДаніToolStripMenuItem_Click;
             // 
-            // імпортToolStripMenuItem
+            // завантаженняДанихToolStripMenuItem1
             // 
-            імпортToolStripMenuItem.Name = "імпортToolStripMenuItem";
-            імпортToolStripMenuItem.Size = new Size(180, 22);
-            імпортToolStripMenuItem.Text = "Імпортувати дані";
-            імпортToolStripMenuItem.Click += імпортToolStripMenuItem_Click;
+            завантаженняДанихToolStripMenuItem1.Name = "завантаженняДанихToolStripMenuItem1";
+            завантаженняДанихToolStripMenuItem1.Size = new Size(187, 22);
+            завантаженняДанихToolStripMenuItem1.Text = "Завантаження даних";
+            завантаженняДанихToolStripMenuItem1.Click += завантаженняДанихToolStripMenuItem1_Click;
             // 
             // документиToolStripMenuItem
             // 
@@ -80,7 +80,6 @@
             документиToolStripMenuItem.Name = "документиToolStripMenuItem";
             документиToolStripMenuItem.Size = new Size(80, 20);
             документиToolStripMenuItem.Text = "Документи";
-            документиToolStripMenuItem.Click += документиToolStripMenuItem_Click;
             // 
             // створитиНакладнуToolStripMenuItem
             // 
@@ -146,7 +145,7 @@
         private ToolStripMenuItem завантажитиНакладніToolStripMenuItem;
         private ToolStripMenuItem інвентарнаВідомістьToolStripMenuItem;
         private ToolStripMenuItem файлToolStripMenuItem;
-        private ToolStripMenuItem імпортToolStripMenuItem;
         private ToolStripMenuItem зберегтиДаніToolStripMenuItem;
+        private ToolStripMenuItem завантаженняДанихToolStripMenuItem1;
     }
 }

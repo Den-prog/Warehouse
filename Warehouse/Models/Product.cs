@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Warehouse.Models
 {
+    // Клас Product описує товар на складі, включаючи його назву, одиницю виміру, ціну,
+    // кількість та дату останнього завезення.
     public class Product
     {
         public string Name {  get; set; }
@@ -17,6 +19,7 @@ namespace Warehouse.Models
 
         public decimal TotalValue => PricePerUnit * Quantity;
 
+        // Метод повертає назву товару у вигляді рядка.
         public override string ToString()
         {
             return Name;

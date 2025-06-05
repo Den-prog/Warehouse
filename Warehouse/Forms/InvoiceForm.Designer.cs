@@ -64,7 +64,6 @@
             dgvProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvProducts.Size = new Size(725, 590);
             dgvProducts.TabIndex = 0;
-            dgvProducts.CellContentClick += dgvProducts_CellContentClick;
             // 
             // nudQuantity
             // 
@@ -81,7 +80,6 @@
             comboBoxInvoiceType.Name = "comboBoxInvoiceType";
             comboBoxInvoiceType.Size = new Size(187, 25);
             comboBoxInvoiceType.TabIndex = 3;
-            comboBoxInvoiceType.SelectedIndexChanged += comboBoxInvoiceType_SelectedIndexChanged;
             // 
             // btnAddItem
             // 

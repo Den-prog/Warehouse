@@ -12,14 +12,16 @@ using Warehouse.Models;
 
 namespace Warehouse.Forms
 {
+    //Клас InventoryForm відповідає за перегляд, додавання, видалення,
+    // збереження та пошук товарів на складі.
     public partial class InventoryForm : Form
     {
         private List<Product> products;
         private List<Product> originalProducts;
 
-        private string filePath = "products.json";
-
         private bool isSaved = true;
+
+        // Метод ініціалізує форму інвентаризації, налаштовує таблицю та зберігає початковий стан товарів.
         public InventoryForm(List<Product> products)
         {
             InitializeComponent();
@@ -34,7 +36,7 @@ namespace Warehouse.Forms
             this.FormClosing += InventoryForm2_FormClosing;
 
         }
-
+        // Метод відкриває форму для додавання нового товару, додає його до списку та оновлює таблицю.
         private void додатиТоварToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var addProduct = new AddProductForm();
@@ -50,7 +52,8 @@ namespace Warehouse.Forms
             }
         }
 
-
+        private string filePath = "products.json";
+        // Метод зберігає поточний список товарів у файл у форматі JSON.
         private void SaveProducts()
         {
             var options = new JsonSerializerOptions { WriteIndented = true };
@@ -58,15 +61,8 @@ namespace Warehouse.Forms
             File.WriteAllText(filePath, json);
         }
 
-        //private List<Product> LoadProducts()
-        //{
-        //    if (!File.Exists(filePath))
-        //        return new List<Product>();
 
-        //    string json = File.ReadAllText(filePath);
-        //    return JsonSerializer.Deserialize<List<Product>>(json);
-        //}
-
+        // Метод створює копію списку товарів для подальшого відновлення.
         private List<Product> CloneProductList(List<Product> source)
         {
             return source.Select(p => new Product
@@ -77,11 +73,11 @@ namespace Warehouse.Forms
                 Unit = p.Unit,
                 LastDeliveryDate = p.LastDeliveryDate,
             }).ToList();
-            UpdateProductGridHeaders();
+           
         }
 
 
-
+        // Метод видаляє вибраний товар зі списку та оновлює таблицю.
         private void видалитиТоварToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dgvInventory.SelectedRows.Count == 0)
@@ -107,10 +103,7 @@ namespace Warehouse.Forms
 
         }
 
-        private void зберегтиToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-           
-        }
+        // Метод обробляє закриття форми, пропонуючи зберегти зміни або відновити початковий стан.
 
         private void InventoryForm2_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -130,15 +123,16 @@ namespace Warehouse.Forms
                 }
                 else if (result == DialogResult.No)
                 {
-                    // Відкат змін 
+                  
                     RollbackChanges();
                 }
                 else if (result == DialogResult.Cancel)
                 {
-                    e.Cancel = true; // Не закривати форму
+                    e.Cancel = true; 
                 }
             }
         }
+        // Метод скасовує всі зміни та повертає список товарів до початкового стану.
         private void RollbackChanges()
         {
            
@@ -172,7 +166,7 @@ namespace Warehouse.Forms
             dgvInventory.DataSource = products;
             UpdateProductGridHeaders();
         }
-
+        // Метод відкриває діалог збереження та зберігає список товарів у вибраний файл.
         private void зберегтиСкладToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -201,19 +195,8 @@ namespace Warehouse.Forms
                 }
             }
         }
-        private void LoadProoductsFormFile()
-        {
-            if (File.Exists("products.json"))
-            {
-                string json = File.ReadAllText("products.json");
-                products = JsonSerializer.Deserialize<List<Product>>(json);
 
-                dgvInventory.DataSource = null;
-                dgvInventory.DataSource = products;
-                UpdateProductGridHeaders();
-            }
-        }
-
+        // Метод оновлює заголовки стовпців таблиці товарів.
         private void UpdateProductGridHeaders()
         {
             if (dgvInventory.Columns.Count == 0) return;
@@ -230,17 +213,13 @@ namespace Warehouse.Forms
                 DataGridViewColumn totalValueColumn = dgvInventory.Columns["TotalValue"];
                 DataGridViewColumn priceColumn = dgvInventory.Columns["PricePerUnit"];
                 totalValueColumn.DefaultCellStyle.Format = "C2";
-                priceColumn.DefaultCellStyle.Format = "C2";// Форматування як валюти
-                //totalValueColumn.DefaultCellStyle.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("uk-UA");
+                priceColumn.DefaultCellStyle.Format = "C2";
+                
             }
 
-            /* if(dgvProducts.Columns.Contains("PricePerUnit"))
-           {
-               DataGridViewColumn priceColumn = dgvProducts.Columns["PricePerUnit"];
-       priceColumn.DefaultCellStyle.Format = "C2"; // Форматування як валюти
-               //priceColumn.DefaultCellStyle.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("uk-UA");
-           }*/
+            
         }
+        // Метод відкриває діалог для завантаження списку товарів з файлу.
         private void завантажитиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -279,7 +258,7 @@ namespace Warehouse.Forms
                 }
             }
         }
-
+        // Метод виконує пошук товарів за назвою та оновлює таблицю результатами пошуку.
         private void btnSeaarch_Click(object sender, EventArgs e)
         {
             string query = txtSearch.Text.ToLower();
@@ -291,22 +270,13 @@ namespace Warehouse.Forms
             UpdateProductGridHeaders();
         }
 
+        // Метод очищає поле пошуку та відновлює повний список товарів у таблиці.
         private void btnClearTxtSearch_Click(object sender, EventArgs e)
         {
             txtSearch.Clear();
             dgvInventory.DataSource = products; 
         }
-
-        private void складToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblSearch_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        // Метод зберігає поточний стан складу у файл та оновлює початковий стан.
         private void btnSaveWrHouse_Click(object sender, EventArgs e)
         {
             SaveProducts();

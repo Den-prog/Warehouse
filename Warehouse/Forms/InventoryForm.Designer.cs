@@ -80,7 +80,6 @@
             складToolStripMenuItem.Name = "складToolStripMenuItem";
             складToolStripMenuItem.Size = new Size(52, 20);
             складToolStripMenuItem.Text = "Склад";
-            складToolStripMenuItem.Click += складToolStripMenuItem_Click;
             // 
             // зберегтиСкладНаДискToolStripMenuItem
             // 
@@ -119,7 +118,6 @@
             lblSearch.Size = new Size(141, 19);
             lblSearch.TabIndex = 8;
             lblSearch.Text = "Введіть назву товару";
-            lblSearch.Click += lblSearch_Click;
             // 
             // txtSearch
             // 

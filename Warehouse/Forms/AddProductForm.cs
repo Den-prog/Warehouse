@@ -11,10 +11,11 @@ using Warehouse.Models;
 
 namespace Warehouse.Forms
 {
+    // Клас AddProductForm відповідає за додавання нового товару до складу через форму введення.
     public partial class AddProductForm : Form
     {
         public Product NewProduct { get; set; }
-
+        // Метод ініціалізує форму, налаштовує обмеження для полів та заповнює список одиниць виміру.
         public AddProductForm()
         {
             InitializeComponent();
@@ -27,7 +28,8 @@ namespace Warehouse.Forms
             cmbUnit.Items.AddRange(new string[] { "шт", "кг", "л" });
 
         }
-
+        // Метод обробляє натискання кнопки збереження, перевіряє коректність введених даних
+        // та створює новий товар, якщо всі поля заповнені правильно.
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtName.Text))
@@ -56,14 +58,6 @@ namespace Warehouse.Forms
             this.Close();
         }
 
-        private void nudQuantity_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtUnit_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+      
     }
 }

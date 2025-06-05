@@ -108,7 +108,6 @@
             nudQuantity.Name = "nudQuantity";
             nudQuantity.Size = new Size(120, 25);
             nudQuantity.TabIndex = 10;
-            nudQuantity.ValueChanged += nudQuantity_ValueChanged;
             // 
             // cmbUnit
             // 

@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Warehouse.Models
 {
+    // Клас TestDataGenerator надає методи для генерації тестових даних для складу.
     public static class TestDataGenerator
     {
+        // Метод повертає список зразків товарів для початкового наповнення складу.
         public static List<Product> GetSampleProducts()
         {
             return new List<Product>

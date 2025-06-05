@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -14,11 +15,13 @@ using Warehouse.Models;
 
 namespace Warehouse.Forms
 {
+    //Клас InvoiceForm відповідає за створення та редагування накладних,
+    //додавання товарів до накладної, а також за збереження змін у складі.
     public partial class InvoiceForm : Form
     {
         private List<Product> products;
 
-        private List<Invoice> allInvoices = new List<Invoice>();//empty
+        private List<Invoice> allInvoices = new List<Invoice>();
 
         private List<Product> originalProducts;
 
@@ -28,11 +31,14 @@ namespace Warehouse.Forms
 
         public Invoice SavedInvoice { get; private set; }
 
+        // Метод зберігає список накладних у файл у форматі JSON.
         private void SaveInvoiceToFile(List<Invoice> invoice, string filePath)
         {
             string json = JsonSerializer.Serialize(invoice, new JsonSerializerOptions { WriteIndented = true });
-            System.IO.File.WriteAllText(filePath, json);
+            File.WriteAllText(filePath, json);
         }
+
+        // Метод ініціалізує форму, налаштовує елементи керування та завантажує список товарів.
         public InvoiceForm(List<Product> products)
         {
             InitializeComponent();
@@ -40,21 +46,11 @@ namespace Warehouse.Forms
             this.allInvoices = allInvoices;
 
             dgvProducts.DataSource = products;
-           /* dgvProducts.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvProducts.MultiSelect = false;
-            dgvProducts.ReadOnly = true;*/
-
-
-
-
-
-
+          
             nudQuantity.Minimum = 1;
             nudQuantity.Maximum = 1000;
 
-            //comboBoxInvoiceType.Items.Add(InvoiceType.Income);
-            //comboBoxInvoiceType.Items.Add(InvoiceType.Outcome);
-            //comboBoxInvoiceType.SelectedIndex = 0;
+          
             comboBoxInvoiceType.Items.Add("Прибуткова накладна");
             comboBoxInvoiceType.Items.Add("Витратна накладна");
             comboBoxInvoiceType.SelectedIndex = 0; 
@@ -70,18 +66,18 @@ namespace Warehouse.Forms
             this.FormClosing += InvoiceForm_FormClosing;
             UpdateProductsGrid();
         }
-
+        // Метод повертає тип накладної, обраний користувачем.
         private InvoiceType GetSelectedInvoiceType()
         {
             var selectedItem = comboBoxInvoiceType.SelectedItem?.ToString();
             return selectedItem == "Прибуткова накладна" ? InvoiceType.Income : InvoiceType.Outcome;
         }
-
+        // Метод повертає вибраний у таблиці товар.
         private Product GetSelectedProduct()
         {
             if (dgvProducts.SelectedRows.Count > 0)
             {
-                var name = dgvProducts.SelectedRows[0].Cells["Name"].Value as string;//Value.ToString() - поменял;
+                var name = dgvProducts.SelectedRows[0].Cells["Name"].Value as string;
                 if (name != null)
                 {
                     return products.FirstOrDefault(p => p.Name == name);
@@ -90,18 +86,13 @@ namespace Warehouse.Forms
             return null;
         }
 
-        private void dgvProducts_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-
+        // Метод додає вибраний товар до поточної накладної.
         private void btnAddItem_Click(object sender, EventArgs e)
         {
             var selectedProduct = GetSelectedProduct();
             var quantity = (int)nudQuantity.Value;
             var invoiceType = GetSelectedInvoiceType();
-            if (invoiceType == null)
+            if (selectedProduct == null)
             {
                 MessageBox.Show("Будь ласка, виберіть товар.");
                 return;
@@ -129,19 +120,8 @@ namespace Warehouse.Forms
 
             UpdateProductsGrid();
 
-
-            /* if (invoiceType == InvoiceType.Income)
-             {
-                 selectedProduct.Quantity += quantity;
-             }
-             else if (invoiceType == InvoiceType.Outcome)
-             {
-                 selectedProduct.Quantity -= quantity;
-             }*/
-
-
         }
-
+        // Метод оновлює відображення таблиці товарів з урахуванням поточних змін.
         private void UpdateProductsGrid()
         {
             string selectedName = null;
@@ -165,8 +145,7 @@ namespace Warehouse.Forms
             if(dgvProducts.Columns.Contains("PricePerUnit"))
             {
                 DataGridViewColumn priceColumn = dgvProducts.Columns["PricePerUnit"];
-                priceColumn.DefaultCellStyle.Format = "C2"; // Форматування як валюти
-                //priceColumn.DefaultCellStyle.FormatProvider = System.Globalization.CultureInfo.GetCultureInfo("uk-UA");
+                priceColumn.DefaultCellStyle.Format = "C2";
             }
        
 
@@ -189,6 +168,7 @@ namespace Warehouse.Forms
                 }
             }
         }
+        // Метод повертає кількість товару з урахуванням поточних змін у накладній.
         private int GetVirtualQuantity(Product product)
         {
             int delta = 0;
@@ -206,7 +186,7 @@ namespace Warehouse.Forms
             return product.Quantity + delta;
         }
 
-
+        // Метод зберігає накладну, оновлює залишки товарів та закриває форму.
         private void SaveInvoice_Click(object sender, EventArgs e)
         {
             if (currentItems.Count <= 0)
@@ -247,25 +227,16 @@ namespace Warehouse.Forms
                 }
             }
 
-
-
             SavedInvoice = invoice;
             DialogResult = DialogResult.OK;
             isSaved = true;
             Close();
 
-
-
-            //var detailsForm = new InvoiceDetailsForm(SavedInvoice);
-            //detailsForm.ShowDialog();
-
-
         }
 
-
+        // Метод обробляє закриття форми, пропонуючи зберегти накладну, якщо є незбережені зміни.
         private void InvoiceForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-
 
             if (!isSaved && currentItems.Count > 0)
             {
@@ -280,34 +251,35 @@ namespace Warehouse.Forms
                 {
                     if (result == DialogResult.Yes)
                     {
-                        // Сохраняем только если есть товары
+                       
                         if (currentItems.Count > 0)
                         {
                             SaveInvoice.PerformClick();
-                            // форма закроется после сохранения
+                            
                         }
                         else
                         {
                             MessageBox.Show("Накладна не містить товару.", "Попередження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            e.Cancel = true; // Не закрывать форму, если пользователь хочет сохранить, но товаров нет
-                        }
+                            e.Cancel = true;                         }
                     }
                     else if (result == DialogResult.No)
                     {
-                        // Відкат змін 
+                        
                         RollbackChanges();
                     }
                     else if (result == DialogResult.Cancel)
                     {
-                        e.Cancel = true; // Не закривати форму
+                        e.Cancel = true; 
                     }
                 }
 
             }
         }
+
+        // Метод скасовує зміни у кількості та ціні товарів, повертаючи їх до початкового стану.
         private void RollbackChanges()
         {
-            // Відновлює початкові кількості
+            
             foreach (var original in originalProducts)
             {
                 var current = products.FirstOrDefault(p => p.Name == original.Name);
@@ -320,111 +292,6 @@ namespace Warehouse.Forms
             }
         }
 
-
-
-
-
-        private void btnAddProduct_Click(object sender, EventArgs e)
-        {
-            var addProduct = new AddProductForm();
-            if (addProduct.ShowDialog() == DialogResult.OK)
-            {
-                products.Add(addProduct.NewProduct);
-
-                UpdateProductsGrid();
-
-            }
-
-
-
-        }
-
-        private void btnDelProduct_Click(object sender, EventArgs e)
-        {
-            if (dgvProducts.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Будь ласка, виберіть товар для видалення");
-                return;
-            }
-
-            var selectedProduct = dgvProducts.SelectedRows[0].DataBoundItem as Product;
-            if (selectedProduct != null)
-            {
-                var confirm = MessageBox.Show($"Ви дійсно хочете видалити товар \"{selectedProduct.Name}\" ? ", "Підтвердження", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (confirm == DialogResult.Yes)
-                {
-                    products.Remove(selectedProduct);
-                    UpdateProductsGrid();
-                }
-            }
-        }
-
-        private void додатиТоварToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var addProduct = new AddProductForm();
-            if (addProduct.ShowDialog() == DialogResult.OK)
-            {
-                products.Add(addProduct.NewProduct);
-
-                dgvProducts.DataSource = null;
-                dgvProducts.DataSource = products;
-
-            }
-
-
-
-        }
-
-    /*    private void видалитиТоварToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (dgvProducts.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Будь ласка, виберіть товар для видалення");
-                return;
-            }
-
-            var selectedProduct = dgvProducts.SelectedRows[0].DataBoundItem as Product;
-            if (selectedProduct != null)
-            {
-                var confirm = MessageBox.Show($"Ви дійсно хочете видалити товар \"{selectedProduct.Name}\" ? ", "Підтвердження", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (confirm == DialogResult.Yes)
-                {
-                    products.Remove(selectedProduct);
-                    dgvProducts.DataSource = null;
-                    dgvProducts.DataSource = products;
-                }
-            }
-
-        }*/
-
-        private void зберегтиНакладнуToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-
-        }
-
-        private void зберегтиНакладнууФайлToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (currentItems.Count == 0)
-            {
-                MessageBox.Show("Накладна не містить товару.", "Попередження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            var invoice = new Invoice
-            {
-                Date = DateTime.Now,
-                Type = (InvoiceType)comboBoxInvoiceType.SelectedItem,
-                Items = new BindingList<InvoiceItem>(currentItems)
-            };
-            invoice.AssignId(); // Присвоюємо унікальний ID
-            allInvoices.Add(invoice);
-            SaveInvoiceToFile(allInvoices, "invoices.json");
-            MessageBox.Show("Накладна збережена у файл");
-        }
-
-        private void comboBoxInvoiceType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+       
     }
 }

@@ -10,14 +10,17 @@ using System.Windows.Forms;
 using Warehouse.Models;
 namespace Warehouse.Forms
 {
+    // Клас AllInvoicesForm відповідає за перегляд, фільтрацію, детальний перегляд та видалення накладних.
     public partial class AllInvoicesForm : Form
     {
         private List<Invoice> allInvoices;
+
+        // Метод ініціалізує форму, завантажує список накладних та налаштовує елементи керування.
         public AllInvoicesForm(List<Invoice> invoices)
         {
             InitializeComponent();
             allInvoices = invoices;
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+           
             Invoice.UpdateNextId(allInvoices);
             LoadInvoices(allInvoices);
 
@@ -26,6 +29,7 @@ namespace Warehouse.Forms
             cmbType.Items.Add("Витратна накладна");
             cmbType.SelectedIndex = 0;
         }
+        // Метод завантажує та відображає список накладних у таблиці.
         private void LoadInvoices(List<Invoice> invoicesToShow)
         {
             dgvAllInvoices.DataSource = null;
@@ -40,19 +44,9 @@ namespace Warehouse.Forms
             dgvAllInvoices.Columns[0].HeaderText = "ID";
             dgvAllInvoices.Columns[2].HeaderText = "Дата";
             dgvAllInvoices.Columns[3].HeaderText = "Кількість товарів";
-
-
-
-            //// Debug: Show a message if there are no invoices
-            //if (data == null || data.Count == 0)
-            //{
-            //    MessageBox.Show("Нема накладних для видображення.", "Інформація", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //}
-
-
         }
 
-
+        // Метод відкриває деталі накладної при подвійному кліку по рядку таблиці.
         private void dgvInvoices_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -68,12 +62,15 @@ namespace Warehouse.Forms
             }
         }
 
+        // Метод оновлює список накладних у формі.
         public void UpdateInvoices(List<Invoice> updatedInvoices)
         {
             this.allInvoices = updatedInvoices;
             LoadInvoices(allInvoices);
 
         }
+
+        // Метод фільтрує накладні за типом, датою та кількістю товарів.
 
         private void btnFilter_Click(object sender, EventArgs e)
         {
@@ -98,7 +95,7 @@ namespace Warehouse.Forms
             }
             LoadInvoices(filtered.ToList());
         }
-
+        // Метод видаляє вибрану накладну зі списку.
         private void btnDeleteInvoice_Click(object sender, EventArgs e)
         {
             if (dgvAllInvoices.SelectedRows.Count == 0)

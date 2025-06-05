@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace Warehouse.Models
 {
+    // Клас WarehouseData використовується для зберігання та передачі даних складу
     public class WarehouseData
     {
         public List<Product> Products { get; set; }

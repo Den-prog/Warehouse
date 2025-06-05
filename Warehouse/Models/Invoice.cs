@@ -8,20 +8,19 @@ using System.Threading.Tasks;
 
 namespace Warehouse.Models
 {
+    // Клас Invoice описує накладну, яка містить інформацію про дату, тип, список товарів та унікальний ідентифікатор.
     public class Invoice
     {
+        
         private static int _nextId = 1;
         public int Id { get;  set; }
-       /* public Invoice()
-        {
-           Id = _nextId++;
-           
 
-        }*/
+        // Метод призначає накладній унікальний ідентифікатор.
         public void AssignId()
         {
             Id = _nextId++;
         }
+        // Метод оновлює значення наступного ідентифікатора на основі існуючих накладних.
         public static void UpdateNextId(IEnumerable<Invoice> invoices)
         {
             if (invoices == null || !invoices.Any())
@@ -39,6 +38,9 @@ namespace Warehouse.Models
 
        
     }
+
+    //Клас InvoiceItem описує у накладній товар, його кількість та загальну вартість.
+    
     public class InvoiceItem
     {
         public Product Product { get; set; }
@@ -47,7 +49,7 @@ namespace Warehouse.Models
 
 
     }
-
+    
     public enum InvoiceType
     {
         Income,
