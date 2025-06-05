@@ -196,7 +196,7 @@ namespace Warehouse.Forms
             }
         }
 
-        // Метод оновлює заголовки стовпців таблиці товарів.
+        // Метод оновлює заголовки стовпців таблиці товарів. 
         private void UpdateProductGridHeaders()
         {
             if (dgvInventory.Columns.Count == 0) return;
