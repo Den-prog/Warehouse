@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -35,12 +36,14 @@ namespace Warehouse.Forms
             LoadTestData();
             this.FormClosing += MainForm_FormClosing;
             this.Load += MainForm_Load;
+           
         }
 
         // Метод завантажує тестові дані товарів для початкового наповнення складу.
         private void LoadTestData()
         {
             allProducts = TestDataGenerator.GetSampleProducts();
+            
         }
 
         // Обробник події закриття форми. Автоматично зберігає дані перед закриттям.
@@ -52,6 +55,10 @@ namespace Warehouse.Forms
         private void MainForm_Load(object sender, EventArgs e)
         {
             AutoLoadData();
+            if (invoices == null || invoices.Count == 0)
+            {
+                invoices = GenerateTestInvoices();
+            }
         }
         // Метод серіалізує та зберігає поточні дані складу (товари та накладні) у файл JSON.
         private void AutoSaveData()
@@ -254,5 +261,46 @@ namespace Warehouse.Forms
                 }
             }
         }
+
+        public static List<Invoice> GenerateTestInvoices()
+        {
+            var products = TestDataGenerator.GetSampleProducts();
+            var invoices = new List<Invoice>();
+
+            var items1 = new BindingList<InvoiceItem>
+            {
+                new InvoiceItem { Product = products[0], Quantity = 10 },
+                new InvoiceItem { Product = products[1], Quantity = 5 }
+            };
+
+            var invoice1 = new Invoice
+            {
+               
+                Date = DateTime.Now.AddDays(-10),
+                Type = InvoiceType.Income,
+                Items = items1
+            };
+            invoice1.AssignId();
+            invoices.Add(invoice1);
+
+            var items2 = new BindingList<InvoiceItem>
+            {
+                new InvoiceItem { Product = products[2], Quantity = 15 }
+               
+            };
+
+            var invoice2 = new Invoice
+            {
+               
+                Date = DateTime.Now.AddDays(-5),
+                Type = InvoiceType.Outcome,
+                Items = items2
+            };
+            invoice2.AssignId();
+            invoices.Add(invoice2);
+            return invoices;
+        }
+        
+
     }
 }
