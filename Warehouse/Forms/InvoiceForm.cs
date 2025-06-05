@@ -21,8 +21,6 @@ namespace Warehouse.Forms
     {
         private List<Product> products;
 
-        private List<Invoice> allInvoices = new List<Invoice>();
-
         private List<Product> originalProducts;
 
         private List<InvoiceItem> currentItems = new List<InvoiceItem>();
@@ -31,19 +29,13 @@ namespace Warehouse.Forms
 
         public Invoice SavedInvoice { get; private set; }
 
-        // Метод зберігає список накладних у файл у форматі JSON.
-        private void SaveInvoiceToFile(List<Invoice> invoice, string filePath)
-        {
-            string json = JsonSerializer.Serialize(invoice, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(filePath, json);
-        }
-
+        
         // Метод ініціалізує форму, налаштовує елементи керування та завантажує список товарів.
         public InvoiceForm(List<Product> products)
         {
             InitializeComponent();
             this.products = products;
-            this.allInvoices = allInvoices;
+           
 
             dgvProducts.DataSource = products;
           

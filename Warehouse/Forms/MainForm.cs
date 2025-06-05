@@ -124,7 +124,7 @@ namespace Warehouse.Forms
         // Метод зберігає всі накладні у файл JSON, де користувач обирає директорію для збереження файлу.
         private void зберегтиВсіНакладніToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            var allProducts = new List<Product>();
+            
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
             saveFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
